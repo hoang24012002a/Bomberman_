@@ -1,31 +1,52 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.entities.DynamicEntity.Bomber;
 
-public class Bomb extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+
+public class Bomb implements ApplicationListener {
+
+	private Stage stage;
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		stage = new Stage(new ScreenViewport());
+		Gdx.input.setInputProcessor(stage);
+
+		Bomber bomber = new Bomber(15, 20);
+
+		stage.addActor(bomber);
+
+	}
+
+	@Override
+	public void resize(int width, int height) {
+
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
 	}
-	
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		stage.dispose();
 	}
 }
