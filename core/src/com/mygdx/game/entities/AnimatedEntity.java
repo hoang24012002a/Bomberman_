@@ -23,6 +23,7 @@ public abstract class AnimatedEntity extends Entity {
     public AnimatedEntity(double x, double y) {
         super(x, y);
     }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Gdx.gl.glClearColor(1, 1, 1, 1);

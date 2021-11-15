@@ -3,7 +3,7 @@ package com.mygdx.game.entities.DynamicEntity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.entities.AnimatedEntity;
-import com.mygdx.game.entities.gamesys.GameManager;
+import com.mygdx.game.gamesys.GameManager;
 
 public class Bomber extends AnimatedEntity {
     private int code = 0; //Mã phím vừa bấm.
@@ -13,6 +13,7 @@ public class Bomber extends AnimatedEntity {
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
+        setZIndex(2);
     }
 
     public Bomber(double x, double y) {
@@ -20,6 +21,7 @@ public class Bomber extends AnimatedEntity {
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
+        setZIndex(2);
     }
 
     @Override
