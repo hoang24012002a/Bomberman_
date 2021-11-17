@@ -6,13 +6,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
+import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
+import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
 import com.mygdx.game.entities.StaticEntity.Item.SpeedItem;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.entities.StaticEntity.Tile.Wall;
 
 
-public class Bomb implements ApplicationListener {
+public class BombGame implements ApplicationListener {
 
 	private Stage stage;
 	
@@ -26,13 +28,15 @@ public class Bomb implements ApplicationListener {
 		Brick brick = new Brick(60, 60);
 		Grass grass = new Grass(100, 100);
 		SpeedItem speedItem = new SpeedItem(brick); // checked
-		Bomb bomb = new Bomb(40, 40);
-		stage.addActor(bomber);
-		stage.addActor(wall);
-		stage.addActor(speedItem);
-		stage.addActor(brick);
-		stage.addActor(grass);
-		stage.addActor(bomb);
+		Bomb bomb = new Bomb(40, 40); // checked
+		Flame flame = new Flame(50, 50);
+//		stage.addActor(bomber);
+//		stage.addActor(wall);
+//		stage.addActor(speedItem);
+//		stage.addActor(brick);
+//		stage.addActor(grass);
+//		stage.addActor(bomb);
+		stage.addActor(flame);
 		// tại sao chỉ có 2 actor đc lên stage???
 	}
 
