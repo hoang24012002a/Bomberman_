@@ -7,9 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
+import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
+import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
+import com.mygdx.game.entities.StaticEntity.Item.BombItem;
+import com.mygdx.game.entities.StaticEntity.Item.SpeedItem;
+import com.mygdx.game.entities.StaticEntity.Tile.Brick;
+import com.mygdx.game.entities.StaticEntity.Tile.Grass;
+import com.mygdx.game.entities.StaticEntity.Tile.Wall;
 
 
-public class Bomb implements ApplicationListener {
+public class BombGame implements ApplicationListener {
 
 	private Stage stage;
 	
@@ -18,12 +25,15 @@ public class Bomb implements ApplicationListener {
 		stage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
 
-		Bomber bomber = new Bomber(0, 0);
-        Balloon balloon = new Balloon(100, 200);
-
-		stage.addActor(balloon);
+		Actor bomber = new Bomber(50, 50);
+		Actor balloon = new Balloon(120, 120);
+		Actor balloon1 = new Balloon(150, 150);
+		Actor balloon2 = new Balloon(140, 120);
+		Actor brick = new Brick(10, 20);
+		Actor grass = new Grass(50, 50);
+		Actor wall = new Wall(100, 100);
 		stage.addActor(bomber);
-
+		stage.addActor(wall);
 	}
 
 	@Override
@@ -52,5 +62,4 @@ public class Bomb implements ApplicationListener {
 	public void dispose () {
 		stage.dispose();
 	}
-
 }

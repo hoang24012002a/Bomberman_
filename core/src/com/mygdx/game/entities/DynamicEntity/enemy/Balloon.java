@@ -27,7 +27,7 @@ public class Balloon extends AnimatedEntity {
         }).start();
     }
 
-    public Balloon(double x, double y) {
+    public Balloon(float x, float y) {
         super(x, y);
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
@@ -37,7 +37,7 @@ public class Balloon extends AnimatedEntity {
             public void run() {
                 while (true) {
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1500);
                         direction = (int) (Math.random() * 4);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -56,6 +56,7 @@ public class Balloon extends AnimatedEntity {
             if (positionX == 0) {
                 positionX = this.getStage().getWidth();
             }
+            setPosition(positionX, positionY);
         } else if (direction == 2) {
             textureAtlas = GameManager.balloonRightDynamic.getKey();
             animation = GameManager.balloonRightDynamic.getValue();
@@ -63,6 +64,7 @@ public class Balloon extends AnimatedEntity {
             if (positionX == this.getStage().getWidth()) {
                 positionX = 0;
             }
+            setPosition(positionX, positionY);
         } else if (direction == 1) {
             textureAtlas = GameManager.balloonRightDynamic.getKey();
             animation = GameManager.balloonRightDynamic.getValue();
@@ -70,6 +72,7 @@ public class Balloon extends AnimatedEntity {
             if (positionY == this.getStage().getHeight()) {
                 positionY = 0;
             }
+            setPosition(positionX, positionY);
         } else if (direction == 3) {
             textureAtlas = GameManager.balloonLeftDynamic.getKey();
             animation = GameManager.balloonLeftDynamic.getValue();
@@ -77,6 +80,7 @@ public class Balloon extends AnimatedEntity {
             if (positionY == 0) {
                 positionY = this.getStage().getHeight();
             }
+            setPosition(positionX, positionY);
         }
     }
 }
