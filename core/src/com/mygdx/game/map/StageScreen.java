@@ -15,6 +15,7 @@ public class StageScreen extends Stage {
     private Group groupNoActnoBang;
     private Group groupNoActs;
     private Group groupActs;
+    //public Portal portal;
     public Bomber bomber;
     public ArrayList<Balloon> balloons = new ArrayList<>();
     //public ArrayList<Oneal> Oneals;
@@ -61,44 +62,49 @@ public class StageScreen extends Stage {
 
         int c, x = 0, y = 0;
         while ((c = inputStreamReader.read()) != -1) {
-            if (Character.toString((char)c).equals("\n")) {
+            if (Character.toString((char) c).equals("\n")) {
                 x = -1;
                 y++;
-            } else if (Character.toString((char)c).equals("#"))  {
+            } else if (Character.toString((char) c).equals("#")) {
                 MyActor myActor = new MyActor(wall);
-                myActor.setPosition(x*32,384-y*32);
-                myActor.setBounds(myActor.getX(), myActor.getY(), wall.getRegionWidth()*2, wall.getRegionHeight()*2);
+                myActor.setPosition(x * 32, 384 - y * 32);
+                myActor.setBounds(myActor.getX(), myActor.getY(), wall.getRegionWidth() * 2, wall.getRegionHeight() * 2);
                 noActNoBangs.add(myActor);
-            } else if (Character.toString((char)c).equals("p")) {
-                bomber = new Bomber(x*32,384-y*32);
-            } else if (Character.toString((char)c).equals("*")) {
+            } else if (Character.toString((char) c).equals("p")) {
+                bomber = new Bomber(x * 32, 384 - y * 32);
+            } else if (Character.toString((char) c).equals("*")) {
                 MyActor myActor = new MyActor(brick);
-                myActor.setPosition(x*32,384-y*32);
-                myActor.setBounds(myActor.getX(), myActor.getY(), brick.getRegionWidth()*2, brick.getRegionHeight()*2);
+                myActor.setPosition(x * 32, 384 - y * 32);
+                myActor.setBounds(myActor.getX(), myActor.getY(), brick.getRegionWidth() * 2, brick.getRegionHeight() * 2);
                 noActs.add(myActor);
-            } else if (Character.toString((char)c).equals("f")) {
+            } else if (Character.toString((char) c).equals("f")) {
                 MyActor myActor = new MyActor(flame);
-                myActor.setPosition(x*32,384-y*32);
-                myActor.setBounds(myActor.getX(), myActor.getY(), flame.getRegionWidth()*2, flame.getRegionHeight()*2);
+                myActor.setPosition(x * 32, 384 - y * 32);
+                myActor.setBounds(myActor.getX(), myActor.getY(), flame.getRegionWidth() * 2, flame.getRegionHeight() * 2);
                 noActs.add(myActor);
-            } else if (Character.toString((char)c).equals("x")) {
+            } else if (Character.toString((char) c).equals("x")) {
                 MyActor myActor = new MyActor(portal);
-                myActor.setPosition(x*32,384-y*32);
-                myActor.setBounds(myActor.getX(), myActor.getY(), portal.getRegionWidth()*2, portal.getRegionHeight()*2);
+                myActor.setPosition(x * 32, 384 - y * 32);
+                myActor.setBounds(myActor.getX(), myActor.getY(), portal.getRegionWidth() * 2, portal.getRegionHeight() * 2);
                 noActNoBangs.add(myActor);
-            } else if (Character.toString((char)c).equals("1")) {
-                Balloon balloon = new Balloon(x*32,384-y*32);
+                MyActor myActor1 = new MyActor(brick);
+                myActor1.setPosition(x * 32, 384 - y * 32);
+                myActor1.setBounds(myActor1.getX(), myActor1.getY(), brick.getRegionWidth() * 2, brick.getRegionHeight() * 2);
+                noActs.add(myActor1);
+            } else if (Character.toString((char) c).equals("1")) {
+                Balloon balloon = new Balloon(x * 32, 384 - y * 32);
                 balloons.add(balloon);
-            } else if (Character.toString((char)c).equals("2")) {
+            } else if (Character.toString((char) c).equals("2")) {
                 MyActor myActor = new MyActor(oneal);
-                myActor.setPosition(x*32,384-y*32);
-                myActor.setBounds(myActor.getX(), myActor.getY(), oneal.getRegionWidth()*2, oneal.getRegionHeight()*2);
+                myActor.setPosition(x * 32, 384 - y * 32);
+                myActor.setBounds(myActor.getX(), myActor.getY(), oneal.getRegionWidth() * 2, oneal.getRegionHeight() * 2);
                 acts.add(myActor);
             }
-            if (Character.toString((char)c).equals(" ") || !Character.toString((char)c).equals("#")) {
+            if (Character.toString((char) c).equals(" ") || (!Character.toString((char) c).equals("#")
+                    && !Character.toString((char) c).equals("x"))) {
                 MyActor myActor = new MyActor(grass);
-                myActor.setPosition(x*32,384-y*32);
-                myActor.setBounds(myActor.getX(), myActor.getY(), grass.getRegionWidth()*2, grass.getRegionHeight()*2);
+                myActor.setPosition(x * 32, 384 - y * 32);
+                myActor.setBounds(myActor.getX(), myActor.getY(), grass.getRegionWidth() * 2, grass.getRegionHeight() * 2);
                 noActNoBangs.add(myActor);
             }
             x++;
@@ -108,42 +114,44 @@ public class StageScreen extends Stage {
         xxx.setBounds(xxx.getX(), xxx.getY(), brick.getRegionWidth()*3, brick.getRegionHeight()*3);*/
     }
 
-    public void remove(int x, int y) {
-        for (int i = 0; i < noActs.size(); i++) {
-            if(x>=noActs.get(i).getX() && x<noActs.get(i).getX()+48) {
-                if(y>=noActs.get(i).getY() && y<noActs.get(i).getY()+48) {
-                    groupNoActs.removeActor(noActs.get(i));
-                    noActs.remove(noActs.get(i));
+        public void remove ( int x, int y){
+            for (int i = 0; i < noActs.size(); i++) {
+                if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + 32) {
+                    if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + 32) {
+                        groupNoActs.removeActor(noActs.get(i));
+                        noActs.remove(noActs.get(i));
+                    }
                 }
+
             }
 
         }
 
+        public MyActor getAt ( int x, int y){
+            for (int i = 0; i < acts.size(); i++) {
+                if (x >= acts.get(i).getX() && x < acts.get(i).getX() + 32) {
+                    if (y >= acts.get(i).getY() && y < acts.get(i).getY() + 32) {
+                        return acts.get(i);
+                    }
+                }
+            }
+            for (int i = 0; i < noActs.size(); i++) {
+                if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + 32) {
+                    if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + 32) {
+                        return noActs.get(i);
+                    }
+                }
+            }
+            for (int i = 0; i < noActNoBangs.size(); i++) {
+                if (x >= noActNoBangs.get(i).getX() && x < noActNoBangs.get(i).getX() + 32) {
+                    if (y >= noActNoBangs.get(i).getY() && y < noActNoBangs.get(i).getY() + 32) {
+                        return noActNoBangs.get(i);
+                    }
+                }
+            }
+            return null;
     }
 
-    public MyActor getAt(int x, int y) {
-        for (int i = 0; i < acts.size() ; i++) {
-            if(x>=acts.get(i).getX() && x<acts.get(i).getX()+48) {
-                if(y>=acts.get(i).getY() && y<acts.get(i).getY()+48) {
-                    return acts.get(i);
-                }
-            }
-        }
-        for (int i = 0; i < noActs.size() ; i++) {
-            if(x>=noActs.get(i).getX() && x<noActs.get(i).getX()+48) {
-                if(y>=noActs.get(i).getY() && y<noActs.get(i).getY()+48) {
-                    return noActs.get(i);
-                }
-            }
-        }
-        for (int i = 0; i < noActNoBangs.size() ; i++) {
-            if(x>=noActNoBangs.get(i).getX() && x<noActNoBangs.get(i).getX()+48) {
-                if(y>=noActNoBangs.get(i).getY() && y<noActNoBangs.get(i).getY()+48) {
-                    return noActNoBangs.get(i);
-                }
-            }
-        }
-        return null;
-    }
+
 
 }
