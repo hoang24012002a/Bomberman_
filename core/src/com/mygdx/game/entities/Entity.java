@@ -41,8 +41,6 @@ public abstract class Entity extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.setPosition(positionX, positionY);
         batch.draw(texture, positionX, positionY);
     }

@@ -33,7 +33,11 @@ public class BombGame implements ApplicationListener {
 		Actor grass = new Grass(50, 50);
 		Actor wall = new Wall(100, 100);
 		stage.addActor(bomber);
-		stage.addActor(wall);
+        stage.addActor(balloon);
+		stage.addActor(balloon1);
+//		stage.addActor(brick);
+//		stage.addActor(grass);
+//		stage.addActor(wall);
 	}
 
 	@Override
@@ -43,6 +47,7 @@ public class BombGame implements ApplicationListener {
 
 	@Override
 	public void render () {
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();

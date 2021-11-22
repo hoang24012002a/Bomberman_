@@ -12,7 +12,7 @@ public class GameManager {
      */
     private static final TextureAtlas playerDead = new TextureAtlas(Gdx.files.internal("img/player/dead/dead.atlas"));
     public static final Pair<TextureAtlas, Animation> playerDeadDynamic = new Pair<TextureAtlas, Animation>(playerDead,
-            new Animation(1/1.5f, playerDead.getRegions()));
+            new Animation(1/1.0f, playerDead.getRegions()));
 
     private static final TextureAtlas playerUp = new TextureAtlas(Gdx.files.internal("img/player/up/up.atlas"));
     public static final Pair<TextureAtlas, Animation> playerUpDynamic = new Pair<TextureAtlas, Animation>(playerUp,
@@ -42,6 +42,10 @@ public class GameManager {
      * enemy.
      */
     //balloon.
+    private static final TextureAtlas balloonDead = new TextureAtlas(Gdx.files.internal("img/enemy/balloon/dead/dead.atlas"));
+    public static final Pair<TextureAtlas, Animation> balloonDeadDynamic = new Pair<TextureAtlas, Animation>(balloonDead,
+            new Animation(1/1.25f, balloonDead.getRegions()));
+
     private static final TextureAtlas balloonLeft = new TextureAtlas(Gdx.files.internal("img/enemy/balloon/left/left.atlas"));
     public static final Pair<TextureAtlas, Animation> balloonLeftDynamic = new Pair<TextureAtlas, Animation>(balloonLeft,
             new Animation(1/6.f, balloonLeft.getRegions()));
@@ -49,6 +53,58 @@ public class GameManager {
     private static final TextureAtlas balloonRight = new TextureAtlas(Gdx.files.internal("img/enemy/balloon/right/right.atlas"));
     public static final Pair<TextureAtlas, Animation> balloonRightDynamic = new Pair<TextureAtlas, Animation>(balloonRight,
             new Animation(1/6.f, balloonRight.getRegions()));
+
+    //doll.
+    private static final TextureAtlas dollDead = new TextureAtlas(Gdx.files.internal("img/enemy/doll/dead/dead.atlas"));
+    public static final Pair<TextureAtlas, Animation> dollDeadDynamic = new Pair<TextureAtlas, Animation>(dollDead,
+            new Animation(1/1.25f, dollDead.getRegions()));
+
+    private static final TextureAtlas dollLeft = new TextureAtlas(Gdx.files.internal("img/enemy/doll/left/left.atlas"));
+    public static final Pair<TextureAtlas, Animation> dollLeftDynamic = new Pair<TextureAtlas, Animation>(dollLeft,
+            new Animation(1/6.f, dollLeft.getRegions()));
+
+    private static final TextureAtlas dollRight = new TextureAtlas(Gdx.files.internal("img/enemy/doll/right/right.atlas"));
+    public static final Pair<TextureAtlas, Animation> dollRightDynamic = new Pair<TextureAtlas, Animation>(dollRight,
+            new Animation(1/6.f, balloonRight.getRegions()));
+
+    //kondoria.
+    private static final TextureAtlas kondoriaDead = new TextureAtlas(Gdx.files.internal("img/enemy/kondoria/dead/dead.atlas"));
+    public static final Pair<TextureAtlas, Animation> kondoriaDeadDynamic = new Pair<TextureAtlas, Animation>(kondoriaDead,
+            new Animation(1/1.25f, kondoriaDead.getRegions()));
+
+    private static final TextureAtlas kondoriaLeft = new TextureAtlas(Gdx.files.internal("img/enemy/kondoria/left/left.atlas"));
+    public static final Pair<TextureAtlas, Animation> kondoriaLeftDynamic = new Pair<TextureAtlas, Animation>(kondoriaLeft,
+            new Animation(1/6.f, kondoriaLeft.getRegions()));
+
+    private static final TextureAtlas kondoriaRight = new TextureAtlas(Gdx.files.internal("img/enemy/kondoria/right/right.atlas"));
+    public static final Pair<TextureAtlas, Animation> kondoriaRightDynamic = new Pair<TextureAtlas, Animation>(kondoriaRight,
+            new Animation(1/6.f, kondoriaRight.getRegions()));
+
+    //minvo.
+    private static final TextureAtlas minvoDead = new TextureAtlas(Gdx.files.internal("img/enemy/minvo/dead/dead.atlas"));
+    public static final Pair<TextureAtlas, Animation> minvoDeadDynamic = new Pair<TextureAtlas, Animation>(minvoDead,
+            new Animation(1/1.25f, minvoDead.getRegions()));
+
+    private static final TextureAtlas minvoLeft = new TextureAtlas(Gdx.files.internal("img/enemy/minvo/left/left.atlas"));
+    public static final Pair<TextureAtlas, Animation> minvoLeftDynamic = new Pair<TextureAtlas, Animation>(minvoLeft,
+            new Animation(1/6.f, minvoLeft.getRegions()));
+
+    private static final TextureAtlas minvoRight = new TextureAtlas(Gdx.files.internal("img/enemy/minvo/right/right.atlas"));
+    public static final Pair<TextureAtlas, Animation> minvoRightDynamic = new Pair<TextureAtlas, Animation>(minvoRight,
+            new Animation(1/6.f, minvoRight.getRegions()));
+
+    //oneal.
+    private static final TextureAtlas onealDead = new TextureAtlas(Gdx.files.internal("img/enemy/oneal/dead/dead.atlas"));
+    public static final Pair<TextureAtlas, Animation> onealDeadDynamic = new Pair<TextureAtlas, Animation>(onealDead,
+            new Animation(1/1.25f, onealDead.getRegions()));
+
+    private static final TextureAtlas onealLeft = new TextureAtlas(Gdx.files.internal("img/enemy/oneal/left/left.atlas"));
+    public static final Pair<TextureAtlas, Animation> onealLeftDynamic = new Pair<TextureAtlas, Animation>(onealLeft,
+            new Animation(1/6.f, onealLeft.getRegions()));
+
+    private static final TextureAtlas onealRight = new TextureAtlas(Gdx.files.internal("img/enemy/oneal/right/right.atlas"));
+    public static final Pair<TextureAtlas, Animation> onealRightDynamic = new Pair<TextureAtlas, Animation>(onealRight,
+            new Animation(1/6.f, onealRight.getRegions()));
 
     /**
      *tile.
@@ -60,7 +116,7 @@ public class GameManager {
     //brick
     public static final  Texture brick = new Texture(Gdx.files.internal("brick/brick.png"));
     private static final TextureAtlas brickExploded = new TextureAtlas(Gdx.files.internal("brick/brickexploded.atlas"));
-    public static final Pair<TextureAtlas, Animation> brickExp = new Pair<>(brickExploded, new Animation(1/3.f, brickExploded.getRegions().get(0)));
+    public static final Pair<TextureAtlas, Animation> brickExp = new Pair<TextureAtlas, Animation>(brickExploded, new Animation(1/3.f, brickExploded.getRegions().get(0)));
 
     //grass
     public static final Texture grass = new Texture(Gdx.files.internal("grass/grass.png"));
@@ -82,11 +138,11 @@ public class GameManager {
      */
     // bombFlick
     private static final TextureAtlas bombFLick = new TextureAtlas(Gdx.files.internal("bomb/bombflick/bomb.atlas"));
-    public static final Pair<TextureAtlas, Animation> bombFlicker = new Pair<>(bombFLick, new Animation(1/3.f, bombFLick.getRegions()));
+    public static final Pair<TextureAtlas, Animation> bombFlicker = new Pair<TextureAtlas, Animation>(bombFLick, new Animation(1/3.f, bombFLick.getRegions()));
 
     // bombExplode
     private static final TextureAtlas bombExploded = new TextureAtlas(Gdx.files.internal("bomb/bombexploded/bombexp.atlas"));
-    public static final Pair<TextureAtlas, Animation> bombExp= new Pair<>(bombExploded, new Animation(1/3.f, bombExploded.getRegions()));
+    public static final Pair<TextureAtlas, Animation> bombExp= new Pair<TextureAtlas, Animation>(bombExploded, new Animation(1/3.f, bombExploded.getRegions()));
 
     //flame1
     public static final TextureAtlas flameEpxloded1 = new TextureAtlas(Gdx.files.internal("flame/flame1/flame1.atlas"));

@@ -1,9 +1,9 @@
 package com.mygdx.game.entities.DynamicEntity.enemy;
 
-import com.mygdx.game.entities.AnimatedEntity;
+import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_random;
 import com.mygdx.game.gamesys.GameManager;
 
-public class Balloon extends AnimatedEntity {
+public class Balloon extends Enemy {
 
     private int direction = 0;
 
@@ -15,13 +15,13 @@ public class Balloon extends AnimatedEntity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    try {
+                try {
+                    while (true) {
                         Thread.sleep(1500);
-                        direction = (int) (Math.random() * 4);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        direction = calculateDir();
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
@@ -35,13 +35,13 @@ public class Balloon extends AnimatedEntity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    try {
+                try {
+                    while (true) {
                         Thread.sleep(1500);
-                        direction = (int) (Math.random() * 4);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        direction = calculateDir();
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
@@ -49,38 +49,84 @@ public class Balloon extends AnimatedEntity {
 
     @Override
     public void act(float delta) {
-        if (direction == 0) {
-            textureAtlas = GameManager.balloonLeftDynamic.getKey();
-            animation = GameManager.balloonLeftDynamic.getValue();
-            positionX -= 0.5;
-            if (positionX == 0) {
-                positionX = this.getStage().getWidth();
-            }
-            setPosition(positionX, positionY);
-        } else if (direction == 2) {
-            textureAtlas = GameManager.balloonRightDynamic.getKey();
-            animation = GameManager.balloonRightDynamic.getValue();
-            positionX += 0.5;
-            if (positionX == this.getStage().getWidth()) {
-                positionX = 0;
-            }
-            setPosition(positionX, positionY);
-        } else if (direction == 1) {
-            textureAtlas = GameManager.balloonRightDynamic.getKey();
-            animation = GameManager.balloonRightDynamic.getValue();
-            positionY += 0.5;
-            if (positionY == this.getStage().getHeight()) {
-                positionY = 0;
-            }
-            setPosition(positionX, positionY);
-        } else if (direction == 3) {
-            textureAtlas = GameManager.balloonLeftDynamic.getKey();
-            animation = GameManager.balloonLeftDynamic.getValue();
-            positionY -= 0.5;
-            if (positionY == 0) {
-                positionY = this.getStage().getHeight();
-            }
-            setPosition(positionX, positionY);
+        killed();
+        if (!isAlive()) {
+            final Balloon _this = this;
+            textureAtlas = GameManager.balloonDeadDynamic.getKey();
+            animation = GameManager.balloonDeadDynamic.getValue();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1500);
+                        getStage().getActors().removeValue(_this, true);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            return;
         }
+        if (direction == 0) {
+            moveLeft();
+        } else if (direction == 2) {
+            moveRight();
+        } else if (direction == 1) {
+            moveTop();
+        } else if (direction == 3) {
+            moveBottom();
+        }
+    }
+
+    @Override
+    protected void killed() {
+        if (positionX == 150) {
+            alive = false;
+        }
+    }
+
+    @Override
+    protected void moveRight() {
+        textureAtlas = GameManager.balloonRightDynamic.getKey();
+        animation = GameManager.balloonRightDynamic.getValue();
+        positionX += 0.5;
+        if (positionX == this.getStage().getWidth()) {
+            positionX = 0;
+        }
+    }
+
+    @Override
+    protected void moveLeft() {
+        textureAtlas = GameManager.balloonLeftDynamic.getKey();
+        animation = GameManager.balloonLeftDynamic.getValue();
+        positionX -= 0.5;
+        if (positionX == 0) {
+            positionX = this.getStage().getWidth();
+        }
+    }
+
+    @Override
+    protected void moveTop() {
+        textureAtlas = GameManager.balloonRightDynamic.getKey();
+        animation = GameManager.balloonRightDynamic.getValue();
+        positionY += 0.5;
+        if (positionY == this.getStage().getHeight()) {
+            positionY = 0;
+        }
+    }
+
+    @Override
+    protected void moveBottom() {
+        textureAtlas = GameManager.balloonLeftDynamic.getKey();
+        animation = GameManager.balloonLeftDynamic.getValue();
+        positionY -= 0.5;
+        if (positionY == 0) {
+            positionY = this.getStage().getHeight();
+        }
+    }
+
+    @Override
+    protected int calculateDir() {
+        return AI_random.random();
     }
 }

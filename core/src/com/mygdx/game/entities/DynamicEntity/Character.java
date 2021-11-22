@@ -15,6 +15,11 @@ public abstract class Character extends AnimatedEntity {
         super(x, y);
         speed = 1;
     }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
     protected boolean canMoveRight() {
         return true;
     }
@@ -33,7 +38,11 @@ public abstract class Character extends AnimatedEntity {
 
     protected abstract void killed();
 
-    public boolean isAlive() {
-        return alive;
-    }
+    protected abstract void moveRight();
+
+    protected abstract void moveLeft();
+
+    protected abstract void moveTop();
+
+    protected abstract void moveBottom();
 }

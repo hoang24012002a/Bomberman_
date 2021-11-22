@@ -29,42 +29,32 @@ public class Bomber extends Character {
         if (!isAlive()) {
             textureAtlas = GameManager.playerDeadDynamic.getKey();
             animation = GameManager.playerDeadDynamic.getValue();
+            final Bomber _this = this;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                        getStage().getActors().removeValue(_this, true);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
             return;
         }
-        // right.
+
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            textureAtlas = GameManager.playerRightDynamic.getKey();
-            animation = GameManager.playerRightDynamic.getValue();
-            if (canMoveRight()) {
-                positionX += speed;
-            }
-            code = Input.Keys.D;
+            moveRight();
             return;
-            // left
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            textureAtlas = GameManager.playerLeftDynamic.getKey();
-            animation = GameManager.playerLeftDynamic.getValue();
-            if (canMoveLeft()) {
-                positionX -= speed;
-            }
-            code = Input.Keys.A;
+            moveLeft();
             return;
-            //bottom.
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            textureAtlas = GameManager.playerDownDynamic.getKey();
-            animation = GameManager.playerDownDynamic.getValue();
-            if (canMoveBottom()) {
-                positionY -= speed;
-            }
-            code = Input.Keys.S;
+            moveBottom();
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            textureAtlas = GameManager.playerUpDynamic.getKey();
-            animation = GameManager.playerUpDynamic.getValue();
-            if (canMoveTop()) {
-                positionY += speed;
-            }
-            code = Input.Keys.W;
+            moveTop();
             return;
         }
         switch (code) {
@@ -92,5 +82,45 @@ public class Bomber extends Character {
             alive = false;
             return;
         }
+    }
+
+    @Override
+    protected void moveRight() {
+        textureAtlas = GameManager.playerRightDynamic.getKey();
+        animation = GameManager.playerRightDynamic.getValue();
+        if (canMoveRight()) {
+            positionX += speed;
+        }
+        code = Input.Keys.D;
+    }
+
+    @Override
+    protected void moveLeft() {
+        textureAtlas = GameManager.playerLeftDynamic.getKey();
+        animation = GameManager.playerLeftDynamic.getValue();
+        if (canMoveLeft()) {
+            positionX -= speed;
+        }
+        code = Input.Keys.A;
+    }
+
+    @Override
+    protected void moveTop() {
+        textureAtlas = GameManager.playerUpDynamic.getKey();
+        animation = GameManager.playerUpDynamic.getValue();
+        if (canMoveTop()) {
+            positionY += speed;
+        }
+        code = Input.Keys.W;
+    }
+
+    @Override
+    protected void moveBottom() {
+        textureAtlas = GameManager.playerDownDynamic.getKey();
+        animation = GameManager.playerDownDynamic.getValue();
+        if (canMoveBottom()) {
+            positionY -= speed;
+        }
+        code = Input.Keys.S;
     }
 }
