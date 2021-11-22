@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class StageScreen extends Stage {
-    private final static String FILE = "Lv1.txt";
+    private final static String FILE ="core\\assets\\level\\Lv3.txt";
     private Group groupNoActnoBang;
     private Group groupNoActs;
     private Group groupActs;
@@ -47,14 +47,14 @@ public class StageScreen extends Stage {
         addActor(groupActs);
     }
     public void insertFromFile() throws IOException {
-        TextureRegion wall = new TextureRegion(new Texture("wall.png"));
-        TextureRegion brick = new TextureRegion(new Texture("brick.png"));
+        TextureRegion wall = new TextureRegion(new Texture("wall/wall.png"));
+        TextureRegion brick = new TextureRegion(new Texture("brick/brick.png"));
         //TextureRegion bomber = new TextureRegion(new Texture("player_down.png"));
-        TextureRegion portal = new TextureRegion(new Texture("portal.png"));
-        TextureRegion oneal = new TextureRegion(new Texture("oneal_left1.png"));
-        TextureRegion balloom = new TextureRegion(new Texture("balloom_right1.png"));
-        TextureRegion flame = new TextureRegion(new Texture("powerup_flames.png"));
-        TextureRegion grass = new TextureRegion(new Texture("grass.png"));
+        TextureRegion portal = new TextureRegion(new Texture("item/portal.png"));
+        //TextureRegion oneal = new TextureRegion(new Texture("oneal_left1.png"));
+        //TextureRegion balloom = new TextureRegion(new Texture("balloom_right1.png"));
+        TextureRegion flame = new TextureRegion(new Texture("item/powerup_flames.png"));
+        TextureRegion grass = new TextureRegion(new Texture("grass/grass.png"));
 
         File file = new File(FILE);
         InputStream inputStream = new FileInputStream(file);
@@ -70,6 +70,11 @@ public class StageScreen extends Stage {
                 myActor.setPosition(x * 32, 384 - y * 32);
                 myActor.setBounds(myActor.getX(), myActor.getY(), wall.getRegionWidth() * 2, wall.getRegionHeight() * 2);
                 noActNoBangs.add(myActor);
+                /*Wall wall1 = new Wall(x * 32, 384 - y * 32);
+                //myActor.setPosition(x * 32, 384 - y * 32);
+                //myActor.setBounds(myActor.getX(), myActor.getY(), wall.getRegionWidth() * 2, wall.getRegionHeight() * 2);
+                groupNoActnoBang.addActor(wall1);
+                 */
             } else if (Character.toString((char) c).equals("p")) {
                 bomber = new Bomber(x * 32, 384 - y * 32);
             } else if (Character.toString((char) c).equals("*")) {
@@ -95,10 +100,10 @@ public class StageScreen extends Stage {
                 Balloon balloon = new Balloon(x * 32, 384 - y * 32);
                 balloons.add(balloon);
             } else if (Character.toString((char) c).equals("2")) {
-                MyActor myActor = new MyActor(oneal);
+                /*MyActor myActor = new MyActor(oneal);
                 myActor.setPosition(x * 32, 384 - y * 32);
                 myActor.setBounds(myActor.getX(), myActor.getY(), oneal.getRegionWidth() * 2, oneal.getRegionHeight() * 2);
-                acts.add(myActor);
+                acts.add(myActor);*/
             }
             if (Character.toString((char) c).equals(" ") || (!Character.toString((char) c).equals("#")
                     && !Character.toString((char) c).equals("x"))) {
@@ -114,19 +119,31 @@ public class StageScreen extends Stage {
         xxx.setBounds(xxx.getX(), xxx.getY(), brick.getRegionWidth()*3, brick.getRegionHeight()*3);*/
     }
 
-        public void remove ( int x, int y){
+    /**
+     *  Hàm remove dùng để xóa Actor
+     * @param myActor .
+     */
+    public void remove (MyActor myActor){
             for (int i = 0; i < noActs.size(); i++) {
-                if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + 32) {
-                    if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + 32) {
-                        groupNoActs.removeActor(noActs.get(i));
-                        noActs.remove(noActs.get(i));
-                    }
+                if (noActs.get(i) == myActor) {
+                    groupNoActs.removeActor(noActs.get(i));
+                    noActs.remove(noActs.get(i));
                 }
-
             }
-
+            for (int i = 0; i < acts.size(); i++) {
+                if (acts.get(i) == myActor) {
+                    groupActs.removeActor(acts.get(i));
+                    acts.remove(acts.get(i));
+                }
+            }
         }
 
+    /**
+     * Hàm getAt trả về Actor đang ở vị trí đầu vào.
+     * @param x
+     * @param y
+     * @return
+     */
         public MyActor getAt ( int x, int y){
             for (int i = 0; i < acts.size(); i++) {
                 if (x >= acts.get(i).getX() && x < acts.get(i).getX() + 32) {
