@@ -2,7 +2,7 @@ package com.mygdx.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.game.Bomb;
+import com.mygdx.game.BombGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -11,6 +11,6 @@ public class DesktopLauncher {
 		config.y = 100;
 		config.height = 416;
 		config.width = 992;
-		new LwjglApplication(new Bomb(), config);
+		new LwjglApplication(new BombGame(), config);
 	}
 }
