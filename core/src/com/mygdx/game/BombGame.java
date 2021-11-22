@@ -5,13 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
-import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
-import com.mygdx.game.entities.StaticEntity.Item.SpeedItem;
-import com.mygdx.game.entities.StaticEntity.Tile.Brick;
-import com.mygdx.game.entities.StaticEntity.Tile.Grass;
-import com.mygdx.game.entities.StaticEntity.Tile.Wall;
 
 
 public class BombGame implements ApplicationListener {
@@ -22,22 +16,33 @@ public class BombGame implements ApplicationListener {
 	public void create () {
 		stage = new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
-
-		Bomber bomber = new Bomber(0, 0);
-		Wall wall = new Wall(30,30);
-		Brick brick = new Brick(60, 60);
-		Grass grass = new Grass(100, 100);
-		SpeedItem speedItem = new SpeedItem(brick); // checked
+		Group group = new Group();
+//		Bomber bomber = new Bomber(0, 0);
+//		Wall wall = new Wall(30,30);
+//		Brick brick = new Brick(60, 60);
+//		Grass grass = new Grass(100, 100);
+//		SpeedItem speedItem = new SpeedItem(brick); // checked
 		Bomb bomb = new Bomb(40, 40); // checked
-		Flame flame = new Flame(50, 50);
+
+//		flame.update();
+		group.addActor(bomb);
+//		group.addActor(flame);
+//		group.addActor(flameHorizontal);
 //		stage.addActor(bomber);
 //		stage.addActor(wall);
 //		stage.addActor(speedItem);
 //		stage.addActor(brick);
 //		stage.addActor(grass);
-//		stage.addActor(bomb);
-		stage.addActor(flame);
+		stage.addActor(group);
+//		stage.addActor(flame);
 		// tại sao chỉ có 2 actor đc lên stage???
+
+//		Bomber bomber = new Bomber(0, 0);
+//		Balloon balloon = new Balloon(100, 200);
+//		Bomber bomber1 = new Bomber(50, 50);
+//		stage.addActor(balloon);
+//		stage.addActor(bomber);
+//		stage.addActor(bomber1);
 	}
 
 	@Override

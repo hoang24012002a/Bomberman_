@@ -20,6 +20,7 @@ public abstract class AnimatedEntity extends Entity {
     public AnimatedEntity(float x, float y) {
         super(x, y);
     }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -27,5 +28,15 @@ public abstract class AnimatedEntity extends Entity {
         elapsedTime += Gdx.graphics.getDeltaTime();
         batch.draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),(float) positionX, (float) positionY);
     }
+
+    @Override
+    public void render(){
+        batch.begin();
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        batch.draw((TextureRegion) animation.getKeyFrame(elapsedTime, true), positionX, positionY);
+        batch.end();
+    }
+
+    public abstract void dispose();
 
 }
