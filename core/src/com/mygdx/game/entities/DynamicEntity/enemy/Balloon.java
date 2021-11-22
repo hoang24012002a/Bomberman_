@@ -27,7 +27,7 @@ public class Balloon extends AnimatedEntity {
         }).start();
     }
 
-    public Balloon(double x, double y) {
+    public Balloon(float x, float y) {
         super(x, y);
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
@@ -78,5 +78,11 @@ public class Balloon extends AnimatedEntity {
                 positionY = this.getStage().getHeight();
             }
         }
+    }
+
+    @Override
+    public void dispose(){
+        this.texture.dispose();
+        this.textureAtlas.dispose();
     }
 }

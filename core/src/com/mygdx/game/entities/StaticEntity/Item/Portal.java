@@ -2,24 +2,21 @@ package com.mygdx.game.entities.StaticEntity.Item;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
-import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.gamesys.GameManager;
 
-public class BombItem extends Item {
-
-
-    public BombItem(Brick brick){
+public class Portal extends Item {
+    public Portal(Brick brick){
         super(brick);
     }
 
     @Override
     public void eatItem(Bomber bomber){
-        if(canBreakable==true && positionX == bomber.getPositionX() && positionY == bomber.getPositionY()){
+        if(positionX == bomber.getPositionX() && positionY == bomber.getPositionY()){
             this.broken = true;
-            this.texture.dispose();
-        }else
-        {
+//            cần 1 biến bool all enemy die để eatPortal
+//
+        }else{
             this.broken = false;
         }
     }
@@ -27,15 +24,15 @@ public class BombItem extends Item {
     @Override
     public void showItem(Brick brickBroken){
         if(brickBroken.isBrokenDown()){
-            this.texture = GameManager.bombItem;
-        }else{
+            this.texture = GameManager.portalItem;
+        }else {
             return;
         }
     }
 
     @Override
     public void draw(Batch batch, float parentDelta){
-        batch.draw(GameManager.bombItem, positionX, positionY);
+        batch.draw(GameManager.portalItem, positionX, positionY);
     }
 
     @Override

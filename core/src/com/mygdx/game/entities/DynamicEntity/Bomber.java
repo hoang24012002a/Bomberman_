@@ -16,7 +16,7 @@ public class Bomber extends AnimatedEntity {
         setZIndex(2);
     }
 
-    public Bomber(double x, double y) {
+    public Bomber(float x, float y) {
         super(x, y);
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
@@ -70,5 +70,9 @@ public class Bomber extends AnimatedEntity {
         }
     }
 
-
+    @Override
+    public void dispose(){
+        this.texture.dispose();
+        this.textureAtlas.dispose();
+    }
 }

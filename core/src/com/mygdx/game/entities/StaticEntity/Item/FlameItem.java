@@ -2,24 +2,28 @@ package com.mygdx.game.entities.StaticEntity.Item;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
-import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.gamesys.GameManager;
 
-public class BombItem extends Item {
+public class FlameItem extends Item {
 
+    protected int numberOfFlameItem;
 
-    public BombItem(Brick brick){
+    public FlameItem(Brick brick){
         super(brick);
+        this.numberOfFlameItem = 0;
+    }
+
+    public int getNumberOfFlameItem() {
+        return numberOfFlameItem;
     }
 
     @Override
     public void eatItem(Bomber bomber){
-        if(canBreakable==true && positionX == bomber.getPositionX() && positionY == bomber.getPositionY()){
+        if(canBreakable == true && positionX == bomber.getPositionX() && positionY == bomber.getPositionY()){
             this.broken = true;
             this.texture.dispose();
-        }else
-        {
+        }else{
             this.broken = false;
         }
     }
@@ -27,15 +31,13 @@ public class BombItem extends Item {
     @Override
     public void showItem(Brick brickBroken){
         if(brickBroken.isBrokenDown()){
-            this.texture = GameManager.bombItem;
-        }else{
-            return;
+            this.texture = GameManager.flameItem;
         }
     }
 
     @Override
     public void draw(Batch batch, float parentDelta){
-        batch.draw(GameManager.bombItem, positionX, positionY);
+        batch.draw(GameManager.flameItem, positionX, positionY);
     }
 
     @Override
@@ -44,5 +46,6 @@ public class BombItem extends Item {
     @Override
     public void dispose(){
         this.texture.dispose();
+        this.numberOfFlameItem = 0;
     }
 }

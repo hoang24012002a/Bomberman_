@@ -1,20 +1,31 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class Entity extends Actor {
-    protected double positionX = 0;
-    protected double positionY = 0;
-    protected TextureRegion texture;
+    protected float positionX = 0;
+    protected float positionY = 0;
+    protected Texture texture;
 
-    protected void setPositionX(double x) {
+    protected void setPositionX(float x) {
         this.positionX = x;
     }
 
-    protected void setPositionY(double y) {
+    protected void setPositionY(float y) {
         this.positionY = y;
+    }
+
+    public float getPositionX() {
+        return positionX;
+    }
+
+    public float getPositionY() {
+        return positionY;
     }
 
     public Entity() {
@@ -22,15 +33,18 @@ public abstract class Entity extends Actor {
         this.positionY = 0;
     }
 
-    public Entity(double x, double y) {
+    public Entity(float x, float y) {
         setPositionX(x);
         setPositionY(y);
     }
 
     @Override
-    public void draw(Batch batch, float alpha) {
-        //Gdx.gl.glClearColor(1, 1, 1, 1);
+    public void draw(Batch batch, float parentAlpha) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.draw(texture, (float) positionX, (float) positionY);
     }
+
+    public abstract void render();
+
 }
