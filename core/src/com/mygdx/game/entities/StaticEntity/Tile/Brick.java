@@ -18,6 +18,14 @@ public class Brick extends StaticEntities {
         this.brokenDown=false;
     }
 
+    public float getX(){
+        return getPositionX();
+    }
+
+    public float getY(){
+        return getPositionY();
+    }
+
     public boolean isDestroy(){
         return true;
     }

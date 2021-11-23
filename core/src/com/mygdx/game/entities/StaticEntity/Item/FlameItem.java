@@ -6,7 +6,6 @@ import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.gamesys.GameManager;
 
 public class FlameItem extends Item {
-
     protected int numberOfFlameItem;
 
     public FlameItem(Brick brick){

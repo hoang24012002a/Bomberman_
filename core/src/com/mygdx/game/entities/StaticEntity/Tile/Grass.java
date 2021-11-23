@@ -11,6 +11,14 @@ public class Grass extends StaticEntities {
         texture= GameManager.grass;
     }
 
+    public float getX(){
+        return getPositionX();
+    }
+
+    public float getY(){
+        return getPositionY();
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(GameManager.grass, positionX, positionY);
