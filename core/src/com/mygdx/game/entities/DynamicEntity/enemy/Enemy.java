@@ -3,9 +3,7 @@ package com.mygdx.game.entities.DynamicEntity.enemy;
 import com.mygdx.game.entities.DynamicEntity.Character;
 
 public abstract class Enemy extends Character {
-    public Enemy() {
-        super();
-    }
+    protected int direction = 0;
 
     public Enemy(float x, float y) {
         super(x, y);
@@ -13,7 +11,9 @@ public abstract class Enemy extends Character {
 
     @Override
     protected void killed() {
-
+        if (positionX == 150) {
+            alive = false;
+        }
     }
 
     protected abstract int calculateDir();

@@ -5,7 +5,7 @@ import com.mygdx.game.gamesys.GameManager;
 
 public class Flame extends AnimatedEntity {
     public Flame(float x, float y){
-        super();
+        super(x, y);
         this.animation= GameManager.flameHorLeftLast;
     }
     // đang tìm cách để tạo hình cho flame

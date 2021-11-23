@@ -1,7 +1,6 @@
 package com.mygdx.game.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.*;
 
 /**
@@ -11,10 +10,6 @@ public abstract class AnimatedEntity extends Entity {
     protected TextureAtlas textureAtlas;
     protected Animation animation;
     protected float elapsedTime = 0;
-
-    public AnimatedEntity() {
-        super();
-    }
 
     public AnimatedEntity(float x, float y) {
         super(x, y);

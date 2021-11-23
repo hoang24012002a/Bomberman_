@@ -6,11 +6,6 @@ public abstract class Character extends AnimatedEntity {
     protected float speed;
     protected boolean alive = true;
 
-    protected Character() {
-        super();
-        speed = 1;
-    }
-
     protected Character(float x, float y) {
         super(x, y);
         speed = 1;

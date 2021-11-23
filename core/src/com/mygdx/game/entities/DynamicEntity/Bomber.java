@@ -7,14 +7,6 @@ import com.mygdx.game.gamesys.GameManager;
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
 
-    public Bomber() {
-        super();
-        textureAtlas = GameManager.playerDownStatic.getKey();
-        animation = GameManager.playerDownStatic.getValue();
-        code = Input.Keys.S;
-        speed = 1;
-    }
-
     public Bomber(float x, float y) {
         super(x, y);
         textureAtlas = GameManager.playerDownStatic.getKey();

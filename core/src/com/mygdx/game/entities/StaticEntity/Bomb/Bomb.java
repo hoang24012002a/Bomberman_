@@ -20,7 +20,7 @@ public class Bomb extends AnimatedEntity {
     protected final float timeToExplode = 2000; // 2000ms
 
     public Bomb(float x, float y){
-        super();
+        super(x, y);
         textureAtlas = GameManager.bombFlicker.getKey();
         animation = GameManager.bombFlicker.getValue();
         // đang tìm cách để set thời gian nổ
