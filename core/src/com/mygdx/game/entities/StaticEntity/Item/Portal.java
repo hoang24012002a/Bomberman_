@@ -10,6 +10,14 @@ public class Portal extends Item {
         super(brick);
     }
 
+    public float getX(){
+        return getPositionX();
+    }
+
+    public float getY(){
+        return getPositionY();
+    }
+
     @Override
     public void eatItem(Bomber bomber){
         if(positionX == bomber.getPositionX() && positionY == bomber.getPositionY()){
