@@ -3,9 +3,10 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
 import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
@@ -18,17 +19,19 @@ public class BombGame implements ApplicationListener {
 
 	private Stage stage;
 	private StageScreen stageScreen;
-	
+	private SpriteBatch batch;
+	private BitmapFont font;
 	@Override
 	public void create () {
 		stage = new Stage(new ScreenViewport());
-		stageScreen = new StageScreen();
-		Gdx.input.setInputProcessor(stage);
-		Bomber bomber = new Bomber(0, 0);
+        batch = new SpriteBatch();
+		font = new BitmapFont();
+		stageScreen = new StageScreen(2);
+		//Bomber bomber = new Bomber(0, 0);
 		Balloon balloon = new Balloon(200,200);
 		Balloon balloon1 = new Balloon(250,200);
 		Wall wall = new Wall(30,30);
-		Brick brick = new Brick(60, 60);
+		Brick brick = new Brick(0, 0);
 		Grass grass = new Grass(80, 80);
 //		SpeedItem speedItem = new SpeedItem(brick); // checked
 		Bomb bomb = new Bomb(40, 40); // checked
@@ -38,14 +41,16 @@ public class BombGame implements ApplicationListener {
 		//group.addActor(flame);
 //		group.addActor(flameHorizontal);
 //		stage.addActor(bomber);
-		stage.addActor(wall);
+
 //		stage.addActor(speedItem);
-		stage.addActor(brick);
-		stage.addActor(grass);
-		stage.addActor(bomber);
+		//stage.addActor(brick);
+
+		//stage.addActor(bomber);
 		stage.addActor(balloon);
 		stage.addActor(balloon1);
+		stage.addActor(wall);
 		stage.addActor(bomb);
+		stage.addActor(grass);
 		//stage.addActor(group);
 //		stage.addActor(flame);
 		// tại sao chỉ có 2 actor đc lên stage???
@@ -68,7 +73,14 @@ public class BombGame implements ApplicationListener {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stageScreen.draw();
 		stage.act(Gdx.graphics.getDeltaTime());
+		stageScreen.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
+		// 4 dòng dưới đây render chữ lên màn hình để test 1 số thứ chứ k có tác dụng gì
+		batch.begin();
+		font.draw(batch,String.valueOf(stageScreen.rows),100,300);
+		font.draw(batch,String.valueOf(stageScreen.columns),200,300);
+		batch.end();
+
 	}
 
 	@Override
@@ -84,6 +96,6 @@ public class BombGame implements ApplicationListener {
 	@Override
 	public void dispose () {
 		stage.dispose();
-		//stageScreen.dispose();
+		stageScreen.dispose();
 	}
 }
