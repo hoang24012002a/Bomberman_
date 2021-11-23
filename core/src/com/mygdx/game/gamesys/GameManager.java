@@ -60,7 +60,7 @@ public class GameManager extends AssetManager {
 
     // bombFlick
     public static final TextureAtlas bombFLick = new TextureAtlas(Gdx.files.internal("bomb/bombflick/bomb.atlas"));
-    public static final Animation bombFlicker = new Animation(1/3.f, bombFLick.getRegions().get(0));
+    public static final Animation bombFlicker = new Animation(1/3.f, bombFLick.getRegions());
 
     // bombExplode
     private static final TextureAtlas bombExploded = new TextureAtlas(Gdx.files.internal("bomb/bombexploded/bombexp.atlas"));
