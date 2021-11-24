@@ -14,9 +14,10 @@ public class Balloon extends Enemy {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (alive) {
                         Thread.sleep(1500);
                         direction = calculateDir();
+//                        System.out.println(positionX + ": " + positionY);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();

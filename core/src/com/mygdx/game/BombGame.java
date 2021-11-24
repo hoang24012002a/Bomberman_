@@ -36,7 +36,7 @@ public class BombGame implements ApplicationListener {
 		Actor wall = new Wall(100, 100);
 		stage.addActor(bomber);
         stage.addActor(balloon);
-		stage.addActor(balloon1);
+//		stage.addActor(balloon1);
 		stage.addActor(oneal);
 //		stage.addActor(brick);
 //		stage.addActor(grass);

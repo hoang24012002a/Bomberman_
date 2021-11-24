@@ -15,7 +15,6 @@ public class Oneal extends Enemy {
                     while (true) {
                         Thread.sleep(1500);
                         direction = calculateDir();
-                        System.out.println(positionX + ": " + positionY);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -27,6 +26,23 @@ public class Oneal extends Enemy {
     @Override
     public void act(float delta) {
         killed();
+        if (isAlive()) {
+            final Oneal _this = this;
+            textureAtlas = GameManager.onealDeadDynamic.getKey();
+            animation = GameManager.onealDeadDynamic.getValue();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1500);
+                        getStage().getActors().removeValue(_this, true);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            return;
+        }
         if (direction == 0) {
             moveLeft();
         } else if (direction == 1) {
