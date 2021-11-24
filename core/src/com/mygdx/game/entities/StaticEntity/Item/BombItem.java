@@ -1,8 +1,6 @@
 package com.mygdx.game.entities.StaticEntity.Item;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
-import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.gamesys.GameManager;
 
@@ -33,16 +31,4 @@ public class BombItem extends Item {
         }
     }
 
-    @Override
-    public void draw(Batch batch, float parentDelta){
-        batch.draw(GameManager.bombItem, positionX, positionY);
-    }
-
-    @Override
-    public void render(){}
-
-    @Override
-    public void dispose(){
-        this.texture.dispose();
-    }
 }

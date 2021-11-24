@@ -8,7 +8,7 @@ public class Balloon extends AnimatedEntity {
     private int direction = 0;
 
     public Balloon() {
-        super();
+        super(0 , 0);
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
         //random direction per 1.5s
@@ -78,11 +78,5 @@ public class Balloon extends AnimatedEntity {
                 positionY = this.getStage().getHeight();
             }
         }
-    }
-
-    @Override
-    public void dispose(){
-        this.texture.dispose();
-        this.textureAtlas.dispose();
     }
 }

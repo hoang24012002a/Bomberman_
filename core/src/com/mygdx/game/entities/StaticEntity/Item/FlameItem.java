@@ -40,12 +40,4 @@ public class FlameItem extends Item {
         batch.draw(GameManager.flameItem, positionX, positionY);
     }
 
-    @Override
-    public void render(){}
-
-    @Override
-    public void dispose(){
-        this.texture.dispose();
-        this.numberOfFlameItem = 0;
-    }
 }

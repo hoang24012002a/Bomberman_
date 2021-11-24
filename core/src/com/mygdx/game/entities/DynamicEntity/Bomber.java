@@ -9,7 +9,7 @@ public class Bomber extends AnimatedEntity {
     private int code = 0; //Mã phím vừa bấm.
 
     public Bomber() {
-        super();
+        super(0 , 0);
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
@@ -68,11 +68,5 @@ public class Bomber extends AnimatedEntity {
                 textureAtlas = GameManager.playerDownStatic.getKey();
                 animation = GameManager.playerDownStatic.getValue();
         }
-    }
-
-    @Override
-    public void dispose(){
-        this.texture.dispose();
-        this.textureAtlas.dispose();
     }
 }

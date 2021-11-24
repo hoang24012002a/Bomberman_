@@ -2,7 +2,6 @@ package com.mygdx.game.entities.StaticEntity.Bomb;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
@@ -15,10 +14,8 @@ public class Flame extends AnimatedEntity {
 
     protected int flameLengt;  // dài trái
 
-    public Flame(Bomb bomb){
-        this.flameLengt = 0;
-        this.positionX = bomb.getPositionX(); // to check posFlame
-        this.positionY = bomb.getPositionY(); // to check posFlame
+    public Flame(float positionX, float positionY){
+        super(positionX, positionY);
         this.animation = GameManager.bombExp;
     }
 
@@ -88,15 +85,6 @@ public class Flame extends AnimatedEntity {
         super.draw(batch, parentAlpha);
     }
 
-    @Override
-    public void render(){
-        elapsedTime += Gdx.graphics.getDeltaTime();
-        Texture currentFrame = (Texture) GameManager.bombExp.getKeyFrame(elapsedTime, false);
-        batch.begin();
-        batch.draw(currentFrame, positionX, positionY);
-        batch.end();
-        super.render();
-    }
 
 //    public void getBrickBroken(Brick brick){
 //        if(positionX-flameLengt <= brick.getPositionX()){
@@ -113,9 +101,4 @@ public class Flame extends AnimatedEntity {
 //        }
 //    }
 
-    @Override
-    public void dispose(){
-        texture.dispose();
-        textureAtlas.dispose();
-    }
 }

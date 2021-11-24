@@ -38,40 +38,40 @@ public class GameManager extends AssetManager {
      */
 
     // wall
-    public static final Texture wall = new Texture(Gdx.files.internal("wall/wall.png"));
-    public static final Texture wallPassGame = new Texture(Gdx.files.internal("wall/powerup_wallpass.png"));
+    public static final Texture wall = new Texture(Gdx.files.internal("img/wall/wall.png"));
+    public static final Texture wallPassGame = new Texture(Gdx.files.internal("img/wall/powerup_wallpass.png"));
 
     //brick
-    public static final  Texture brick = new Texture(Gdx.files.internal("brick/brick.png"));
-    public static final TextureAtlas brickExploded = new TextureAtlas(Gdx.files.internal("brick/brickexploded.atlas"));
+    public static final  Texture brick = new Texture(Gdx.files.internal("img/brick/brick.png"));
+    public static final TextureAtlas brickExploded = new TextureAtlas(Gdx.files.internal("img/brick/brickexploded.atlas"));
     public static final Animation brickExp = new Animation(1/3.f, brickExploded.getRegions());
 
     //grass
-    public static final Texture grass = new Texture(Gdx.files.internal("grass/grass.png"));
+    public static final Texture grass = new Texture(Gdx.files.internal("img/grass/grass.png"));
 
     // bombItem
-    public static final Texture bombItem = new Texture(Gdx.files.internal("item/powerup_bombs.png"));
+    public static final Texture bombItem = new Texture(Gdx.files.internal("img/item/powerup_bombs.png"));
     // speedItem
-    public static final Texture speedItem = new Texture(Gdx.files.internal("item/powerup_speed.png"));
+    public static final Texture speedItem = new Texture(Gdx.files.internal("img/item/powerup_speed.png"));
     // flameItem
-    public static final Texture flameItem = new Texture(Gdx.files.internal("item/powerup_flames.png"));
+    public static final Texture flameItem = new Texture(Gdx.files.internal("img/item/powerup_flames.png"));
     // portalItem
-    public static final Texture portalItem = new Texture(Gdx.files.internal("item/portal.png"));
+    public static final Texture portalItem = new Texture(Gdx.files.internal("img/item/portal.png"));
 
     // bombFlick
-    public static final TextureAtlas bombFLick = new TextureAtlas(Gdx.files.internal("bomb/bombflick/bomb.atlas"));
+    public static final TextureAtlas bombFLick = new TextureAtlas(Gdx.files.internal("img/bomb/bombflick/bomb.atlas"));
     public static final Animation bombFlicker = new Animation(1/3.f, bombFLick.getRegions().get(0));
 
     // bombExplode
-    private static final TextureAtlas bombExploded = new TextureAtlas(Gdx.files.internal("bomb/bombexploded/bombexp.atlas"));
+    private static final TextureAtlas bombExploded = new TextureAtlas(Gdx.files.internal("img/bomb/bombexploded/bombexp.atlas"));
     public static final Animation bombExp= new Animation(1/3.f, bombExploded.getRegions());
 
     //flame1
-    public static final TextureAtlas flameEpxloded1 = new TextureAtlas(Gdx.files.internal("flame/flame1/flame1.atlas"));
+    public static final TextureAtlas flameEpxloded1 = new TextureAtlas(Gdx.files.internal("img/flame/flame1/flame1.atlas"));
     // flame2
-    public static final TextureAtlas flameExploded2 = new TextureAtlas(Gdx.files.internal("flame/flame2/flame2.atlas"));
+    public static final TextureAtlas flameExploded2 = new TextureAtlas(Gdx.files.internal("img/flame/flame2/flame2.atlas"));
     // flame3
-    public static final TextureAtlas flameExploded3 = new TextureAtlas(Gdx.files.internal("flame/flame3/flame3.atlas"));
+    public static final TextureAtlas flameExploded3 = new TextureAtlas(Gdx.files.internal("img/flame/flame3/flame3.atlas"));
     // flame horizontal
     public static final Animation flameHorizontal = new Animation(1/3.f, flameEpxloded1.findRegion("explosion_horizontal"), flameExploded2.findRegion("explosion_horizontal1"), flameExploded3.findRegion("explosion_horizontal1"));
     // flame vertical
