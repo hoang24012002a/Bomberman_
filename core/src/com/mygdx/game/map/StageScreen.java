@@ -18,11 +18,13 @@ public class StageScreen extends Stage {
     private final static String LV1 ="core\\assets\\level\\Lv1.txt";
     private final static String LV2 ="core\\assets\\level\\Lv2.txt";
     private final static String LV3 ="core\\assets\\level\\Lv3.txt";
+    private final static int textureSize = 32;
     private Group groupNoActnoBang;
     private Group groupNoActs;
     private Group groupActs;
     public int rows;
     public int columns;
+    public int dem = 0;
     //public Portal portal;
     public Bomber bomber;
     public ArrayList<Balloon> balloons = new ArrayList<>();
@@ -31,7 +33,6 @@ public class StageScreen extends Stage {
     private ArrayList<Actor> noActNoBangs = new ArrayList<>();
     private ArrayList<Actor> noActs = new ArrayList<>();
     private ArrayList<Actor> acts = new ArrayList<>();
-
     public StageScreen(int Lv) {
         String s = "";
         if (Lv == 1) s=LV1;
@@ -51,10 +52,10 @@ public class StageScreen extends Stage {
         for(int i = 0 ; i < noActs.size(); i++) {
             groupNoActs.addActor(noActs.get(i));
         }
-        for(int i = 0 ; i < balloons.size(); i++) {
-            groupActs.addActor(balloons.get(i));
+        for(int i = 0 ; i < acts.size(); i++) {
+            groupActs.addActor(acts.get(i));
         }
-        groupActs.addActor(bomber);
+
         addActor(groupNoActnoBang);
         addActor(groupNoActs);
         addActor(groupActs);
@@ -66,31 +67,34 @@ public class StageScreen extends Stage {
         InputStream inputStream = new FileInputStream(file);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader reader = new BufferedReader(inputStreamReader);
-
+        rows = Integer.valueOf(reader.readLine());
+        columns = Integer.valueOf(reader.readLine());
         int c, x = 0, y = 0;
-        while ((c = inputStreamReader.read()) != -1) {
+        while ((c = reader.read()) != -1) {
             if (Character.toString((char) c).equals("\n")) {
                 x = -1;
                 y++;
             } else if ((char) c == '#') {
-                Wall wall = new Wall(x * 32, 384 - y * 32);
+                Wall wall = new Wall(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 noActNoBangs.add(wall);
             } else if (Character.toString((char) c).equals("p")) {
-                bomber = new Bomber(x * 32, 384 - y * 32);
+                bomber = new Bomber(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                acts.add(bomber);
             } else if (Character.toString((char) c).equals("*")) {
-                Brick brick = new Brick(x * 32, 384 - y * 32);
+                Brick brick = new Brick(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 noActs.add(brick);
             } else if (Character.toString((char) c).equals("f")) {
-                Brick brick = new Brick(x * 32, 384 - y * 32);
+                Brick brick = new Brick(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 FlameItem flameItem= new FlameItem(brick);
                 noActs.add(flameItem);
             } else if (Character.toString((char) c).equals("x")) {
-                Brick brick = new Brick(x * 32, 384 - y * 32);
+                Brick brick = new Brick(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 Portal portal = new Portal(brick);
                 noActNoBangs.add(portal);
             } else if (Character.toString((char) c).equals("1")) {
-                Balloon balloon = new Balloon(x * 32, 384 - y * 32);
+                Balloon balloon = new Balloon(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 balloons.add(balloon);
+                acts.add(balloon);
             } else if (Character.toString((char) c).equals("2")) {
                 /*MyActor myActor = new MyActor(oneal);
                 myActor.setPosition(x * 32, 384 - y * 32);
@@ -99,11 +103,12 @@ public class StageScreen extends Stage {
             }
             if (Character.toString((char) c).equals(" ") || (!Character.toString((char) c).equals("#")
                 && !Character.toString((char) c).equals("x") && !Character.toString((char) c).equals("\r"))) {
-                Grass grass = new Grass(x * 32, 384 - y * 32);
+                Grass grass = new Grass(x * textureSize, textureSize * (rows-1) - y * 32);
                 noActNoBangs.add(grass);
             }
-            if (x < 31 && x != -1 && y >= 2) mapMatrix[y-2][x] = (char)c;
+           if (x < columns && x != -1) mapMatrix[y][x] = (char)c;
             x++;
+            dem++;
         }
     }
 
@@ -122,6 +127,7 @@ public class StageScreen extends Stage {
      * @param myActor .
      */
     public void remove (MyActor myActor) {
+
             for (int i = 0; i < noActs.size(); i++) {
                 if (noActs.get(i) == myActor) {
                     groupNoActs.removeActor(noActs.get(i));
@@ -144,30 +150,62 @@ public class StageScreen extends Stage {
      */
         public Actor getAt ( float x, float y) {
             for (int i = 0; i < acts.size(); i++) {
-                if (x >= acts.get(i).getX() && x < acts.get(i).getX() + 32) {
-                    if (y >= acts.get(i).getY() && y < acts.get(i).getY() + 32) {
+                if (x >= acts.get(i).getX() && x < acts.get(i).getX() + textureSize) {
+                    if (y >= acts.get(i).getY() && y < acts.get(i).getY() + textureSize) {
                         return acts.get(i);
                     }
                 }
             }
             for (int i = 0; i < noActs.size(); i++) {
-                if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + 32) {
-                    if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + 32) {
+                if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + textureSize) {
+                    if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + textureSize) {
                         return noActs.get(i);
                     }
                 }
             }
             for (int i = 0; i < noActNoBangs.size(); i++) {
-                if (x >= noActNoBangs.get(i).getX() && x < noActNoBangs.get(i).getX() + 32) {
-                    if (y >= noActNoBangs.get(i).getY() && y < noActNoBangs.get(i).getY() + 32) {
+                if (x >= noActNoBangs.get(i).getX() && x < noActNoBangs.get(i).getX() + textureSize) {
+                    if (y >= noActNoBangs.get(i).getY() && y < noActNoBangs.get(i).getY() + textureSize) {
                         return noActNoBangs.get(i);
                     }
                 }
             }
-
             return null;
     }
 
+    public boolean CheckInPortal(float x,float y) {
+        /*if (bomber.getX() + 32 < portal.getX() || bomber.getX() > portal.getX() + 32
+                || bomber.getY() + 32 < portal.getY() || bomber.getY() > portal.getY() +32) {
+            return true;
+        }*/
+        if (getAt(x,y) instanceof Portal) {
+            return true;
+        }
+        return false;
+    }
 
+    public boolean CheckAllEnemyDeath(){
+        if (balloons.size() == 0) {
+            //&& stageScreen.oneals == 0)
+            return true;
+        }
+        return false;
+    }
+
+    public boolean changeOfLevelUp(float x, float y) {
+        /*if (CheckInPortal(x,y)) {
+            return true;
+        }*/
+        if (bomber.getX() == 200) {
+            return true;
+        }
+        return false;
+    }
+
+    public void pauseReal() {
+            for (int i =0; i < balloons.size(); i++) {
+                balloons.get(i).setDirection(5);
+            }
+    }
 
 }
