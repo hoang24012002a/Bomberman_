@@ -6,21 +6,21 @@ repeat: none
 bomb_exploded
   rotate: false
   xy: 1, 1
-  size: 16, 16
-  orig: 16, 16
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 bomb_exploded1
   rotate: false
-  xy: 19, 1
-  size: 16, 16
-  orig: 16, 16
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 bomb_exploded2
   rotate: false
-  xy: 37, 1
-  size: 16, 16
-  orig: 16, 16
+  xy: 69, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
