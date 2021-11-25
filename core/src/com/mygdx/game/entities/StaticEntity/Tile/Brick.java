@@ -1,46 +1,60 @@
 package com.mygdx.game.entities.StaticEntity.Tile;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.gamesys.GameManager;
 
 public class Brick extends StaticEntities {
-    TextureAtlas textureAtlas;
+    protected TextureAtlas textureAtlas;
+    protected boolean brokenDown;             // nổ hay chưa
+    protected Animation animation;
 
     public Brick(float x, float y){
         super(x, y);
         this.canBreakable=true;
         texture=GameManager.brick;
+        this.brokenDown=false;
+    }
+
+    public float getX(){
+        return getPositionX();
+    }
+
+    public float getY(){
+        return getPositionY();
     }
 
     public boolean isDestroy(){
         return true;
     }
 
-    /*@Override
-    public void create(){
-        texture = GameManager.brick;
-        textureAtlas = GameManager.brickExp.getKey();
+    public void setBrokenDown(boolean brokenDown) {
+        this.brokenDown = brokenDown;
     }
 
-    public void brickExploded(){
-
+    public boolean isBrokenDown() {
+        return brokenDown;
     }
 
-    @Override
-    public void draw(Batch batch, float parentDelta){
-        batch.draw(texture, 30, 30);
-    }
-
-    @Override
-    public void render(){
-        getStage().draw();
+    public void showBrickExp(){
+        if(isBrokenDown()){
+            this.texture.dispose();
+            this.animation = GameManager.brickExp;
+        }
     }
 
     @Override
-    public void dispose(){
-        texture.dispose();;
+    public void draw(Batch batch, float parentAlpha) {
+        batch.draw(GameManager.brick, positionX, positionY);
+    }
+
+    @Override
+    public void render(){}
+    @Override
+    public void dispose() {
+        texture.dispose();
         textureAtlas.dispose();
-    }*/
+    }
 }

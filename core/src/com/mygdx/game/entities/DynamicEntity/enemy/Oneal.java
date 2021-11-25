@@ -24,8 +24,12 @@ public class Oneal extends Enemy {
     }
 
     @Override
+    public void dispose() {
+
+    }
+
+    @Override
     public void act(float delta) {
-        killed();
         if (isAlive()) {
             final Oneal _this = this;
             textureAtlas = GameManager.onealDeadDynamic.getKey();
@@ -96,6 +100,6 @@ public class Oneal extends Enemy {
 
     @Override
     protected int calculateDir() {
-        return AI_random.random();
+        return AI_random.random(4);
     }
 }

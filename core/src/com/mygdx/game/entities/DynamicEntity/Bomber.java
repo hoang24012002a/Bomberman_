@@ -2,6 +2,9 @@ package com.mygdx.game.entities.DynamicEntity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.entities.DynamicEntity.enemy.Enemy;
+import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
 import com.mygdx.game.gamesys.GameManager;
 
 public class Bomber extends Character {
@@ -16,28 +19,42 @@ public class Bomber extends Character {
     }
 
     @Override
+    public boolean isAlive() {
+        Actor actor0 = stageScreen.getAt(positionX - 1, positionY + 16);
+        Actor actor1 = stageScreen.getAt(positionX + 16, positionY + 33);
+        Actor actor2 = stageScreen.getAt(positionX + 33, positionY + 16);
+        Actor actor3 = stageScreen.getAt(positionX + 16, positionY - 1);
+        if (actor0 instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
+            return false;
+        } else if (actor0 instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    private int dem = 0;
+    @Override
     public void act(float delta) {
-        killed();
         if (!isAlive()) {
+            dem++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
             animation = GameManager.playerDeadDynamic.getValue();
-            final Bomber _this = this;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                        getStage().getActors().removeValue(_this, true);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            if (dem == 100) {
+                System.out.println(getX() + " : " + getY());
+                remove();
+                dem = 0;
+            }
             return;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             moveRight();
+            System.out.println(stageScreen.getAt(positionX + 31, positionY + 31));
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             moveLeft();
@@ -69,18 +86,12 @@ public class Bomber extends Character {
         }
     }
 
-    protected void killed() {
-        if (positionX >= 100 || positionX + 48 > 100) {
-            alive = false;
-            return;
-        }
-    }
-
     @Override
     protected void moveRight() {
         textureAtlas = GameManager.playerRightDynamic.getKey();
         animation = GameManager.playerRightDynamic.getValue();
         if (canMoveRight()) {
+            positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
         }
         code = Input.Keys.D;
@@ -91,6 +102,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerLeftDynamic.getKey();
         animation = GameManager.playerLeftDynamic.getValue();
         if (canMoveLeft()) {
+            positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX -= speed;
         }
         code = Input.Keys.A;
@@ -101,6 +113,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerUpDynamic.getKey();
         animation = GameManager.playerUpDynamic.getValue();
         if (canMoveTop()) {
+            positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY += speed;
         }
         code = Input.Keys.W;
@@ -111,6 +124,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerDownDynamic.getKey();
         animation = GameManager.playerDownDynamic.getValue();
         if (canMoveBottom()) {
+            positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY -= speed;
         }
         code = Input.Keys.S;

@@ -3,10 +3,13 @@ package com.mygdx.game.entities.DynamicEntity.enemy;
 import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_random;
 import com.mygdx.game.gamesys.GameManager;
 
+import java.util.ArrayList;
+
 public class Balloon extends Enemy {
 
     public Balloon(float x, float y) {
         super(x, y);
+        speed = 0.5f;
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
         //random direction per 1.5s
@@ -17,7 +20,6 @@ public class Balloon extends Enemy {
                     while (alive) {
                         Thread.sleep(1500);
                         direction = calculateDir();
-//                        System.out.println(positionX + ": " + positionY);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -27,23 +29,19 @@ public class Balloon extends Enemy {
     }
 
     @Override
+    public void dispose() {
+
+    }
+    private int dem = 0;
+    @Override
     public void act(float delta) {
-        killed();
         if (!isAlive()) {
-            final Balloon _this = this;
             textureAtlas = GameManager.balloonDeadDynamic.getKey();
             animation = GameManager.balloonDeadDynamic.getValue();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1500);
-                        getStage().getActors().removeValue(_this, true);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            dem++;
+            if (dem == 100) {
+                remove();
+            }
             return;
         }
         if (direction == 0) {
@@ -61,9 +59,9 @@ public class Balloon extends Enemy {
     protected void moveRight() {
         textureAtlas = GameManager.balloonRightDynamic.getKey();
         animation = GameManager.balloonRightDynamic.getValue();
-        positionX += 0.5;
-        if (positionX == this.getStage().getWidth()) {
-            positionX = 0;
+        if (canMoveRight()) {
+            positionY += (Math.round(positionY / 32) * 32 - positionY);
+            positionX += speed;
         }
     }
 
@@ -71,9 +69,9 @@ public class Balloon extends Enemy {
     protected void moveLeft() {
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
-        positionX -= 0.5;
-        if (positionX == 0) {
-            positionX = this.getStage().getWidth();
+        if (canMoveLeft()) {
+            positionY += (Math.round(positionY / 32) * 32 - positionY);
+            positionX -= speed;
         }
     }
 
@@ -81,9 +79,9 @@ public class Balloon extends Enemy {
     protected void moveTop() {
         textureAtlas = GameManager.balloonRightDynamic.getKey();
         animation = GameManager.balloonRightDynamic.getValue();
-        positionY += 0.5;
-        if (positionY == this.getStage().getHeight()) {
-            positionY = 0;
+        if (canMoveTop()) {
+            positionX += (Math.round(positionX / 32) * 32 - positionX);
+            positionY += speed;
         }
     }
 
@@ -91,14 +89,20 @@ public class Balloon extends Enemy {
     protected void moveBottom() {
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
-        positionY -= 0.5;
-        if (positionY == 0) {
-            positionY = this.getStage().getHeight();
+        if (canMoveBottom()) {
+            positionX += (Math.round(positionX / 32) * 32 - positionX);
+            positionY -= speed;
         }
     }
 
     @Override
     protected int calculateDir() {
-        return AI_random.random();
+        ArrayList<Integer> dir = new ArrayList<>();
+        if (canMoveBottom()) dir.add(3);
+        if (canMoveLeft()) dir.add(0);
+        if (canMoveRight()) dir.add(2);
+        if (canMoveTop()) dir.add(1);
+        int index = AI_random.random(dir.size());
+        return dir.get(index);
     }
 }

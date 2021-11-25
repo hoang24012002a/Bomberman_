@@ -3,44 +3,30 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
-import com.mygdx.game.entities.DynamicEntity.enemy.Oneal;
 import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
-import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
-import com.mygdx.game.entities.StaticEntity.Item.BombItem;
-import com.mygdx.game.entities.StaticEntity.Item.SpeedItem;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.entities.StaticEntity.Tile.Wall;
+import com.mygdx.game.map.StageScreen;
 
 
 public class BombGame implements ApplicationListener {
 
 	private Stage stage;
-	
+	private StageScreen stageScreen;
+	private SpriteBatch batch;
+	private BitmapFont font;
 	@Override
 	public void create () {
 		stage = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage);
-
-		Actor bomber = new Bomber(50, 50);
-		Actor balloon = new Balloon(120, 120);
-		Actor balloon1 = new Balloon(150, 150);
-		Actor balloon2 = new Balloon(140, 120);
-		Actor oneal = new Oneal(160, 200);
-		Actor brick = new Brick(10, 20);
-		Actor grass = new Grass(50, 50);
-		Actor wall = new Wall(100, 100);
-		stage.addActor(bomber);
-        stage.addActor(balloon);
-//		stage.addActor(balloon1);
-		stage.addActor(oneal);
-//		stage.addActor(brick);
-//		stage.addActor(grass);
-//		stage.addActor(wall);
+		batch = new SpriteBatch();
+		font = new BitmapFont();
+		stageScreen = new StageScreen(2);
 	}
 
 	@Override
@@ -50,10 +36,17 @@ public class BombGame implements ApplicationListener {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		stageScreen.draw();
 		stage.act(Gdx.graphics.getDeltaTime());
+		stageScreen.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
+		// 4 dòng dưới đây render chữ lên màn hình để test 1 số thứ chứ k có tác dụng gì
+		batch.begin();
+		font.draw(batch,String.valueOf(stageScreen.rows),100,300);
+		font.draw(batch,String.valueOf(stageScreen.columns),200,300);
+		batch.end();
+
 	}
 
 	@Override
@@ -69,5 +62,6 @@ public class BombGame implements ApplicationListener {
 	@Override
 	public void dispose () {
 		stage.dispose();
+		stageScreen.dispose();
 	}
 }

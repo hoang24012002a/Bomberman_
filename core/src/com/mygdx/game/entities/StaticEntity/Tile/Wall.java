@@ -1,9 +1,6 @@
 package com.mygdx.game.entities.StaticEntity.Tile;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.gamesys.GameManager;
 
@@ -14,12 +11,23 @@ public class Wall extends StaticEntities {
         this.canBreakable=false;
         texture = GameManager.wall;
     }
+    public float getX(){
+        return getPositionX();
+    }
+
+    public float getY(){
+        return getPositionY();
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
+        batch.draw(GameManager.wall, positionX, positionY);
     }
 
+    @Override
+    public void render(){
+    }
+    @Override
     public void dispose() {
         texture.dispose();
     }
