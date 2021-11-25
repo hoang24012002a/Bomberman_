@@ -39,7 +39,7 @@ public class GameManager extends AssetManager {
 
     // wall
     public static final Texture wall = new Texture(Gdx.files.internal("img/wall/wall.png"));
-    public static final Texture wallPassGame = new Texture(Gdx.files.internal("img/wall/powerup_wallpass.png"));
+//    public static final Texture wallPassGame = new Texture(Gdx.files.internal("img/wall/powerup_wallpass.png"));
 
     //brick
     public static final  Texture brick = new Texture(Gdx.files.internal("img/brick/brick.png"));
@@ -59,11 +59,13 @@ public class GameManager extends AssetManager {
     public static final Texture portalItem = new Texture(Gdx.files.internal("img/item/portal.png"));
 
     // bombFlick
-    public static final TextureAtlas bombFLick = new TextureAtlas(Gdx.files.internal("img/bomb/bombflick/bomb.atlas"));
-    public static final Animation bombFlicker = new Animation(1/3.f, bombFLick.getRegions().get(0));
+    private static final TextureAtlas bombFLick = new TextureAtlas(Gdx.files.internal("img/bomb/bombflick/bombflick.atlas"));
+//    public static final Animation bombFlicker = new Animation(1/3.f, bombFLick.getRegions());
+    public static final Pair<TextureAtlas, Animation> bombFlick = new Pair<>(bombFLick, new Animation(1/3.f, bombFLick.getRegions()));
+
 
     // bombExplode
-    private static final TextureAtlas bombExploded = new TextureAtlas(Gdx.files.internal("img/bomb/bombexploded/bombexp.atlas"));
+    public static final TextureAtlas bombExploded = new TextureAtlas(Gdx.files.internal("img/bomb/bombexploded/bombexp.atlas"));
     public static final Animation bombExp= new Animation(1/3.f, bombExploded.getRegions());
 
     //flame1
@@ -73,7 +75,7 @@ public class GameManager extends AssetManager {
     // flame3
     public static final TextureAtlas flameExploded3 = new TextureAtlas(Gdx.files.internal("img/flame/flame3/flame3.atlas"));
     // flame horizontal
-    public static final Animation flameHorizontal = new Animation(1/3.f, flameEpxloded1.findRegion("explosion_horizontal"), flameExploded2.findRegion("explosion_horizontal1"), flameExploded3.findRegion("explosion_horizontal1"));
+    public static final Animation flameHorizontal = new Animation(1/3.f, flameEpxloded1.findRegion("explosion_horizontal"), flameExploded2.findRegion("explosion_horizontal1"), flameExploded3.findRegion("explosion_horizontal2"));
     // flame vertical
     public static final Animation flameVertical = new Animation(1/3.f, flameEpxloded1.findRegion("explosion_vertical"), flameExploded2.findRegion("explosion_vertical1"), flameExploded3.findRegion("explosion_vertical2"));
     // flame horizon left last
