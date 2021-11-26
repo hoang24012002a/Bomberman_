@@ -3,7 +3,6 @@ package com.mygdx.game.entities.StaticEntity.Item;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
-import com.mygdx.game.gamesys.GameManager;
 
 public abstract class Item extends StaticEntities {
 
@@ -11,9 +10,14 @@ public abstract class Item extends StaticEntities {
 
     public Item(Brick brick){
         super(brick.getPositionX(), brick.getPositionY());
-        this.canBreakable=false;
+        this.canBreakable=true;
         this.broken = false;
-        this.texture = GameManager.brick;
+    }
+
+    public Item(float positionX, float positionY){
+        super(positionX, positionY);
+        this.broken = false;
+        this.canBreakable  = true;
     }
 
     public boolean isBroken() {

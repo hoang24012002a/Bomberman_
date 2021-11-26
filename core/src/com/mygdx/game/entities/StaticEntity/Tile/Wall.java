@@ -8,7 +8,7 @@ public class Wall extends StaticEntities {
     public Wall(float x, float y){
         super(x, y);
         this.canBreakable=false;
-        texture = GameManager.wall;
+        this.texture = GameManager.wall;
     }
 
 }

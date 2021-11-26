@@ -4,24 +4,47 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.gamesys.GameManager;
 
 public class FlameManager extends Flame {
-    protected Flame center;
     protected Array<Flame> flames;
+    protected int flameItem = 2;
+    protected final int timeExp = 3000;
+
     public FlameManager(float positionX, float positionY){
         super(positionX, positionY);
-        this.center = new Flame(positionX, positionY);
-        this.flames = new Array<>();
-        //flames.add(new Flame(positionX, positionY));
-        flames.add(new Flame(positionX, positionY+16, GameManager.flameVerTopLast));
-        flames.add(new Flame(positionX, positionY-16, GameManager.flameVerDownLast));
-        flames.add(new Flame(positionX-16, positionY, GameManager.flameHorLeftLast));
-        flames.add(new Flame(positionX+16, positionY, GameManager.flameHorRightLast));
-        out();
+        this.flames = new Array<>(flameItem*2+5);
+        addFlame();
+        outPos();
+    }
+    public FlameManager(Flame flame){
+        super(flame.getPositionX(), flame.getPositionY());
+        this.flames = new Array<>(flameItem*2+5);
+        addFlame();
+        outPos();
     }
 
-    public void out(){
-//    System.out.println(center.getPositionX());
-    System.out.println(flames.get(0).getPositionX());
-    System.out.println(flames.get(1).getPositionX());
+
+    public void addFlame(){
+        flames.add(new Flame(positionX, positionY, GameManager.bombExp));
+        flames.add(new Flame(positionX, positionY+(flameItem+1)*32, GameManager.flameVerTopLast));
+        flames.add(new Flame(positionX, positionY-(flameItem+1)*32, GameManager.flameVerDownLast));
+        flames.add(new Flame(positionX-(flameItem+1)*32, positionY, GameManager.flameHorLeftLast));
+        flames.add(new Flame(positionX+(flameItem+1)*32, positionY, GameManager.flameHorRightLast));
+        // dọc trên + ngang phải
+        for(int i = 1; i <=flameItem; i++){
+            flames.add(new Flame(positionX, positionY+i*32, GameManager.flameVertical));
+            flames.add(new Flame(positionX+i*32, positionY, GameManager.flameHorizontal));
+        }
+        // dọc dưới + ngang trái
+        for(int i = flameItem; i>=1; i--){
+            flames.add(new Flame(positionX, positionY-i*32, GameManager.flameVertical));
+            flames.add(new Flame(positionX-i*32, positionY, GameManager.flameHorizontal));
+        }
+    }
+
+
+    public void outPos(){
+        for(int i = 0; i < flames.size; i++){
+            System.out.println(flames.get(i).getPositionX()+"-"+ flames.get(i).getPositionY());
+        }
     }
 
     public Array<Flame> getFlames() {
@@ -29,17 +52,31 @@ public class FlameManager extends Flame {
     }
 
     public int sizeFla(){
-        int n = getFlames().size;
-        return n;
+        return flames.size;
     }
 
-//    public Array<Flame> vcl(){
-//        int n = center.flameLengt/16;
-//        flames.add(center);
-//        flames.add(new Flame(center.getPositionX()-(n+1)*16,center.getPositionY(), GameManager.flameHorLeftLast));
-//        flames.add(new Flame(center.getPositionX()+(n+1)*16,center.getPositionY(), GameManager.flameHorRightLast));
-//        flames.add(new Flame(center.getPositionX(), center.getPositionY()-(n+1)*16, GameManager.flameVerDownLast));
-//        flames.add(new Flame(center.getPositionX(), center.getPositionY()+(n+1)*16, GameManager.flameVerTopLast));
-//        return flames;
-//    }
+    public void update(){
+        flameItem++;
+    }
+
+    @Override
+    public void act(float delta){
+        final FlameManager flameManager = this;
+        final Array<Flame> _this = flames;
+    new Thread(
+            new Runnable() {
+              @Override
+              public void run() {
+                try {
+                  Thread.sleep(timeExp);
+                  getStage().getActors().removeAll(_this, true);
+                  flames.removeAll(flames, true);
+                  System.out.println("run");
+                } catch (InterruptedException e) {
+                  e.printStackTrace();
+                }
+              }
+            })
+        .start();
+    }
 }
