@@ -24,6 +24,7 @@ public class StageScreen extends Stage {
     private Group groupActs;
     public int rows;
     public int columns;
+    public int dem = 0;
     //public Portal portal;
     public Bomber bomber;
     public static ArrayList<Balloon> balloons = new ArrayList<>();
@@ -54,8 +55,8 @@ public class StageScreen extends Stage {
         for(int i = 0 ; i < noActs.size(); i++) {
             groupNoActs.addActor(noActs.get(i));
         }
-        for(int i = 0 ; i < balloons.size(); i++) {
-            groupActs.addActor(balloons.get(i));
+        for(int i = 0 ; i < acts.size(); i++) {
+            groupActs.addActor(acts.get(i));
         }
 
         addActor(groupNoActnoBang);
@@ -78,7 +79,7 @@ public class StageScreen extends Stage {
                 x = -1;
                 y++;
             } else if ((char) c == '#') {
-                Wall wall = new Wall(x * 32, 384 - y * 32);
+                Wall wall = new Wall(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 noActNoBangs.add(wall);
             } else if (Character.toString((char) c).equals("p")) {
                 bomber = new Bomber(x * textureSize, textureSize * (rows-1) - y * textureSize);
@@ -107,19 +108,19 @@ public class StageScreen extends Stage {
                 acts.add(myActor);*/
             }
             if (Character.toString((char) c).equals(" ") || (!Character.toString((char) c).equals("#")
-                && !Character.toString((char) c).equals("x") && !Character.toString((char) c).equals("\r"))) {
+                    && !Character.toString((char) c).equals("x") && !Character.toString((char) c).equals("\r"))) {
                 Grass grass = new Grass(x * textureSize, textureSize * (rows-1) - y * 32);
                 noActNoBangs.add(grass);
             }
-           if (x < columns && x != -1) {
-               if((char)c == '*' || (char)c == '#') {
-                   mapMatrix[y][x] = '0';
-               } else if ((char)c != 'p' && (char)c != '1' && (char)c != '2' && (char)c != '3' ) {
-                   mapMatrix[y][x] = 'n';
-               } else {
-                   mapMatrix[y][x] = (char)c;
-               }
-           }
+            if (x < columns && x != -1) {
+                if((char)c == '*' || (char)c == '#') {
+                    mapMatrix[y][x] = '0';
+                } else if ((char)c != 'p' && (char)c != '1' && (char)c != '2' && (char)c != '3' ) {
+                    mapMatrix[y][x] = 'n';
+                } else {
+                    mapMatrix[y][x] = (char)c;
+                }
+            }
             x++;
             dem++;
         }
@@ -141,19 +142,19 @@ public class StageScreen extends Stage {
      */
     public void remove (Actor myActor) {
 
-            for (int i = 0; i < noActs.size(); i++) {
-                if (noActs.get(i) == myActor) {
-                    groupNoActs.removeActor(noActs.get(i));
-                    noActs.remove(noActs.get(i));
-                }
-            }
-            for (int i = 0; i < acts.size(); i++) {
-                if (acts.get(i) == myActor) {
-                    groupActs.removeActor(acts.get(i));
-                    acts.remove(acts.get(i));
-                }
+        for (int i = 0; i < noActs.size(); i++) {
+            if (noActs.get(i) == myActor) {
+                groupNoActs.removeActor(noActs.get(i));
+                noActs.remove(noActs.get(i));
             }
         }
+        for (int i = 0; i < acts.size(); i++) {
+            if (acts.get(i) == myActor) {
+                groupActs.removeActor(acts.get(i));
+                acts.remove(acts.get(i));
+            }
+        }
+    }
 
     /**
      * Hàm getAt trả về Actor đang ở vị trí đầu vào.
@@ -161,29 +162,29 @@ public class StageScreen extends Stage {
      * @param y
      * @return
      */
-        public Actor getAt ( float x, float y) {
-            for (int i = 0; i < acts.size(); i++) {
-                if (x >= acts.get(i).getX() && x < acts.get(i).getX() + textureSize) {
-                    if (y >= acts.get(i).getY() && y < acts.get(i).getY() + textureSize) {
-                        return acts.get(i);
-                    }
+    public Actor getAt ( float x, float y) {
+        for (int i = 0; i < acts.size(); i++) {
+            if (x >= acts.get(i).getX() && x < acts.get(i).getX() + textureSize) {
+                if (y >= acts.get(i).getY() && y < acts.get(i).getY() + textureSize) {
+                    return acts.get(i);
                 }
             }
-            for (int i = 0; i < noActs.size(); i++) {
-                if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + textureSize) {
-                    if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + textureSize) {
-                        return noActs.get(i);
-                    }
+        }
+        for (int i = 0; i < noActs.size(); i++) {
+            if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + textureSize) {
+                if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + textureSize) {
+                    return noActs.get(i);
                 }
             }
-            for (int i = 0; i < noActNoBangs.size(); i++) {
-                if (x >= noActNoBangs.get(i).getX() && x < noActNoBangs.get(i).getX() + textureSize) {
-                    if (y >= noActNoBangs.get(i).getY() && y < noActNoBangs.get(i).getY() + textureSize) {
-                        return noActNoBangs.get(i);
-                    }
+        }
+        for (int i = 0; i < noActNoBangs.size(); i++) {
+            if (x >= noActNoBangs.get(i).getX() && x < noActNoBangs.get(i).getX() + textureSize) {
+                if (y >= noActNoBangs.get(i).getY() && y < noActNoBangs.get(i).getY() + textureSize) {
+                    return noActNoBangs.get(i);
                 }
             }
-            return null;
+        }
+        return null;
     }
 
     public boolean CheckInPortal(float x,float y) {
@@ -205,5 +206,25 @@ public class StageScreen extends Stage {
         return false;
     }
 
+    public boolean changeOfLevelUp(float x, float y) {
+        /*if (CheckInPortal(x,y)) {
+            return true;
+        }*/
+        if (bomber.getX() == 200) {
+            return true;
+        }
+        return false;
+    }
+
+    public void pauseReal() {
+        for (int i =0; i < balloons.size(); i++) {
+            balloons.get(i).setDirection(5);
+        }
+    }
+
+    // Function addBombg
+    public void addBomb(Actor actor){
+        addActor(actor);
+    }
 
 }
