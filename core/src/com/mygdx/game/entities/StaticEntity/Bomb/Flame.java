@@ -15,14 +15,14 @@ public class Flame extends AnimatedEntity {
 
     protected int flameLengt;  // dài trái
 
-    public Flame(Bomb bomb){
+    public Flame(Bomb bomb) {
         this.flameLengt = 0;
         this.positionX = bomb.getPositionX(); // to check posFlame
         this.positionY = bomb.getPositionY(); // to check posFlame
         this.animation = GameManager.bombExp;
     }
 
-    public Flame(float positionX, float positionY, Animation flameType){
+    public Flame(float positionX, float positionY, Animation flameType) {
         super(positionX, positionY);
         this.animation = flameType;
     }
@@ -69,6 +69,7 @@ public class Flame extends AnimatedEntity {
                 flameArray.add(new Flame(positionX, positionY+i*16, GameManager.flameVertical));
             }
         }
+        flameArray.add(this);
         return flameArray;
     }
 

@@ -1,12 +1,9 @@
 package com.mygdx.game.entities.StaticEntity.Bomb;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.entities.AnimatedEntity;
-import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
 import com.mygdx.game.gamesys.GameManager;
 
 

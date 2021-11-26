@@ -85,4 +85,8 @@ public class Balloon extends AnimatedEntity {
         this.texture.dispose();
         this.textureAtlas.dispose();
     }
+
+    public void setDirection(int n) {
+        direction = n;
+    }
 }
