@@ -5,7 +5,7 @@ import com.mygdx.game.gamesys.GameManager;
 
 public class FlameManager extends Flame {
     protected Array<Flame> flames;
-    protected int flameItem = 2;
+    protected static int flameItem = 2;
     protected final int timeExp = 3000;
 
     public FlameManager(float positionX, float positionY){

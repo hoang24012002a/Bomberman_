@@ -17,7 +17,7 @@ public class Brick extends StaticEntities {
     protected Flame flame;
     protected boolean haveInside;
     protected Item item;
-    protected int randomNum = ThreadLocalRandom.current().nextInt(0, 3);
+    protected int randomNum = ThreadLocalRandom.current().nextInt(0, 3); // to random Item
 
     public Brick(float x, float y){
         super(x, y);
@@ -55,21 +55,35 @@ public class Brick extends StaticEntities {
         float flameLeght = 32;  // là cộng cả the last
         float posFlameX = 90;
         float posFlameY  = 90;
-        if(positionX == 150 && positionY == 150){
-            brokenDown = true;
-            getStage().getActors().removeValue(this, true);
-           getStage().addActor(new Flame(positionX, positionY, GameManager.brickExp));
-           if(haveInside){
-                if(randomNum == 0){
-                    getStage().addActor(new BombItem(positionX, positionY));
-                }else if(randomNum == 1){
-                    getStage().addActor(new FlameItem(positionX, positionY));
-                } else {
-                    getStage().addActor(new SpeedItem(positionX, positionY));
+        final Brick _this = this;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    if(positionX == 150 && positionY == 150){
+                        brokenDown = true;
+                        getStage().getActors().removeValue(_this, true);
+                        getStage().addActor(new Flame(positionX, positionY, GameManager.brickExp));
+                    }
+                    Thread.sleep(1000);
+                    if(brokenDown){
+                        if(haveInside){
+                            if(randomNum == 0){
+                                getStage().addActor(new BombItem(positionX, positionY));
+                            }else if(randomNum == 1){
+                                getStage().addActor(new FlameItem(positionX, positionY));
+                            } else {
+                                getStage().addActor(new SpeedItem(positionX, positionY));
+                            }
+                        }else{
+                            getStage().addActor(new Grass(positionX, positionY));
+                        }
+                    }
+                } catch (InterruptedException e){
+                    e.printStackTrace();
                 }
-           }else{
-               getStage().addActor(new Grass(positionX, positionY));
-           }
-        }
+            }
+        }).start();
+
     }
 }
