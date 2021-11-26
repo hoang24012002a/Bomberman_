@@ -222,7 +222,7 @@ public class StageScreen extends Stage {
             }
     }
 
-    // add bomb
+    // Function addBombg
     public void addBomb(Actor actor){
             addActor(actor);
     }
