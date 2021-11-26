@@ -6,21 +6,21 @@ repeat: none
 balloom_right1
   rotate: false
   xy: 1, 1
-  size: 48, 48
-  orig: 48, 48
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 balloom_right2
   rotate: false
-  xy: 51, 1
-  size: 48, 48
-  orig: 48, 48
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 balloom_right3
   rotate: false
-  xy: 101, 1
-  size: 48, 48
-  orig: 48, 48
+  xy: 69, 1
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1

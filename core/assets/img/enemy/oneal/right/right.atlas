@@ -1,26 +1,26 @@
 
-down.png
+right.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-player_down
+oneal_right1
   rotate: false
   xy: 1, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-player_down
+oneal_right2
   rotate: false
   xy: 35, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 1
-player_down
+  index: -1
+oneal_right3
   rotate: false
   xy: 69, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 2
+  index: -1
