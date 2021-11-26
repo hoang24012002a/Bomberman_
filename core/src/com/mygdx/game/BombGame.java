@@ -26,7 +26,7 @@ public class BombGame implements ApplicationListener {
 		stage = new Stage(new ScreenViewport());
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		stageScreen = new StageScreen(2);
+		stageScreen = new StageScreen(1);
 	}
 
 	@Override

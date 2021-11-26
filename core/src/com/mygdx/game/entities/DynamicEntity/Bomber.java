@@ -4,47 +4,37 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.entities.DynamicEntity.enemy.Enemy;
+import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
 import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
+import com.mygdx.game.entities.StaticEntity.Item.*;
 import com.mygdx.game.gamesys.GameManager;
+
+import java.util.ArrayList;
 
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
+    private int maxBomb = 3;
+    private ArrayList<Bomb> listBomb;
 
     public Bomber(float x, float y) {
         super(x, y);
+        listBomb = new ArrayList<>();
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
         speed = 1;
     }
 
-    @Override
-    public boolean isAlive() {
-        Actor actor0 = stageScreen.getAt(positionX - 1, positionY + 16);
-        Actor actor1 = stageScreen.getAt(positionX + 16, positionY + 33);
-        Actor actor2 = stageScreen.getAt(positionX + 33, positionY + 16);
-        Actor actor3 = stageScreen.getAt(positionX + 16, positionY - 1);
-        if (actor0 instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
-            return false;
-        } else if (actor0 instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
     private int dem = 0;
     @Override
     public void act(float delta) {
-        if (!isAlive()) {
+        removeBombExplored();
+        killed();
+        if (!alive) {
             dem++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
             animation = GameManager.playerDeadDynamic.getValue();
-            if (dem == 100) {
+            if (dem == 96) {
                 System.out.println(getX() + " : " + getY());
                 remove();
                 dem = 0;
@@ -54,7 +44,6 @@ public class Bomber extends Character {
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             moveRight();
-            System.out.println(stageScreen.getAt(positionX + 31, positionY + 31));
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             moveLeft();
@@ -64,6 +53,11 @@ public class Bomber extends Character {
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveTop();
+            return;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if (canPlaceBomb()) {
+                placeBomb(getX(), getY());
+            }
             return;
         }
         switch (code) {
@@ -94,6 +88,7 @@ public class Bomber extends Character {
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
         }
+        setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.D;
     }
 
@@ -105,6 +100,7 @@ public class Bomber extends Character {
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX -= speed;
         }
+        setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.A;
     }
 
@@ -116,6 +112,7 @@ public class Bomber extends Character {
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY += speed;
         }
+        setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.W;
     }
 
@@ -127,6 +124,80 @@ public class Bomber extends Character {
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY -= speed;
         }
+        setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.S;
+    }
+
+    @Override
+    public boolean isAlive() {
+        Actor actor = stageScreen.getAt(getX() - 1, getY() + 16);
+        Actor actor1 = stageScreen.getAt(getX() + 16, getY() + 33);
+        Actor actor2 = stageScreen.getAt(getX() + 33, getY() + 16);
+        Actor actor3 = stageScreen.getAt(getX() + 16, getY() - 1);
+        eadItem(actor);
+        eadItem(actor1);
+        eadItem(actor2);
+        eadItem(actor3);
+        if (actor instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
+            return false;
+        } else if (actor instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void killed() {
+        if (!isAlive()) {
+            alive = false;
+        }
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    private void eadItem(Actor item) {
+        if (item instanceof Item && !((Item) item).isBroken()) {
+            return;
+        }
+        if (item instanceof BombItem) {
+            maxBomb++;
+            item.remove();
+        } else if (item instanceof SpeedItem) {
+            speed += 1;
+            item.remove();
+        } else if (item instanceof FlameItem) {
+            //TODO: raise flame length.
+            item.remove();
+        } else if (item instanceof Portal) {
+            if (Enemy.numberEnemy == 0) {
+                //TODO: next Level.
+            }
+        }
+    }
+
+    private boolean canPlaceBomb() {
+        return listBomb.size() < maxBomb;
+    }
+
+    private void placeBomb(float x, float y) {
+        if (canPlaceBomb()) {
+            float currentX = Math.round(getX() / 32) * 32;
+            float currentY = Math.round(getY() / 32) * 32;
+            Bomb newBomb = new Bomb(currentX, currentY);
+            listBomb.add(newBomb);
+            stageScreen.addActor(newBomb);
+        }
+    }
+
+    private void removeBombExplored() {
+        for (int i = 0; i < listBomb.size(); i++) {
+//            if (listBomb.get(i).isExplored()) {
+//                listBomb.remove(listBomb.get(i));
+//                i--;
+//            }
+        }
     }
 }

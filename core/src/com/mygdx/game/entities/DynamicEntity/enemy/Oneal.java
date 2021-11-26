@@ -66,6 +66,7 @@ public class Oneal extends Enemy {
         if (positionX == this.getStage().getWidth()) {
             positionX = 0;
         }
+        setPositionInMatrix(positionX, positionY, '2');
     }
 
     @Override
@@ -76,6 +77,7 @@ public class Oneal extends Enemy {
         if (positionX == 0) {
             positionX = this.getStage().getWidth();
         }
+        setPositionInMatrix(positionX, positionY, '2');
     }
 
     @Override
@@ -86,6 +88,7 @@ public class Oneal extends Enemy {
         if (positionY == this.getStage().getHeight()) {
             positionY = 0;
         }
+        setPositionInMatrix(positionX, positionY, '2');
     }
 
     @Override
@@ -96,6 +99,7 @@ public class Oneal extends Enemy {
         if (positionY == 0) {
             positionY = this.getStage().getHeight();
         }
+        setPositionInMatrix(positionX, positionY, '2');
     }
 
     @Override

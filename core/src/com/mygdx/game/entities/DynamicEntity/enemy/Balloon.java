@@ -40,7 +40,10 @@ public class Balloon extends Enemy {
             animation = GameManager.balloonDeadDynamic.getValue();
             dem++;
             if (dem == 100) {
+                System.out.print(numberEnemy + " ; ");
                 remove();
+                numberEnemy--;
+                System.out.println(numberEnemy);
             }
             return;
         }
@@ -63,6 +66,7 @@ public class Balloon extends Enemy {
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
         }
+        setPositionInMatrix(positionX, positionY, '1');
     }
 
     @Override
@@ -73,6 +77,7 @@ public class Balloon extends Enemy {
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX -= speed;
         }
+        setPositionInMatrix(positionX, positionY, '1');
     }
 
     @Override
@@ -83,6 +88,7 @@ public class Balloon extends Enemy {
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY += speed;
         }
+        setPositionInMatrix(positionX, positionY, '1');
     }
 
     @Override
@@ -93,6 +99,7 @@ public class Balloon extends Enemy {
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY -= speed;
         }
+        setPositionInMatrix(positionX, positionY, '1');
     }
 
     @Override
