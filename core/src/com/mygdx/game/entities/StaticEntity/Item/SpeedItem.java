@@ -1,12 +1,17 @@
 package com.mygdx.game.entities.StaticEntity.Item;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
+import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.gamesys.GameManager;
 
 public class SpeedItem extends Item {
     private static final int SPEED_BOOST = 10;
+
+    public SpeedItem(float positionX, float positionY){
+        super(positionX, positionY);
+        this.texture = GameManager.speedItem;
+    }
 
     public SpeedItem(Brick brick){
         super(brick);
@@ -36,15 +41,10 @@ public class SpeedItem extends Item {
     }
 
     @Override
-    public void draw(Batch batch, float parentDelta){
-        batch.draw(GameManager.speedItem, positionX, positionY);
-    }
-
-    @Override
-    public void render(){}
-
-    @Override
-    public void dispose(){
-        this.texture.dispose();
+    public void act(float delta){
+        if(positionX == 90 && positionY == 90){
+            getStage().getActors().removeValue(this, true);
+            getStage().addActor(new Grass(positionX, positionY));
+        }
     }
 }

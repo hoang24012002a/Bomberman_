@@ -1,12 +1,6 @@
 package com.mygdx.game.entities.StaticEntity.Bomb;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
 import com.mygdx.game.entities.AnimatedEntity;
-import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
 import com.mygdx.game.gamesys.GameManager;
 
 
@@ -15,48 +9,43 @@ import com.mygdx.game.gamesys.GameManager;
  */
 public class Bomb extends AnimatedEntity {
 
-    protected final float timeToExplode = 2000; // 2000ms
+    protected final int timeToExplode = 3000; // 2000ms
     protected int numberOfBomb = 1;
-    // Frame that must be rendered at each time
-    private TextureRegion currentFrame;
-
 
     public Bomb(float x, float y){
         super(x, y);
-        textureAtlas = GameManager.bombFLick;
-        animation = GameManager.bombFlicker;
+        textureAtlas = GameManager.bombFlick.getKey();
+        animation = GameManager.bombFlick.getValue();
     }
 
     public int getNumberOfBomb() {
         return numberOfBomb;
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-    }
-
+    private int dem = 0;
     @Override
     public void act(float delta) {
-        super.act(delta);
+        final Bomb _this = this;
+        textureAtlas = GameManager.bombFlick.getKey();
+        animation = GameManager.bombFlick.getValue();
+        //TODO: nen lam theo cach nay.
+        dem++;
+        if (dem == 200) {
+            dem = 0;
+            remove();
+        }
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(timeToExplode);
+//                    getStage().getActors().removeValue(_this, true);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+        return;
     }
 
-    @Override
-    public void render(){
-        // Elapsed time
-        elapsedTime += Gdx.graphics.getDeltaTime();
-
-        // Getting the frame we must draw at this moment
-        currentFrame = (TextureRegion) GameManager.flameVerTopLast.getKeyFrame(elapsedTime);
-        // Drawing on the screen
-        batch.begin();
-        batch.draw(currentFrame, positionX + 100, positionY+100);
-        batch.end();
-    }
-
-    @Override
-    public void dispose(){
-        textureAtlas.dispose();
-        texture.dispose();
-    }
 }

@@ -15,6 +15,7 @@ public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
     private int maxBomb = 3;
     private ArrayList<Bomb> listBomb;
+    private boolean canPlace = true;
 
     public Bomber(float x, float y) {
         super(x, y);
@@ -22,7 +23,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
-        speed = 1;
+        speed = 1.5f;
     }
 
     private int dem = 0;
@@ -55,7 +56,7 @@ public class Bomber extends Character {
             moveTop();
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (canPlaceBomb()) {
+            if (canPlace) {
                 placeBomb(getX(), getY());
             }
             return;
@@ -153,11 +154,6 @@ public class Bomber extends Character {
         }
     }
 
-    @Override
-    public void dispose() {
-
-    }
-
     private void eadItem(Actor item) {
         if (item instanceof Item && !((Item) item).isBroken()) {
             return;
@@ -178,12 +174,12 @@ public class Bomber extends Character {
         }
     }
 
-    private boolean canPlaceBomb() {
-        return listBomb.size() < maxBomb;
+    private void canPlaceBomb() {
+        canPlace = listBomb.size() < maxBomb;
     }
 
     private void placeBomb(float x, float y) {
-        if (canPlaceBomb()) {
+        if (canPlace) {
             float currentX = Math.round(getX() / 32) * 32;
             float currentY = Math.round(getY() / 32) * 32;
             Bomb newBomb = new Bomb(currentX, currentY);

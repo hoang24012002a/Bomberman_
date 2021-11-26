@@ -1,16 +1,24 @@
 package com.mygdx.game.entities.StaticEntity.Item;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
+import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.gamesys.GameManager;
 
 public class FlameItem extends Item {
+
     protected int numberOfFlameItem;
+
+
+    public FlameItem(float positionX, float positionY){
+        super(positionX, positionY);
+        this.texture =GameManager.flameItem;
+    }
 
     public FlameItem(Brick brick){
         super(brick);
         this.numberOfFlameItem = 0;
+        this.texture = GameManager.flameItem;
     }
 
     public int getNumberOfFlameItem() {
@@ -35,16 +43,11 @@ public class FlameItem extends Item {
     }
 
     @Override
-    public void draw(Batch batch, float parentDelta){
-        batch.draw(GameManager.flameItem, positionX, positionY);
+    public void act(float delta){
+        if(positionX == 90 && positionY == 90){
+            getStage().getActors().removeValue(this, true);
+            getStage().addActor(new Grass(positionX, positionY));
+        }
     }
 
-    @Override
-    public void render(){}
-
-    @Override
-    public void dispose(){
-        this.texture.dispose();
-        this.numberOfFlameItem = 0;
-    }
 }

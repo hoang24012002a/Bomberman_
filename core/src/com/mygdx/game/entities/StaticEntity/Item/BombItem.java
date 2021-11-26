@@ -1,23 +1,28 @@
 package com.mygdx.game.entities.StaticEntity.Item;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
-import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
+import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.gamesys.GameManager;
 
 public class BombItem extends Item {
-
 
     public BombItem(Brick brick){
         super(brick);
     }
 
+    public BombItem(float positionX, float positionY){
+        super(positionX, positionY);
+        this.texture = GameManager.bombItem;
+    }
+
+
+    //    canBreakable==true &&
     @Override
     public void eatItem(Bomber bomber){
         if(canBreakable==true && positionX == bomber.getPositionX() && positionY == bomber.getPositionY()){
             this.broken = true;
-            this.texture.dispose();
+            getStage().getActors().removeValue(this, true);
         }else
         {
             this.broken = false;
@@ -34,15 +39,11 @@ public class BombItem extends Item {
     }
 
     @Override
-    public void draw(Batch batch, float parentDelta){
-        batch.draw(GameManager.bombItem, positionX, positionY);
+    public void act(float delta){
+        if(positionX == 90&&positionY==90){
+            getStage().getActors().removeValue(this, true);
+            getStage().addActor(new Grass(positionX, positionY));
+        }
     }
 
-    @Override
-    public void render(){}
-
-    @Override
-    public void dispose(){
-        this.texture.dispose();
-    }
 }

@@ -3,28 +3,44 @@ dead.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+<<<<<<< HEAD
 dead_oneal
+=======
+mob_dead1
+>>>>>>> 6b12c4a340dcee849401c19f6f6510bcd27818c2
   rotate: false
   xy: 1, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+<<<<<<< HEAD
 mob_dead1
+=======
+mob_dead2
+>>>>>>> 6b12c4a340dcee849401c19f6f6510bcd27818c2
   rotate: false
   xy: 35, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+<<<<<<< HEAD
 mob_dead2
+=======
+mob_dead3
+>>>>>>> 6b12c4a340dcee849401c19f6f6510bcd27818c2
   rotate: false
   xy: 69, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+<<<<<<< HEAD
 mob_dead3
+=======
+oneal_dead
+>>>>>>> 6b12c4a340dcee849401c19f6f6510bcd27818c2
   rotate: false
   xy: 103, 1
   size: 32, 32

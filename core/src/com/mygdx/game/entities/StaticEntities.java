@@ -1,12 +1,8 @@
 package com.mygdx.game.entities;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
 public abstract class StaticEntities extends Entity{
     protected boolean canBreakable;
-    protected SpriteBatch batch;
+    protected boolean canPass;
 
     public StaticEntities(float positionX, float positionY, boolean canBreakable){
         super(positionX, positionY);
@@ -15,18 +11,23 @@ public abstract class StaticEntities extends Entity{
 
     public StaticEntities(float positionX, float positionY){
         super(positionX, positionY);
+        this.canBreakable = false;
+        this.canPass = false;
     }
 
     public void setCanBreakale(boolean canBreakable){
         this.canBreakable=canBreakable;
     }
 
-    public abstract void draw(Batch batch, float parentDelta);
+    public boolean isCanBreakable() {
+        return canBreakable;
+    }
 
-    //public abstract void create();
+    public boolean isCanPass() {
+        return canPass;
+    }
 
-    //public abstract void render();
-
-    public abstract void dispose();
-
+    public void setCanPass(boolean canPass) {
+        this.canPass = canPass;
+    }
 }

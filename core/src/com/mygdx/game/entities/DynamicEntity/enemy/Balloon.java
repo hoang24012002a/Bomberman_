@@ -28,10 +28,6 @@ public class Balloon extends Enemy {
         }).start();
     }
 
-    @Override
-    public void dispose() {
-
-    }
     private int dem = 0;
     @Override
     public void act(float delta) {

@@ -24,11 +24,6 @@ public class Oneal extends Enemy {
     }
 
     @Override
-    public void dispose() {
-
-    }
-
-    @Override
     public void act(float delta) {
         if (isAlive()) {
             final Oneal _this = this;
