@@ -28,7 +28,7 @@ public class BombGame implements ApplicationListener {
 		Actor bom = new Bomber(10, 10);
 		Actor bomb = new Bomb(200, 200);
 		BombItem bomItem = new BombItem(90, 90);
-		Actor brick = new Brick(150, 150, true);
+		Actor brick = new Brick(150	, 150, true);
 		Actor bl = new Balloon(90, 90);
     	Actor flame = new Flame(stage.getWidth()-50, stage.getHeight()-50);
 //		 no group is ok
@@ -41,8 +41,8 @@ public class BombGame implements ApplicationListener {
 		stage.addActor(bomItem);
 		bomItem.eatItem((Bomber) bom);
 		stage.addActor(brick);
-		stage.addActor(bom);
-		stage.addActor(bomb);
+//		stage.addActor(bom);
+//		stage.addActor(bomb);
 //		stage.addActor(new Grass(50, 50));
 //		stage.addActor(flameManager.getFlames().get(0));
 //		stage.addActor(flameManager.getFlames().get(4));
