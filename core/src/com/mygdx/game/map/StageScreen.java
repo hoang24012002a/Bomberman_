@@ -24,7 +24,6 @@ public class StageScreen extends Stage {
     private Group groupActs;
     public int rows;
     public int columns;
-    public int dem = 0;
     //public Portal portal;
     public Bomber bomber;
     public static ArrayList<Balloon> balloons = new ArrayList<>();
@@ -55,8 +54,8 @@ public class StageScreen extends Stage {
         for(int i = 0 ; i < noActs.size(); i++) {
             groupNoActs.addActor(noActs.get(i));
         }
-        for(int i = 0 ; i < acts.size(); i++) {
-            groupActs.addActor(acts.get(i));
+        for(int i = 0 ; i < balloons.size(); i++) {
+            groupActs.addActor(balloons.get(i));
         }
 
         addActor(groupNoActnoBang);
@@ -79,7 +78,7 @@ public class StageScreen extends Stage {
                 x = -1;
                 y++;
             } else if ((char) c == '#') {
-                Wall wall = new Wall(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                Wall wall = new Wall(x * 32, 384 - y * 32);
                 noActNoBangs.add(wall);
             } else if (Character.toString((char) c).equals("p")) {
                 bomber = new Bomber(x * textureSize, textureSize * (rows-1) - y * textureSize);
@@ -206,25 +205,5 @@ public class StageScreen extends Stage {
         return false;
     }
 
-    public boolean changeOfLevelUp(float x, float y) {
-        /*if (CheckInPortal(x,y)) {
-            return true;
-        }*/
-        if (bomber.getX() == 200) {
-            return true;
-        }
-        return false;
-    }
-
-    public void pauseReal() {
-            for (int i =0; i < balloons.size(); i++) {
-                balloons.get(i).setDirection(5);
-            }
-    }
-
-    // Function addBombg
-    public void addBomb(Actor actor){
-              addActor(actor);
-    }
 
 }
