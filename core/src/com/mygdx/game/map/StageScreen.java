@@ -22,6 +22,7 @@ public class StageScreen extends Stage {
     private Group groupNoActnoBang;
     private Group groupNoActs;
     private Group groupActs;
+    //private ArrayList<Actor> bombAround = new ArrayList<>();
     public int rows;
     public int columns;
     public int dem = 0;
@@ -113,12 +114,12 @@ public class StageScreen extends Stage {
                 noActNoBangs.add(grass);
             }
             if (x < columns && x != -1) {
-                if((char)c == '*' || (char)c == '#') {
-                    mapMatrix[y][x] = '0';
+                if((char)c == '*' || (char)c == '#' || (char)c == 'f' || (char)c == 'b' || (char)c == 's') {
+                    mapMatrix[rows-1-y][x] = '0';
                 } else if ((char)c != 'p' && (char)c != '1' && (char)c != '2' && (char)c != '3' ) {
-                    mapMatrix[y][x] = 'n';
+                    mapMatrix[rows-1-y][x] = 'n';
                 } else {
-                    mapMatrix[y][x] = (char)c;
+                    mapMatrix[rows-1-y][x] = (char)c;
                 }
             }
             x++;
@@ -216,11 +217,11 @@ public class StageScreen extends Stage {
         return false;
     }
 
-    public void pauseReal() {
+   /* public void pauseReal() {
         for (int i =0; i < balloons.size(); i++) {
-            balloons.get(i).setDirection(5);
+            balloons.get(i).;
         }
-    }
+    }*/
 
     // Function addBombg
     public void addBomb(Actor actor){
@@ -228,4 +229,42 @@ public class StageScreen extends Stage {
         groupNoActs.addActor(actor);
     }
 
+    /**
+     * mảng 4 phần tử gạch, tường xung quanh quả bom.
+     * [0]:up,[1]:down,[2]:right,[3]:left;
+     * @param bomb .
+     * @return ArrayList<Actor>
+     */
+    public ArrayList<Actor> bombArounds(Actor bomb) {
+        ArrayList<Actor> bombAround = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            if (getAt(bomb.getX() + 1, textureSize * (i + 1) + bomb.getY()) instanceof Wall
+                    || getAt(bomb.getX() + 1, textureSize * (i + 1) + bomb.getY()) instanceof Brick) {
+                bombAround.add(getAt(bomb.getX() + 1, textureSize * (i + 1) + bomb.getY()));
+                break;
+            }
+        }
+        for (int i = 0; i < 11; i++) {
+            if (getAt(bomb.getX() + 1, textureSize * (-i - 1) + bomb.getY() +2) instanceof Wall
+                    || getAt(bomb.getX() + 1, textureSize * (-i - 1) + bomb.getY() +2) instanceof Brick) {
+                bombAround.add(getAt(bomb.getX() + 1, textureSize * (-i - 1) + bomb.getY()+2));
+                break;
+            }
+        }
+        for (int i = 0; i < 29; i++) {
+            if (getAt(textureSize * (i + 1) + bomb.getX(), bomb.getY() + 1) instanceof Wall
+                    || getAt(textureSize * (i + 1) + bomb.getX(), bomb.getY() + 1) instanceof Brick) {
+                bombAround.add(getAt(textureSize * (i + 1) + bomb.getX(), bomb.getY() + 1));
+                break;
+            }
+        }
+        for (int i = 0; i < 29; i++) {
+            if (getAt(textureSize * (-i - 1) + bomb.getX(), bomb.getY() + 1) instanceof Wall
+                    || getAt(textureSize * (-i - 1) + bomb.getX(), bomb.getY() + 1) instanceof Brick) {
+                bombAround.add(getAt(textureSize * (-i - 1) + bomb.getX(), bomb.getY() + 1));
+                break;
+            }
+        }
+        return bombAround;
+    }
 }
