@@ -12,34 +12,26 @@ public class Balloon extends Enemy {
         speed = 0.5f;
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
-        //random direction per 1.5s
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (alive) {
-                        Thread.sleep(1500);
-                        direction = calculateDir();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
-    private int dem = 0;
+    private int timeKill = 0;
+    private int timeChangeDirection = 0;
     @Override
     public void act(float delta) {
+        timeChangeDirection++;
+        if (timeChangeDirection == 20) {
+            direction = calculateDir();
+            timeChangeDirection = 0;
+        }
         if (!isAlive()) {
             textureAtlas = GameManager.balloonDeadDynamic.getKey();
             animation = GameManager.balloonDeadDynamic.getValue();
-            dem++;
-            if (dem == 100) {
-                System.out.print(numberEnemy + " ; ");
+            timeKill++;
+            if (timeKill == 100) {
+                setPositionInMatrix(getX(), getY(), 'n');
+                stageScreen.remove(this);
                 remove();
                 numberEnemy--;
-                System.out.println(numberEnemy);
             }
             return;
         }

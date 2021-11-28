@@ -59,24 +59,30 @@ public class FlameManager extends Flame {
         flameItem++;
     }
 
+    private int dem = 0;
     @Override
     public void act(float delta){
         final FlameManager flameManager = this;
         final Array<Flame> _this = flames;
-    new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                try {
-                  Thread.sleep(timeExp);
-                  getStage().getActors().removeAll(_this, true);
-                  flames.removeAll(flames, true);
-                  System.out.println("run");
-                } catch (InterruptedException e) {
-                  e.printStackTrace();
-                }
-              }
-            })
-        .start();
+        dem++;
+        if (dem == 200) {
+            remove();
+            flames.removeAll(flames, true);
+        }
+//        new Thread(
+//                new Runnable() {
+//                  @Override
+//                  public void run() {
+//                    try {
+//                      Thread.sleep(timeExp);
+//                      getStage().getActors().removeAll(_this, true);
+//                      flames.removeAll(flames, true);
+//                      System.out.println("run");
+//                    } catch (InterruptedException e) {
+//                      e.printStackTrace();
+//                    }
+//                  }
+//                })
+//            .start();
     }
 }

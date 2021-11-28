@@ -15,10 +15,11 @@ public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
     private int maxBomb = 3;
     private ArrayList<Bomb> listBomb;
-    private boolean canPlace = true;
+    public static Bomber bomber;
 
     public Bomber(float x, float y) {
         super(x, y);
+        bomber = this;
         listBomb = new ArrayList<>();
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
@@ -36,7 +37,6 @@ public class Bomber extends Character {
             textureAtlas = GameManager.playerDeadDynamic.getKey();
             animation = GameManager.playerDeadDynamic.getValue();
             if (dem == 96) {
-                System.out.println(getX() + " : " + getY());
                 remove();
                 dem = 0;
             }
@@ -55,9 +55,10 @@ public class Bomber extends Character {
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveTop();
             return;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (canPlace) {
-                placeBomb(getX(), getY());
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            if (canPlaceBomb()) {
+                System.out.println(stageScreen.Stringmap());
+                placeBomb();
             }
             return;
         }
@@ -174,26 +175,30 @@ public class Bomber extends Character {
         }
     }
 
-    private void canPlaceBomb() {
-        canPlace = listBomb.size() < maxBomb;
+    private boolean canPlaceBomb() {
+        float currentX = Math.round(getX() / 32) * 32;
+        float currentY = Math.round(getY() / 32) * 32;
+        Actor actor = stageScreen.getAt(currentX, currentY);
+        if (listBomb.size() >= maxBomb) {
+            return false;
+        }
+        return !(actor instanceof Bomb) && !(actor instanceof Item);
     }
 
-    private void placeBomb(float x, float y) {
-        if (canPlace) {
-            float currentX = Math.round(getX() / 32) * 32;
-            float currentY = Math.round(getY() / 32) * 32;
-            Bomb newBomb = new Bomb(currentX, currentY);
-            listBomb.add(newBomb);
-            stageScreen.addActor(newBomb);
-        }
+    private void placeBomb() {
+        float currentX = Math.round(getX() / 32) * 32;
+        float currentY = Math.round(getY() / 32) * 32;
+        Bomb newBomb = new Bomb(currentX, currentY);
+        listBomb.add(newBomb);
+        stageScreen.addBomb(newBomb);
     }
 
     private void removeBombExplored() {
         for (int i = 0; i < listBomb.size(); i++) {
-//            if (listBomb.get(i).isExplored()) {
-//                listBomb.remove(listBomb.get(i));
-//                i--;
-//            }
+            if (listBomb.get(i).isExplored()) {
+                listBomb.remove(listBomb.get(i));
+                i--;
+            }
         }
     }
 }
