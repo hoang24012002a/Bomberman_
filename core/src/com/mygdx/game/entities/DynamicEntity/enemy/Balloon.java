@@ -27,11 +27,14 @@ public class Balloon extends Enemy {
             textureAtlas = GameManager.balloonDeadDynamic.getKey();
             animation = GameManager.balloonDeadDynamic.getValue();
             timeKill++;
+            if (timeKill == 10) {
+                GameManager.balloonDeadSound.play();
+            }
             if (timeKill == 100) {
                 setPositionInMatrix(getX(), getY(), 'n');
                 stageScreen.remove(this);
-                remove();
                 numberEnemy--;
+                remove();
             }
             return;
         }

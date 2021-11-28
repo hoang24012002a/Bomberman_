@@ -27,18 +27,21 @@ public class Bomber extends Character {
         speed = 1.5f;
     }
 
-    private int dem = 0;
+    private int timeKill = 0;
     @Override
     public void act(float delta) {
         removeBombExplored();
         killed();
         if (!alive) {
-            dem++;
+            timeKill++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
             animation = GameManager.playerDeadDynamic.getValue();
-            if (dem == 96) {
+            if (timeKill == 10) {
+                GameManager.playerDeadSound.play();
+            }
+            if (timeKill == 92) {
                 remove();
-                dem = 0;
+                timeKill = 0;
             }
             return;
         }
@@ -57,7 +60,6 @@ public class Bomber extends Character {
             return;
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if (canPlaceBomb()) {
-                System.out.println(stageScreen.Stringmap());
                 placeBomb();
             }
             return;
@@ -87,6 +89,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerRightDynamic.getKey();
         animation = GameManager.playerRightDynamic.getValue();
         if (canMoveRight()) {
+            eadItem(stageScreen.getAt(positionX + 33, positionY + 16));
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
         }
@@ -99,6 +102,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerLeftDynamic.getKey();
         animation = GameManager.playerLeftDynamic.getValue();
         if (canMoveLeft()) {
+            eadItem(stageScreen.getAt(positionX - 1, positionY + 16));
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX -= speed;
         }
@@ -111,6 +115,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerUpDynamic.getKey();
         animation = GameManager.playerUpDynamic.getValue();
         if (canMoveTop()) {
+            eadItem(stageScreen.getAt(positionX + 16, positionY + 33));
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY += speed;
         }
@@ -123,6 +128,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerDownDynamic.getKey();
         animation = GameManager.playerDownDynamic.getValue();
         if (canMoveBottom()) {
+            eadItem(stageScreen.getAt(positionX + 16, positionY - 1));
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY -= speed;
         }
@@ -136,10 +142,6 @@ public class Bomber extends Character {
         Actor actor1 = stageScreen.getAt(getX() + 16, getY() + 33);
         Actor actor2 = stageScreen.getAt(getX() + 33, getY() + 16);
         Actor actor3 = stageScreen.getAt(getX() + 16, getY() - 1);
-        eadItem(actor);
-        eadItem(actor1);
-        eadItem(actor2);
-        eadItem(actor3);
         if (actor instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
             return false;
         } else if (actor instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
@@ -156,18 +158,22 @@ public class Bomber extends Character {
     }
 
     private void eadItem(Actor item) {
-        if (item instanceof Item && !((Item) item).isBroken()) {
+        if (!(item instanceof Item) || !((Item) item).isBroken()) {
             return;
         }
+        GameManager.eatItemSound.play();
         if (item instanceof BombItem) {
             maxBomb++;
             item.remove();
+            stageScreen.remove(item);
         } else if (item instanceof SpeedItem) {
             speed += 1;
             item.remove();
+            stageScreen.remove(item);
         } else if (item instanceof FlameItem) {
             //TODO: raise flame length.
             item.remove();
+            stageScreen.remove(item);
         } else if (item instanceof Portal) {
             if (Enemy.numberEnemy == 0) {
                 //TODO: next Level.
@@ -191,6 +197,7 @@ public class Bomber extends Character {
         Bomb newBomb = new Bomb(currentX, currentY);
         listBomb.add(newBomb);
         stageScreen.addBomb(newBomb);
+        GameManager.placeBombSound.play();
     }
 
     private void removeBombExplored() {

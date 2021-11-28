@@ -30,11 +30,14 @@ public class Oneal extends Enemy {
             textureAtlas = GameManager.onealDeadDynamic.getKey();
             animation = GameManager.onealDeadDynamic.getValue();
             timeKill++;
+            if (timeKill == 10) {
+                GameManager.onealDeadSound.play();
+            }
             if (timeKill == 100) {
                 setPositionInMatrix(getX(), getY(), 'n');
                 stageScreen.remove(this);
-                remove();
                 numberEnemy--;
+                remove();
             }
             return;
         }
@@ -100,7 +103,6 @@ public class Oneal extends Enemy {
         if (canMoveLeft()) dir.add(0);
         if (canMoveRight()) dir.add(2);
         if (canMoveTop()) dir.add(1);
-        boolean check = false;
         double distance = Float.MAX_VALUE;
         int min = 0;
         for (int i = 0; i < dir.size(); i++) {
