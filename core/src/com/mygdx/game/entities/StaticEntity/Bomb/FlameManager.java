@@ -12,6 +12,7 @@ public class FlameManager extends Flame {
         super(positionX, positionY);
         this.flames = new Array<>(flameItem*2+5);
         addFlame();
+        checkExploded();
         outPos();
     }
     public FlameManager(Flame flame){
@@ -40,6 +41,80 @@ public class FlameManager extends Flame {
         }
     }
 
+    public void removeLeftFlame(){
+        /**
+         * TO DO:  get positionX of brick and wall nearest
+         * */
+        float posXNearest = 236;
+        Array.ArrayIterator<Flame> iterator = flames.iterator();
+        if(positionX-getFlameLengt() <= posXNearest){
+            while (iterator.hasNext()){
+                Flame temp  = iterator.next();
+                if(temp.getPositionX() <= posXNearest){
+                    flames.removeValue(temp, true);
+                }
+            }
+        }
+    }
+
+    public void removeRightFlame(){
+        /**
+         * TO DO: get positionX of brick and wall nearest
+         * */
+        float posXNearest = 364;
+        Array.ArrayIterator<Flame> iterator = flames.iterator();
+        if(positionX+getFlameLengt() >= posXNearest){
+            while (iterator.hasNext()){
+                Flame temp  = iterator.next();
+                if(temp.getPositionX() >= posXNearest){
+                    flames.removeValue(temp, true);
+                }
+            }
+        }
+    }
+
+    public void removeTopFlame(){
+        /**
+         * TO DO: get positionY of brick and wall nearest
+         * */
+        float posYNearest = 364;
+        Array.ArrayIterator<Flame> iterator = flames.iterator();
+        if(positionY+getFlameLengt()>=posYNearest){
+            while (iterator.hasNext()){
+                Flame temp = iterator.next();
+                if(temp.getPositionY()>=posYNearest){
+                    flames.removeValue(temp, true);
+                }
+            }
+        }
+    }
+
+    public void removeDownFLame(){
+        /**
+         * TO DO: get positionY of brick and wall nearest
+         * */
+        float posYNearest = 236;
+        Array.ArrayIterator<Flame> iterator = flames.iterator();
+        if((positionY-getFlameLengt())<=posYNearest){
+            while (iterator.hasNext()){
+                Flame temp = iterator.next();
+                if(temp.getPositionY() <= posYNearest){
+                    flames.removeValue(temp, true);
+                }
+            }
+        }
+    }
+
+    public float getFlameLengt(){
+        return (FlameManager.flameItem+1)*32;
+    }
+
+    public void checkExploded(){
+        removeLeftFlame();
+        removeRightFlame();
+        removeTopFlame();
+        removeDownFLame();
+    }
 
     public void outPos(){
         for(int i = 0; i < flames.size; i++){
@@ -55,7 +130,7 @@ public class FlameManager extends Flame {
         return flames.size;
     }
 
-    public void update(){
+    public void updateItem(){
         flameItem++;
     }
 
