@@ -1,5 +1,6 @@
 package com.mygdx.game.map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,9 +16,9 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class StageScreen extends Stage {
-    private final static String LV1 ="core\\assets\\level\\Lv1.txt";
-    private final static String LV2 ="core\\assets\\level\\Lv2.txt";
-    private final static String LV3 ="core\\assets\\level\\Lv3.txt";
+    private final static String LV1 = "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv1.txt";
+    private final static String LV2 =".\\core\\assets\\level\\Lv2.txt";
+    private final static String LV3 =".\\core\\assets\\level\\Lv3.txt";
     private final static int textureSize = 32;
     private Group groupNoActnoBang;
     private Group groupNoActs;
