@@ -21,7 +21,7 @@ public abstract class Character extends AnimatedEntity {
         map = stageScreen.mapMatrix;
     }
 
-    protected boolean canMoveRight() {
+    public boolean canMoveRight() {
         Actor actor = stageScreen.getAt(getX() + 32 + 1, getY() + 32 * 0.5f);
         if (actor instanceof Brick) {
             return false;
@@ -35,7 +35,7 @@ public abstract class Character extends AnimatedEntity {
         return true;
     }
 
-    protected boolean canMoveLeft() {
+    public boolean canMoveLeft() {
         Actor actor = stageScreen.getAt(getX() - 1, getY() + 32 * 0.5f);
         if (actor instanceof Brick) {
             return false;
@@ -49,7 +49,7 @@ public abstract class Character extends AnimatedEntity {
         return true;
     }
 
-    protected boolean canMoveTop() {
+    public boolean canMoveTop() {
         Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() + 32 + 1);
         if (actor instanceof Brick) {
             return false;
@@ -63,7 +63,7 @@ public abstract class Character extends AnimatedEntity {
         return true;
     }
 
-    protected boolean canMoveBottom() {
+    public boolean canMoveBottom() {
         Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() - 1);
         if (actor instanceof Brick) {
             return false;
@@ -94,7 +94,10 @@ public abstract class Character extends AnimatedEntity {
 
     public abstract boolean isAlive();
 
-    public abstract void killed();
+    public void killed() {
+        alive = false;
+    }
+
 
     protected abstract void moveRight();
 

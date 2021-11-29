@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
-    private int maxBomb = 3;
+    private int maxBomb = 2;
     private ArrayList<Bomb> listBomb;
     public static Bomber bomber;
 
@@ -31,8 +31,7 @@ public class Bomber extends Character {
     @Override
     public void act(float delta) {
         removeBombExplored();
-        killed();
-        if (!alive) {
+        if (!isAlive()) {
             timeKill++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
             animation = GameManager.playerDeadDynamic.getValue();
@@ -41,7 +40,7 @@ public class Bomber extends Character {
             }
             if (timeKill == 92) {
                 remove();
-                timeKill = 0;
+                stageScreen.remove(this);
             }
             return;
         }
@@ -138,23 +137,21 @@ public class Bomber extends Character {
 
     @Override
     public boolean isAlive() {
+        if (!alive) {
+            return false;
+        }
         Actor actor = stageScreen.getAt(getX() - 1, getY() + 16);
         Actor actor1 = stageScreen.getAt(getX() + 16, getY() + 33);
         Actor actor2 = stageScreen.getAt(getX() + 33, getY() + 16);
         Actor actor3 = stageScreen.getAt(getX() + 16, getY() - 1);
         if (actor instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
+            alive = false;
             return false;
         } else if (actor instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
+            alive = false;
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void killed() {
-        if (!isAlive()) {
-            alive = false;
-        }
     }
 
     private void eadItem(Actor item) {

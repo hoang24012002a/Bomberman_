@@ -119,7 +119,7 @@ public class GameManager extends AssetManager {
 
     private static final TextureAtlas dollRight = new TextureAtlas(Gdx.files.internal("img/enemy/doll/right/right.atlas"));
     public static final Pair<TextureAtlas, Animation> dollRightDynamic = new Pair<TextureAtlas, Animation>(dollRight,
-            new Animation(1/6.f, balloonRight.getRegions()));
+            new Animation(1/6.f, dollRight.getRegions()));
 
     //kondoria.
     private static final TextureAtlas kondoriaDead = new TextureAtlas(Gdx.files.internal("img/enemy/kondoria/dead/dead.atlas"));
@@ -161,6 +161,8 @@ public class GameManager extends AssetManager {
             new Animation(1/6.f, onealRight.getRegions()));
 
     public static final Sound playerDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Die.ogg"));
+
+    public static final Sound dollDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/EnemyDie.ogg"));
 
     public static final Sound balloonDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/EnemyDie1.ogg"));
 

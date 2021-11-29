@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
+import com.mygdx.game.entities.DynamicEntity.enemy.Doll;
 import com.mygdx.game.entities.DynamicEntity.enemy.Oneal;
 import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
 import com.mygdx.game.entities.StaticEntity.Item.Portal;
@@ -110,6 +111,9 @@ public class StageScreen extends Stage {
             } else if (Character.toString((char) c).equals("2")) {
                 Actor oneal = new Oneal(x * 32, 384 - y * 32);
                 acts.add(oneal);
+            } else if (Character.toString((char) c).equals("3")) {
+                Actor doll = new Doll(x * 32, 384 - y * 32);
+                acts.add(doll);
             }
             if (Character.toString((char) c).equals(" ") || (!Character.toString((char) c).equals("#")
                     && !Character.toString((char) c).equals("x") && !Character.toString((char) c).equals("\r"))) {

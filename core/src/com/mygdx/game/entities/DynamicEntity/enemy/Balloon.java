@@ -1,14 +1,12 @@
 package com.mygdx.game.entities.DynamicEntity.enemy;
 
-import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_random;
+import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_Low;
 import com.mygdx.game.gamesys.GameManager;
 
-import java.util.ArrayList;
-
 public class Balloon extends Enemy {
-
     public Balloon(float x, float y) {
         super(x, y);
+        ai = new AI_Low(this);
         speed = 0.5f;
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
@@ -19,7 +17,7 @@ public class Balloon extends Enemy {
     @Override
     public void act(float delta) {
         timeChangeDirection++;
-        if (timeChangeDirection == 20) {
+        if (timeChangeDirection == 40) {
             direction = calculateDir();
             timeChangeDirection = 0;
         }
@@ -95,12 +93,6 @@ public class Balloon extends Enemy {
 
     @Override
     protected int calculateDir() {
-        ArrayList<Integer> dir = new ArrayList<>();
-        if (canMoveBottom()) dir.add(3);
-        if (canMoveLeft()) dir.add(0);
-        if (canMoveRight()) dir.add(2);
-        if (canMoveTop()) dir.add(1);
-        int index = AI_random.random(dir.size());
-        return dir.get(index);
+        return ai.calDir();
     }
 }
