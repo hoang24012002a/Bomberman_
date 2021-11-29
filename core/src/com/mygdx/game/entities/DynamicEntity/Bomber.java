@@ -31,7 +31,7 @@ public class Bomber extends Character {
     @Override
     public void act(float delta) {
         removeBombExplored();
-        if (!isAlive()) {
+        if (!alive) {
             timeKill++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
             animation = GameManager.playerDeadDynamic.getValue();
@@ -88,7 +88,12 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerRightDynamic.getKey();
         animation = GameManager.playerRightDynamic.getValue();
         if (canMoveRight()) {
-            eadItem(stageScreen.getAt(positionX + 33, positionY + 16));
+            Actor actor = stageScreen.getAt(positionX + 33, positionY + 16);
+            eadItem(actor);
+            if (!isAlive(actor))  {
+                killed();
+                return;
+            }
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
         }
@@ -101,7 +106,12 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerLeftDynamic.getKey();
         animation = GameManager.playerLeftDynamic.getValue();
         if (canMoveLeft()) {
-            eadItem(stageScreen.getAt(positionX - 1, positionY + 16));
+            Actor actor = stageScreen.getAt(positionX - 1, positionY + 16);
+            eadItem(actor);
+            if (!isAlive(actor))  {
+                killed();
+                return;
+            }
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX -= speed;
         }
@@ -114,7 +124,12 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerUpDynamic.getKey();
         animation = GameManager.playerUpDynamic.getValue();
         if (canMoveTop()) {
-            eadItem(stageScreen.getAt(positionX + 16, positionY + 33));
+            Actor actor = stageScreen.getAt(positionX + 16, positionY + 33);
+            eadItem(actor);
+            if (!isAlive(actor))  {
+                killed();
+                return;
+            }
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY += speed;
         }
@@ -127,7 +142,12 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerDownDynamic.getKey();
         animation = GameManager.playerDownDynamic.getValue();
         if (canMoveBottom()) {
-            eadItem(stageScreen.getAt(positionX + 16, positionY - 1));
+            Actor actor = stageScreen.getAt(positionX + 16, positionY - 1);
+            eadItem(actor);
+            if (!isAlive(actor))  {
+                killed();
+                return;
+            }
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY -= speed;
         }
@@ -136,19 +156,11 @@ public class Bomber extends Character {
     }
 
     @Override
-    public boolean isAlive() {
+    public boolean isAlive(Actor actor) {
         if (!alive) {
             return false;
         }
-        Actor actor = stageScreen.getAt(getX() - 1, getY() + 16);
-        Actor actor1 = stageScreen.getAt(getX() + 16, getY() + 33);
-        Actor actor2 = stageScreen.getAt(getX() + 33, getY() + 16);
-        Actor actor3 = stageScreen.getAt(getX() + 16, getY() - 1);
-        if (actor instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
-            alive = false;
-            return false;
-        } else if (actor instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
-            alive = false;
+        if (actor instanceof Enemy || actor instanceof Flame) {
             return false;
         }
         return true;

@@ -92,7 +92,7 @@ public abstract class Character extends AnimatedEntity {
         }
     }
 
-    public abstract boolean isAlive();
+    public abstract boolean isAlive(Actor actor);
 
     public void killed() {
         alive = false;
