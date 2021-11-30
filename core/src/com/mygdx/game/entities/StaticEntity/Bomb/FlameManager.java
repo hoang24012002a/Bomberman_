@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entities.AnimatedEntity;
 import com.mygdx.game.gamesys.GameManager;
 import com.mygdx.game.map.StageScreen;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 
@@ -108,7 +109,7 @@ public class FlameManager extends Flame {
         }
     }
 
-    public float getFlameLengt(){
+    public static float getFlameLengt(){
         return (FlameManager.flameItem+1)*32;
     }
 
