@@ -3,6 +3,7 @@ package com.mygdx.game.gamesys;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -118,7 +119,7 @@ public class GameManager extends AssetManager {
 
     private static final TextureAtlas dollRight = new TextureAtlas(Gdx.files.internal("img/enemy/doll/right/right.atlas"));
     public static final Pair<TextureAtlas, Animation> dollRightDynamic = new Pair<TextureAtlas, Animation>(dollRight,
-            new Animation(1/6.f, balloonRight.getRegions()));
+            new Animation(1/6.f, dollRight.getRegions()));
 
     //kondoria.
     private static final TextureAtlas kondoriaDead = new TextureAtlas(Gdx.files.internal("img/enemy/kondoria/dead/dead.atlas"));
@@ -158,5 +159,17 @@ public class GameManager extends AssetManager {
     private static final TextureAtlas onealRight = new TextureAtlas(Gdx.files.internal("img/enemy/oneal/right/right.atlas"));
     public static final Pair<TextureAtlas, Animation> onealRightDynamic = new Pair<TextureAtlas, Animation>(onealRight,
             new Animation(1/6.f, onealRight.getRegions()));
+
+    public static final Sound playerDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Die.ogg"));
+
+    public static final Sound dollDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/EnemyDie.ogg"));
+
+    public static final Sound balloonDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/EnemyDie1.ogg"));
+
+    public static final Sound onealDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/EnemyDie2.ogg"));
+
+    public static final Sound placeBombSound = Gdx.audio.newSound(Gdx.files.internal("sounds/PlaceBomb.ogg"));
+
+    public static final Sound eatItemSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Powerup.ogg"));
 }
 

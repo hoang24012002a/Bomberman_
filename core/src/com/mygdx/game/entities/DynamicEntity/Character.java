@@ -2,6 +2,7 @@ package com.mygdx.game.entities.DynamicEntity;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.entities.AnimatedEntity;
+import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
 import com.mygdx.game.entities.StaticEntity.Item.Item;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.entities.StaticEntity.Tile.Wall;
@@ -20,54 +21,58 @@ public abstract class Character extends AnimatedEntity {
         map = stageScreen.mapMatrix;
     }
 
-    protected boolean canMoveRight() {
-        Actor actor = stageScreen.getAt(getX() + 32 + 1, getY() + 32 * 0.3f);
-        Actor actor1 = stageScreen.getAt(getX() + 32 + 1, getY() + 32 * 0.7f);
-        if (actor instanceof Brick || actor1 instanceof Brick) {
+    public boolean canMoveRight() {
+        Actor actor = stageScreen.getAt(getX() + 32 + 1, getY() + 32 * 0.5f);
+        if (actor instanceof Brick) {
             return false;
-        } else if (actor instanceof Wall || actor1 instanceof Wall) {
+        } else if (actor instanceof Wall) {
             return false;
-        } else if (actor instanceof Item && actor1 instanceof Item) {
+        } else if (actor instanceof Item) {
             return ((Item) actor).isBroken();
+        } else if (actor instanceof Bomb) {
+            return false;
         }
         return true;
     }
 
-    protected boolean canMoveLeft() {
-        Actor actor = stageScreen.getAt(getX() - 1, getY() + 32 * 0.3f);
-        Actor actor1 = stageScreen.getAt(getX() - 1, getY() + 32 * 0.7f);
-        if (actor instanceof Brick || actor1 instanceof Brick) {
+    public boolean canMoveLeft() {
+        Actor actor = stageScreen.getAt(getX() - 1, getY() + 32 * 0.5f);
+        if (actor instanceof Brick) {
             return false;
-        } else if (actor instanceof Wall || actor1 instanceof Wall) {
+        } else if (actor instanceof Wall) {
             return false;
-        } else if (actor instanceof Item && actor1 instanceof Item) {
+        } else if (actor instanceof Item) {
             return ((Item) actor).isBroken();
+        } else if (actor instanceof Bomb) {
+            return false;
         }
         return true;
     }
 
-    protected boolean canMoveTop() {
-        Actor actor = stageScreen.getAt(getX() + 32 * 0.3f, getY() + 32 + 1);
-        Actor actor1 = stageScreen.getAt(getX() + 32 * 0.7f, getY() + 32 + 1);
-        if (actor instanceof Brick || actor1 instanceof Brick) {
+    public boolean canMoveTop() {
+        Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() + 32 + 1);
+        if (actor instanceof Brick) {
             return false;
-        } else if (actor instanceof Wall || actor1 instanceof Wall) {
+        } else if (actor instanceof Wall) {
             return false;
-        } else if (actor instanceof Item && actor1 instanceof Item) {
+        } else if (actor instanceof Item) {
             return ((Item) actor).isBroken();
+        } else if (actor instanceof Bomb) {
+            return false;
         }
         return true;
     }
 
-    protected boolean canMoveBottom() {
-        Actor actor = stageScreen.getAt(getX() + 32 * 0.3f, getY() - 1);
-        Actor actor1 = stageScreen.getAt(getX() + 32 * 0.7f, getY() - 1);
-        if (actor instanceof Brick || actor1 instanceof Brick) {
+    public boolean canMoveBottom() {
+        Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() - 1);
+        if (actor instanceof Brick) {
             return false;
-        } else if (actor instanceof Wall || actor1 instanceof Wall) {
+        } else if (actor instanceof Wall) {
             return false;
-        } else if (actor instanceof Item && actor1 instanceof Item) {
+        } else if (actor instanceof Item) {
             return ((Item) actor).isBroken();
+        } else if (actor instanceof Bomb) {
+            return false;
         }
         return true;
     }
@@ -77,19 +82,22 @@ public abstract class Character extends AnimatedEntity {
         int y_matrix = Math.round(y / 32);
         stageScreen.mapMatrix[y_matrix][x_matrix] = symbol;
         if (stageScreen.mapMatrix[y_matrix - 1][x_matrix] == symbol) {
-            stageScreen.mapMatrix[y_matrix - 1][x_matrix] = ' ';
+            stageScreen.mapMatrix[y_matrix - 1][x_matrix] = 'n';
         } else if (stageScreen.mapMatrix[y_matrix + 1][x_matrix] == symbol) {
-            stageScreen.mapMatrix[y_matrix + 1][x_matrix] = ' ';
+            stageScreen.mapMatrix[y_matrix + 1][x_matrix] = 'n';
         } else if (stageScreen.mapMatrix[y_matrix][x_matrix - 1] == symbol) {
-            stageScreen.mapMatrix[y_matrix][x_matrix - 1] = ' ';
+            stageScreen.mapMatrix[y_matrix][x_matrix - 1] = 'n';
         } else if (stageScreen.mapMatrix[y_matrix][x_matrix + 1] == symbol) {
-            stageScreen.mapMatrix[y_matrix][x_matrix + 1] = ' ';
+            stageScreen.mapMatrix[y_matrix][x_matrix + 1] = 'n';
         }
     }
 
     public abstract boolean isAlive();
 
-    public abstract void killed();
+    public void killed() {
+        alive = false;
+    }
+
 
     protected abstract void moveRight();
 

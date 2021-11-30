@@ -13,12 +13,13 @@ import java.util.ArrayList;
 
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
-    private int maxBomb = 3;
+    private int maxBomb = 2;
     private ArrayList<Bomb> listBomb;
-    private boolean canPlace = true;
+    public static Bomber bomber;
 
     public Bomber(float x, float y) {
         super(x, y);
+        bomber = this;
         listBomb = new ArrayList<>();
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
@@ -26,19 +27,20 @@ public class Bomber extends Character {
         speed = 1.5f;
     }
 
-    private int dem = 0;
+    private int timeKill = 0;
     @Override
     public void act(float delta) {
         removeBombExplored();
-        killed();
-        if (!alive) {
-            dem++;
+        if (!isAlive()) {
+            timeKill++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
             animation = GameManager.playerDeadDynamic.getValue();
-            if (dem == 96) {
-                System.out.println(getX() + " : " + getY());
+            if (timeKill == 10) {
+                GameManager.playerDeadSound.play();
+            }
+            if (timeKill == 92) {
                 remove();
-                dem = 0;
+                stageScreen.remove(this);
             }
             return;
         }
@@ -55,9 +57,9 @@ public class Bomber extends Character {
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveTop();
             return;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (canPlace) {
-                placeBomb(getX(), getY());
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            if (canPlaceBomb()) {
+                placeBomb();
             }
             return;
         }
@@ -86,6 +88,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerRightDynamic.getKey();
         animation = GameManager.playerRightDynamic.getValue();
         if (canMoveRight()) {
+            eadItem(stageScreen.getAt(positionX + 33, positionY + 16));
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
         }
@@ -98,6 +101,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerLeftDynamic.getKey();
         animation = GameManager.playerLeftDynamic.getValue();
         if (canMoveLeft()) {
+            eadItem(stageScreen.getAt(positionX - 1, positionY + 16));
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX -= speed;
         }
@@ -110,6 +114,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerUpDynamic.getKey();
         animation = GameManager.playerUpDynamic.getValue();
         if (canMoveTop()) {
+            eadItem(stageScreen.getAt(positionX + 16, positionY + 33));
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY += speed;
         }
@@ -122,6 +127,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerDownDynamic.getKey();
         animation = GameManager.playerDownDynamic.getValue();
         if (canMoveBottom()) {
+            eadItem(stageScreen.getAt(positionX + 16, positionY - 1));
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY -= speed;
         }
@@ -131,42 +137,40 @@ public class Bomber extends Character {
 
     @Override
     public boolean isAlive() {
+        if (!alive) {
+            return false;
+        }
         Actor actor = stageScreen.getAt(getX() - 1, getY() + 16);
         Actor actor1 = stageScreen.getAt(getX() + 16, getY() + 33);
         Actor actor2 = stageScreen.getAt(getX() + 33, getY() + 16);
         Actor actor3 = stageScreen.getAt(getX() + 16, getY() - 1);
-        eadItem(actor);
-        eadItem(actor1);
-        eadItem(actor2);
-        eadItem(actor3);
         if (actor instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
+            alive = false;
             return false;
         } else if (actor instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
+            alive = false;
             return false;
         }
         return true;
     }
 
-    @Override
-    public void killed() {
-        if (!isAlive()) {
-            alive = false;
-        }
-    }
-
     private void eadItem(Actor item) {
-        if (item instanceof Item && !((Item) item).isBroken()) {
+        if (!(item instanceof Item) || !((Item) item).isBroken()) {
             return;
         }
+        GameManager.eatItemSound.play();
         if (item instanceof BombItem) {
             maxBomb++;
             item.remove();
+            stageScreen.remove(item);
         } else if (item instanceof SpeedItem) {
             speed += 1;
             item.remove();
+            stageScreen.remove(item);
         } else if (item instanceof FlameItem) {
             //TODO: raise flame length.
             item.remove();
+            stageScreen.remove(item);
         } else if (item instanceof Portal) {
             if (Enemy.numberEnemy == 0) {
                 //TODO: next Level.
@@ -174,26 +178,31 @@ public class Bomber extends Character {
         }
     }
 
-    private void canPlaceBomb() {
-        canPlace = listBomb.size() < maxBomb;
+    private boolean canPlaceBomb() {
+        float currentX = Math.round(getX() / 32) * 32;
+        float currentY = Math.round(getY() / 32) * 32;
+        Actor actor = stageScreen.getAt(currentX, currentY);
+        if (listBomb.size() >= maxBomb) {
+            return false;
+        }
+        return !(actor instanceof Bomb) && !(actor instanceof Item);
     }
 
-    private void placeBomb(float x, float y) {
-        if (canPlace) {
-            float currentX = Math.round(getX() / 32) * 32;
-            float currentY = Math.round(getY() / 32) * 32;
-            Bomb newBomb = new Bomb(currentX, currentY);
-            listBomb.add(newBomb);
-            stageScreen.addActor(newBomb);
-        }
+    private void placeBomb() {
+        float currentX = Math.round(getX() / 32) * 32;
+        float currentY = Math.round(getY() / 32) * 32;
+        Bomb newBomb = new Bomb(currentX, currentY);
+        listBomb.add(newBomb);
+        stageScreen.addBomb(newBomb);
+        GameManager.placeBombSound.play();
     }
 
     private void removeBombExplored() {
         for (int i = 0; i < listBomb.size(); i++) {
-//            if (listBomb.get(i).isExplored()) {
-//                listBomb.remove(listBomb.get(i));
-//                i--;
-//            }
+            if (listBomb.get(i).isExplored()) {
+                listBomb.remove(listBomb.get(i));
+                i--;
+            }
         }
     }
 }

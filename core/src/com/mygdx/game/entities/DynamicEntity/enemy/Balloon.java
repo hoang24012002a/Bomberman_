@@ -1,45 +1,38 @@
 package com.mygdx.game.entities.DynamicEntity.enemy;
 
-import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_random;
+import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_Low;
 import com.mygdx.game.gamesys.GameManager;
 
-import java.util.ArrayList;
-
 public class Balloon extends Enemy {
-
     public Balloon(float x, float y) {
         super(x, y);
+        ai = new AI_Low(this);
         speed = 0.5f;
         textureAtlas = GameManager.balloonLeftDynamic.getKey();
         animation = GameManager.balloonLeftDynamic.getValue();
-        //random direction per 1.5s
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (alive) {
-                        Thread.sleep(1500);
-                        direction = calculateDir();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
-    private int dem = 0;
+    private int timeKill = 0;
+    private int timeChangeDirection = 0;
     @Override
     public void act(float delta) {
+        timeChangeDirection++;
+        if (timeChangeDirection == 40) {
+            direction = calculateDir();
+            timeChangeDirection = 0;
+        }
         if (!isAlive()) {
             textureAtlas = GameManager.balloonDeadDynamic.getKey();
             animation = GameManager.balloonDeadDynamic.getValue();
-            dem++;
-            if (dem == 100) {
-                System.out.print(numberEnemy + " ; ");
-                remove();
+            timeKill++;
+            if (timeKill == 10) {
+                GameManager.balloonDeadSound.play();
+            }
+            if (timeKill == 100) {
+                setPositionInMatrix(getX(), getY(), 'n');
+                stageScreen.remove(this);
                 numberEnemy--;
-                System.out.println(numberEnemy);
+                remove();
             }
             return;
         }
@@ -100,12 +93,6 @@ public class Balloon extends Enemy {
 
     @Override
     protected int calculateDir() {
-        ArrayList<Integer> dir = new ArrayList<>();
-        if (canMoveBottom()) dir.add(3);
-        if (canMoveLeft()) dir.add(0);
-        if (canMoveRight()) dir.add(2);
-        if (canMoveTop()) dir.add(1);
-        int index = AI_random.random(dir.size());
-        return dir.get(index);
+        return ai.calDir();
     }
 }
