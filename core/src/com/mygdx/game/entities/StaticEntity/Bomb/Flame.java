@@ -64,6 +64,6 @@ public class Flame extends AnimatedEntity {
 //                    }
 //                })
 //                .start();
-        return;
+//        return;
     }
 }
