@@ -4,10 +4,12 @@ import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.gamesys.GameManager;
+import com.mygdx.game.map.StageScreen;
 
 public class FlameItem extends Item {
 
     protected int numberOfFlameItem;
+    protected StageScreen stageScreen;
 
 
     public FlameItem(float positionX, float positionY){
@@ -26,10 +28,11 @@ public class FlameItem extends Item {
     }
 
     @Override
-    public void eatItem(Bomber bomber){
-        if(canBreakable == true && positionX == bomber.getPositionX() && positionY == bomber.getPositionY()){
+    public void eatItem(float x, float y){
+        if(canBreakable == true && positionX == x && positionY == y){
             this.broken = true;
-            this.texture.dispose();
+            remove();
+            stageScreen.addActor(new Grass(positionX, positionY));
         }else{
             this.broken = false;
         }
@@ -42,12 +45,10 @@ public class FlameItem extends Item {
         }
     }
 
-    @Override
-    public void act(float delta){
-        if(positionX == 90 && positionY == 90){
-            getStage().getActors().removeValue(this, true);
-            getStage().addActor(new Grass(positionX, positionY));
-        }
-    }
-
+//    @Override
+//    public void act(float delta){
+//        float currentBomberX = stageScreen.bomber.getPositionX();
+//        float currentBomberY = stageScreen.bomber.getPositionY();
+//        eatItem(currentBomberX, currentBomberY);
+//    }
 }

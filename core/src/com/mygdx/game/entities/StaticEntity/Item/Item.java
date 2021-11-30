@@ -25,7 +25,7 @@ public abstract class Item extends StaticEntities {
     }
 
     //    nếu pos Bomber = pos Item xoá Item
-    public abstract void eatItem(Bomber bomber);
+    public abstract void eatItem(float x, float y);
 
     //    show item inside brick
     public abstract void showItem(Brick brickBroken);
