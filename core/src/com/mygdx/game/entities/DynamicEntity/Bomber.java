@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.entities.DynamicEntity.enemy.Enemy;
 import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
 import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
+import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
 import com.mygdx.game.entities.StaticEntity.Item.*;
 import com.mygdx.game.gamesys.GameManager;
 
@@ -169,6 +170,7 @@ public class Bomber extends Character {
             stageScreen.remove(item);
         } else if (item instanceof FlameItem) {
             //TODO: raise flame length.
+            FlameManager.updateItem();
             item.remove();
             stageScreen.remove(item);
         } else if (item instanceof Portal) {
@@ -192,8 +194,10 @@ public class Bomber extends Character {
         float currentX = Math.round(getX() / 32) * 32;
         float currentY = Math.round(getY() / 32) * 32;
         Bomb newBomb = new Bomb(currentX, currentY);
+        FlameManager flameManager = new FlameManager(currentX, currentY);
         listBomb.add(newBomb);
         stageScreen.addBomb(newBomb);
+        stageScreen.addFlames(flameManager);
         GameManager.placeBombSound.play();
     }
 
