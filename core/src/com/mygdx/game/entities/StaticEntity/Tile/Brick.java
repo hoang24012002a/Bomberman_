@@ -1,12 +1,15 @@
 package com.mygdx.game.entities.StaticEntity.Tile;
 
 import com.mygdx.game.entities.StaticEntities;
+import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
 import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
+import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
 import com.mygdx.game.entities.StaticEntity.Item.BombItem;
 import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
 import com.mygdx.game.entities.StaticEntity.Item.Item;
 import com.mygdx.game.entities.StaticEntity.Item.SpeedItem;
 import com.mygdx.game.gamesys.GameManager;
+import com.mygdx.game.map.StageScreen;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,10 +17,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Brick extends StaticEntities {
 
     protected boolean brokenDown;             // nổ hay chưa
-    protected Flame flame;
     protected boolean haveInside;
     protected Item item;
     protected int randomNum = ThreadLocalRandom.current().nextInt(0, 3); // to random Item
+    protected StageScreen stageScreen;
 
     public Brick(float x, float y){
         super(x, y);
@@ -52,32 +55,32 @@ public class Brick extends StaticEntities {
 //   need flame lenght and flame pos to check
     @Override
     public void act(float delta){
-        float flameLeght = 32;  // là cộng cả the last
-        float posFlameX = 90;
-        float posFlameY  = 90;
-        final Brick _this = this;
-
+        // TODO: get flame pos and length
+        float flameLeght = FlameManager.getFlameLengt();  // là cộng cả the last
+        // TODO: get pos and calculate what brick need exp
+        final float toTestX = 150;
+        final float toTestY = 150;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
-                    if(positionX == 150 && positionY == 150){
+                    if(positionX == toTestX && positionY == toTestY){
                         brokenDown = true;
-                        getStage().getActors().removeValue(_this, true);
-                        getStage().addActor(new Flame(positionX, positionY, GameManager.brickExp));
+                        remove();
+                        stageScreen.addActor(new Flame(positionX, positionY, GameManager.brickExp));
                     }
                     Thread.sleep(1000);
                     if(brokenDown){
                         if(haveInside){
                             if(randomNum == 0){
-                                getStage().addActor(new BombItem(positionX, positionY));
+                                stageScreen.addActor(new BombItem(positionX, positionY));
                             }else if(randomNum == 1){
-                                getStage().addActor(new FlameItem(positionX, positionY));
+                                stageScreen.addActor(new FlameItem(positionX, positionY));
                             } else {
-                                getStage().addActor(new SpeedItem(positionX, positionY));
+                                stageScreen.addActor(new SpeedItem(positionX, positionY));
                             }
                         }else{
-                            getStage().addActor(new Grass(positionX, positionY));
+                            stageScreen.addActor(new Grass(positionX, positionY));
                         }
                     }
                 } catch (InterruptedException e){
