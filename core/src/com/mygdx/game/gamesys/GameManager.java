@@ -171,5 +171,31 @@ public class GameManager extends AssetManager {
     public static final Sound placeBombSound = Gdx.audio.newSound(Gdx.files.internal("sounds/PlaceBomb.ogg"));
 
     public static final Sound eatItemSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Powerup.ogg"));
+
+    public static final Sound bombExplodedSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Explosion.ogg"));
+
+    public static final Sound portalAppearSound = Gdx.audio.newSound(Gdx.files.internal("sounds/PortalAppears.ogg"));
+
+    public static final Sound telePortSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Teleport.ogg"));
+
+    public static final Sound kickBombSound = Gdx.audio.newSound(Gdx.files.internal("sounds/KickBomb.ogg"));
+
+    public static final Sound oopsSound = Gdx.audio.newSound(Gdx.files.internal("music/Oops.ogg"));
+
+    public static final Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal("music/GameOver.ogg"));
+
+    public static final Sound victorySound = Gdx.audio.newSound(Gdx.files.internal("music/Victory.ogg"));
+
+    public static final Sound stageClearSound = Gdx.audio.newSound(Gdx.files.internal("music/StageCleared.ogg"));
+
+    public static final Sound backGroundMap1Sound = Gdx.audio.newSound(Gdx.files.internal("music/SuperBomberman-Area1.ogg"));
+
+    public static final Sound backGroundMap2Sound = Gdx.audio.newSound(Gdx.files.internal("music/SuperBomberman-Area2.ogg"));
+
+    public static final Sound backGroundMap3Sound = Gdx.audio.newSound(Gdx.files.internal("music/SuperBomberman-Boss.ogg"));
+
+    public static final Sound pauseSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Pause.ogg"));
+
+    public static final Sound powerUpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Powerup.ogg"));
 }
 
