@@ -1,5 +1,6 @@
 package com.mygdx.game.entities.StaticEntity.Bomb;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
@@ -11,17 +12,18 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 
 public class FlameManager extends Flame {
-    protected Array<Flame> flames;
+    public Array<Flame> flames;
     protected static int flameItem = 0;
     protected final int timeExp = 3000;
     protected StageScreen stageScreen;
 
     public FlameManager(float positionX, float positionY){
         super(positionX, positionY);
-        this.stageScreen =StageScreen.me;
+        this.stageScreen = StageScreen.me;
         this.flames = new Array<>(flameItem*2+5);
         addFlame();
         checkExploded();
+        System.out.println(sizeFlame());
 //        outPos();
     }
     public FlameManager(Flame flame){
@@ -113,6 +115,7 @@ public class FlameManager extends Flame {
         return (FlameManager.flameItem+1)*32;
     }
 
+
     public void checkExploded(){
         ArrayList<Actor> nearest = stageScreen.bombArounds(positionX, positionY);
         removeLeftFlame(nearest.get(3).getX());
@@ -120,8 +123,21 @@ public class FlameManager extends Flame {
         removeTopFlame(nearest.get(0).getY());
         removeDownFLame(nearest.get(1).getY());
     }
+
+//    để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
+    public boolean isBurned(){
+        for(int i = 0; i < sizeFlame(); i++){
+//            System.out.println("burned");
+            if(getFlames().get(i).burned){
+                return true;
+            }
+        }
+        return false;
+    }
+
+//    để check vị trí của flame xem có đúng không
     public void outPos(){
-        for(int i = 0; i < flames.size; i++){
+       for(int i = 0; i < flames.size; i++){
             System.out.println(flames.get(i).getPositionX()+"-"+ flames.get(i).getPositionY());
         }
     }
@@ -134,29 +150,45 @@ public class FlameManager extends Flame {
         return flames.size;
     }
 
+
     public static void updateItem(){
         flameItem++;
     }
 
+//    nếu phát sinh vấn đề
     private int dem = 0;
     @Override
     public void act(float delta){
-        final FlameManager flameManager = this;
-        final Array.ArrayIterator<Flame> iterator = flames.iterator();
-        new Thread(
-                new Runnable() {
-                  @Override
-                  public void run() {
-                        stageScreen.addFlames(flameManager);
-                  }
-                })
-            .start();
+//        final FlameManager flameManager = this;
+//        final Array.ArrayIterator<Flame> iterator = flames.iterator();
+//        new Thread(
+//                new Runnable() {
+//                  @Override
+//                  public void run() {
+//                        stageScreen.addFlames(flameManager);
+//                  }
+//                })
+//            .start();
 //        dem++;
 //        if (dem == 200) {
 //            Array.ArrayIterator<Flame> iterator = flames.iterator();
 //            while (iterator.hasNext()){
-//                getStage().addActor(iterator.next());
+//                stageScreen.remove(iterator.next());
 //            }
 //        }
+//        final FlameManager flameManager = this;
+//        new Thread(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try{
+//                            Thread.sleep(1800);
+//                            stageScreen.addFlames(flameManager);
+//                        }catch (InterruptedException e){
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                })
+//                .start();
     }
 }
