@@ -8,6 +8,7 @@ import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
 import com.mygdx.game.entities.DynamicEntity.enemy.Doll;
 import com.mygdx.game.entities.DynamicEntity.enemy.Oneal;
+import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
 import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
 import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
 import com.mygdx.game.entities.StaticEntity.Item.Portal;
@@ -17,6 +18,7 @@ import com.mygdx.game.entities.StaticEntity.Tile.Wall;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class StageScreen extends Stage {
 //<<<<<<< HEAD
@@ -28,7 +30,7 @@ public class StageScreen extends Stage {
       "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv2.txt";
   private final static String LV3 =
       "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv3.txt";
-    private final static int textureSize = 32;
+    public final static int textureSize = 32;
     private Group groupNoActnoBang;
     private Group groupNoActs;
     private Group groupActs;
@@ -178,22 +180,22 @@ public class StageScreen extends Stage {
      * @param y
      * @return
      */
-    public Actor getAt ( float x, float y) {
-        for (int i = 0; i < acts.size(); i++) {
+    public Actor getAt (float x, float y) {
+        for (int i = acts.size() - 1; i >= 0; i--) {
             if (x >= acts.get(i).getX() && x < acts.get(i).getX() + textureSize) {
                 if (y >= acts.get(i).getY() && y < acts.get(i).getY() + textureSize) {
                     return acts.get(i);
                 }
             }
         }
-        for (int i = 0; i < noActs.size(); i++) {
+        for (int i = noActs.size() - 1; i >= 0 ; i--) {
             if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + textureSize) {
                 if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + textureSize) {
                     return noActs.get(i);
                 }
             }
         }
-        for (int i = 0; i < noActNoBangs.size(); i++) {
+        for (int i = noActNoBangs.size() - 1; i >=0 ; i--) {
             if (x >= noActNoBangs.get(i).getX() && x < noActNoBangs.get(i).getX() + textureSize) {
                 if (y >= noActNoBangs.get(i).getY() && y < noActNoBangs.get(i).getY() + textureSize) {
                     return noActNoBangs.get(i);
@@ -247,10 +249,21 @@ public class StageScreen extends Stage {
     public void addFlames(FlameManager flameManager){
         System.out.println("work");
         for(int i = 0; i < flameManager.sizeFlame(); i++){
-            noActs.add(flameManager.getFlames().get(i));
+            noActs.add(0, flameManager.getFlames().get(i));
             groupNoActs.addActor(flameManager.getFlames().get(i));
         }
+        System.out.println(flameManager.sizeFlame());
     }
+
+    public void removeFlame(FlameManager flameManager) {
+        //System.out.println("work in this method" + flameManager.sizeFlame());
+        for(int i = 0; i < flameManager.sizeFlame(); i++) {
+            //System.out.println("working");
+            remove(flameManager.getFlames().get(i));
+        }
+
+    }
+
 
     /**
      * mảng 4 phần tử gạch, tường xung quanh quả bom.
