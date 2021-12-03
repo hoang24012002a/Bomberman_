@@ -28,7 +28,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Wall) {
             return false;
         } else if (actor instanceof Item) {
-            return ((Item) actor).isBroken();
+            return true;
         } else if (actor instanceof Bomb) {
             return false;
         }
@@ -42,7 +42,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Wall) {
             return false;
         } else if (actor instanceof Item) {
-            return ((Item) actor).isBroken();
+            return true;
         } else if (actor instanceof Bomb) {
             return false;
         }
@@ -56,7 +56,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Wall) {
             return false;
         } else if (actor instanceof Item) {
-            return ((Item) actor).isBroken();
+            return true;
         } else if (actor instanceof Bomb) {
             return false;
         }
@@ -70,7 +70,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Wall) {
             return false;
         } else if (actor instanceof Item) {
-            return ((Item) actor).isBroken();
+            return true;
         } else if (actor instanceof Bomb) {
             return false;
         }
