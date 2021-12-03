@@ -16,12 +16,15 @@ public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
     private int maxBomb = 2;
     private ArrayList<Bomb> listBomb;
+//  thêm một array flame manager để add và xoá như arraylistBom
+    private ArrayList<FlameManager> listFlame;
     public static Bomber bomber;
 
     public Bomber(float x, float y) {
         super(x, y);
         bomber = this;
         listBomb = new ArrayList<>();
+        listFlame = new ArrayList<>();
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
@@ -170,12 +173,13 @@ public class Bomber extends Character {
             stageScreen.remove(item);
         } else if (item instanceof FlameItem) {
             //TODO: raise flame length.
+            //  update độ dài flame lên 1;
             FlameManager.updateItem();
             item.remove();
             stageScreen.remove(item);
         } else if (item instanceof Portal) {
             if (Enemy.numberEnemy == 0) {
-                //TODO: next Level.
+//                TODO: next Level.
             }
         }
     }
@@ -194,19 +198,50 @@ public class Bomber extends Character {
         float currentX = Math.round(getX() / 32) * 32;
         float currentY = Math.round(getY() / 32) * 32;
         Bomb newBomb = new Bomb(currentX, currentY);
-        FlameManager flameManager = new FlameManager(currentX, currentY);
+        final FlameManager flameManager = new FlameManager(currentX, currentY);
         listBomb.add(newBomb);
+        listFlame.add(flameManager);
         stageScreen.addBomb(newBomb);
-        stageScreen.addFlames(flameManager);
+//      Để bắt thời gian biến mất của quả bom khoảng 1,8s
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(1800);
+                    stageScreen.addFlames(flameManager);
+                    GameManager.bombExplodedSound.play();
+                    if(flameManager.isBurned()){
+                        removeFlameBurned();
+                    }
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+//        stageScreen.addFlames(flameManager);
         GameManager.placeBombSound.play();
     }
 
     private void removeBombExplored() {
         for (int i = 0; i < listBomb.size(); i++) {
             if (listBomb.get(i).isExplored()) {
+                stageScreen.remove(listBomb.get(i));
                 listBomb.remove(listBomb.get(i));
                 i--;
             }
         }
     }
+    /**
+     * method này để xoá flame ra khỏi stage + list flame
+     * */
+    private void removeFlameBurned(){
+        for(int i = 0; i < listFlame.size(); i++){
+            if(listFlame.get(i).isBurned()){
+                stageScreen.removeFlame(listFlame.get(i));
+                listFlame.remove(listFlame.get(i));
+                i--;
+            }
+        }
+    }
+
 }
