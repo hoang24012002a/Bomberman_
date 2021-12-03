@@ -3,6 +3,7 @@ package com.mygdx.game.entities.DynamicEntity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entities.DynamicEntity.enemy.Enemy;
 import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
 import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
@@ -16,12 +17,15 @@ public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
     private int maxBomb = 2;
     private ArrayList<Bomb> listBomb;
+    private ArrayList<FlameManager> listflames;
     public static Bomber bomber;
-
+    //private Bomb newBomb ;
+    private boolean check = false;
     public Bomber(float x, float y) {
         super(x, y);
         bomber = this;
         listBomb = new ArrayList<>();
+        listflames = new ArrayList<>();
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
@@ -31,7 +35,9 @@ public class Bomber extends Character {
     private int timeKill = 0;
     @Override
     public void act(float delta) {
+
         removeBombExplored();
+        removeFlame();
         if (!isAlive()) {
             timeKill++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
@@ -39,7 +45,8 @@ public class Bomber extends Character {
             if (timeKill == 10) {
                 GameManager.playerDeadSound.play();
             }
-            if (timeKill == 92) {
+            if (timeKill == 100) {
+                removeFlame();
                 remove();
                 stageScreen.remove(this);
             }
@@ -61,6 +68,8 @@ public class Bomber extends Character {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if (canPlaceBomb()) {
                 placeBomb();
+                check =true;
+
             }
             return;
         }
@@ -82,7 +91,22 @@ public class Bomber extends Character {
                 animation = GameManager.playerDownStatic.getValue();
                 break;
         }
+        /*if(check == true) {
+            if(newBomb.explored == true) {
+                stageScreen.remove(newBomb);
+            }
+        }*/
+
     }
+    @Override
+    public float getX() {
+        return positionX;
+    }
+    @Override
+    public float getY() {
+        return positionY;
+    }
+
 
     @Override
     protected void moveRight() {
@@ -93,6 +117,7 @@ public class Bomber extends Character {
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
         }
+        //System.out.println(positionX+",,," + positionY);
         setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.D;
     }
@@ -149,8 +174,8 @@ public class Bomber extends Character {
             alive = false;
             return false;
         } else if (actor instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
-            alive = false;
-            return false;
+            alive = true;
+            return true;
         }
         return true;
     }
@@ -195,16 +220,34 @@ public class Bomber extends Character {
         float currentY = Math.round(getY() / 32) * 32;
         Bomb newBomb = new Bomb(currentX, currentY);
         FlameManager flameManager = new FlameManager(currentX, currentY);
-        listBomb.add(newBomb);
-        stageScreen.addBomb(newBomb);
+        //listBomb.add(newBomb);
+        //stageScreen.addBomb(newBomb);
+        listflames.add(flameManager);
         stageScreen.addFlames(flameManager);
         GameManager.placeBombSound.play();
+        /*if (newBomb.explored ==true) {
+            stageScreen.noActRemove(newBomb.explored);
+        }*/
     }
 
     private void removeBombExplored() {
         for (int i = 0; i < listBomb.size(); i++) {
-            if (listBomb.get(i).isExplored()) {
+            if (listBomb.get(i).explored) {
+                stageScreen.remove(listBomb.get(i));
                 listBomb.remove(listBomb.get(i));
+                i--;
+            }
+        }
+    }
+
+    private void removeFlame() {
+
+        for (int i = 0; i < listflames.size(); i++) {
+            //System.out.println(listflames.size());
+            if (listflames.get(i).isBurnFlameManager()) {
+                //System.out.println("kkkkkkkkkk");
+                stageScreen.removeFlame(listflames.get(i));
+                listflames.remove(listflames.get(i));
                 i--;
             }
         }

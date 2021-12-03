@@ -1,6 +1,7 @@
 package com.mygdx.game.map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,17 +21,17 @@ import java.util.ArrayList;
 
 public class StageScreen extends Stage {
 //<<<<<<< HEAD
-    private final static String LV1 = "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv1.txt";
+    private final static String LV1 = "D:\\Bomb\\core\\assets\\level\\Lv1.txt";
   // =======
   //    private final static String LV1 =".\\core\\assets\\level\\Lv1.txt";
   // >>>>>>> 1abe639d5dfb9ff33ad2ff197d06b2375ba3a438
   private final static String LV2 =
-      "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv2.txt";
+      "D:\\Bomb\\core\\assets\\level\\Lv2.txt";
   private final static String LV3 =
-      "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv3.txt";
+      "D:\\Bomb\\core\\assets\\level\\Lv3.txt";
     private final static int textureSize = 32;
     private Group groupNoActnoBang;
-    private Group groupNoActs;
+    public Group groupNoActs;
     private Group groupActs;
     //private ArrayList<Actor> bombAround = new ArrayList<>();
     public int rows;
@@ -45,7 +46,7 @@ public class StageScreen extends Stage {
     public char mapMatrix[][] ;
     //public ArrayList<Oneal> Oneals;
     private ArrayList<Actor> noActNoBangs = new ArrayList<>();
-    private ArrayList<Actor> noActs = new ArrayList<>();
+    public ArrayList<Actor> noActs = new ArrayList<>();
     private ArrayList<Actor> acts = new ArrayList<>();
     public static StageScreen me;
 
@@ -113,15 +114,15 @@ public class StageScreen extends Stage {
                 noActNoBangs.add(portal);
                 noActs.add(brick);
             } else if (Character.toString((char) c).equals("1")) {
-                Balloon balloon = new Balloon(x * textureSize, textureSize * (rows-1) - y * textureSize);
-                balloons.add(balloon);
-                acts.add(balloon);
+                //Balloon balloon = new Balloon(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                //balloons.add(balloon);
+                //acts.add(balloon);
             } else if (Character.toString((char) c).equals("2")) {
-                Actor oneal = new Oneal(x * 32, 384 - y * 32);
+                Oneal oneal = new Oneal(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 acts.add(oneal);
             } else if (Character.toString((char) c).equals("3")) {
-                Actor doll = new Doll(x * 32, 384 - y * 32);
-                acts.add(doll);
+                /*Actor doll = new Doll(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                acts.add(doll);*/
             }
             if (Character.toString((char) c).equals(" ") || (!Character.toString((char) c).equals("#")
                     && !Character.toString((char) c).equals("x") && !Character.toString((char) c).equals("\r"))) {
@@ -168,8 +169,18 @@ public class StageScreen extends Stage {
             if (noActs.get(i) == myActor) {
                 groupNoActs.removeActor(noActs.get(i));
                 noActs.remove(noActs.get(i));
+                //i--;
             }
         }
+    }
+
+    public void removeFlame(FlameManager flameManager) {
+        //System.out.println("work22222" + flameManager.sizeFlame());
+        for(int i = 0; i < flameManager.sizeFlame(); i++) {
+            //System.out.println("work1111");
+            remove(flameManager.getFlames().get(i));
+        }
+
     }
 
     /**
@@ -179,21 +190,21 @@ public class StageScreen extends Stage {
      * @return
      */
     public Actor getAt ( float x, float y) {
-        for (int i = 0; i < acts.size(); i++) {
+        for (int i = acts.size() - 1; i >= 0; i--) {
             if (x >= acts.get(i).getX() && x < acts.get(i).getX() + textureSize) {
                 if (y >= acts.get(i).getY() && y < acts.get(i).getY() + textureSize) {
                     return acts.get(i);
                 }
             }
         }
-        for (int i = 0; i < noActs.size(); i++) {
+        for (int i = noActs.size() - 1; i >= 0 ; i--) {
             if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + textureSize) {
                 if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + textureSize) {
                     return noActs.get(i);
                 }
             }
         }
-        for (int i = 0; i < noActNoBangs.size(); i++) {
+        for (int i = noActNoBangs.size() - 1; i >=0 ; i--) {
             if (x >= noActNoBangs.get(i).getX() && x < noActNoBangs.get(i).getX() + textureSize) {
                 if (y >= noActNoBangs.get(i).getY() && y < noActNoBangs.get(i).getY() + textureSize) {
                     return noActNoBangs.get(i);
@@ -240,8 +251,12 @@ public class StageScreen extends Stage {
 
     // Function addBombg
     public void addBomb(Actor actor){
-        noActs.add(0, actor);
+        noActs.add(0,actor);
         groupNoActs.addActor(actor);
+    }
+
+    public void noActRemove() {
+        noActs.remove(0);
     }
 
     public void addFlames(FlameManager flameManager){

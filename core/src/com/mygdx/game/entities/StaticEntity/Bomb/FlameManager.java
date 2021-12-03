@@ -11,15 +11,17 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 
 public class FlameManager extends Flame {
-    protected Array<Flame> flames;
+    //protected Array<Flame> flames;
+    private boolean burnFlameManager = false;
+    public Array<Flame> flames;
     protected static int flameItem = 0;
     protected final int timeExp = 3000;
-    protected StageScreen stageScreen;
+
 
     public FlameManager(float positionX, float positionY){
         super(positionX, positionY);
-        this.stageScreen =StageScreen.me;
-        this.flames = new Array<>(flameItem*2+5);
+        //stageScreen = StageScreen.me;
+        flames = new Array<>(flameItem*2+5);
         addFlame();
         checkExploded();
 //        outPos();
@@ -30,6 +32,16 @@ public class FlameManager extends Flame {
         addFlame();
     }
 
+    public boolean isBurnFlameManager() {
+        for(int i = 0; i < sizeFlame(); i++) {
+            //System.out.println("work1");
+            //System.out.println(getFlames().get(i).burn);
+            if(getFlames().get(i).burn) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void addFlame(){
         flames.add(new Flame(positionX, positionY));
@@ -37,6 +49,7 @@ public class FlameManager extends Flame {
         flames.add(new Flame(positionX, positionY-(flameItem+1)*32, GameManager.flameVerDownLast));
         flames.add(new Flame(positionX-(flameItem+1)*32, positionY, GameManager.flameHorLeftLast));
         flames.add(new Flame(positionX+(flameItem+1)*32, positionY, GameManager.flameHorRightLast));
+
         // dọc trên + ngang phải
         for(int i = 1; i <=flameItem; i++){
             flames.add(new Flame(positionX, positionY+i*32, GameManager.flameVertical));
@@ -65,6 +78,7 @@ public class FlameManager extends Flame {
     }
 
     public void removeRightFlame(float posXNearestRight){
+        //System.out.println(posXNearestRight);
         /**
          * TO DO: get positionX of brick and wall nearest
          * */
@@ -73,6 +87,7 @@ public class FlameManager extends Flame {
             while (iterator.hasNext()){
                 Flame temp  = iterator.next();
                 if(temp.getPositionX() >= posXNearestRight){
+                    //System.out.println(temp.getPositionX() + "---" + posXNearestRight);
                     flames.removeValue(temp, true);
                 }
             }
@@ -115,8 +130,11 @@ public class FlameManager extends Flame {
 
     public void checkExploded(){
         ArrayList<Actor> nearest = stageScreen.bombArounds(positionX, positionY);
+        //System.out.println(stageScreen.getAt(positionX,positionY));
+        //System.out.println(positionX+"..."+positionY);
         removeLeftFlame(nearest.get(3).getX());
         removeRightFlame(nearest.get(2).getX());
+        //System.out.println(nearest.get(2).getX());
         removeTopFlame(nearest.get(0).getY());
         removeDownFLame(nearest.get(1).getY());
     }
