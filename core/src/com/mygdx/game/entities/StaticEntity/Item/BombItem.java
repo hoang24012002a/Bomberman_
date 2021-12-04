@@ -39,7 +39,7 @@ public class BombItem extends Item {
     public boolean isBroken(){
         if(this.remove()){
             System.out.println("removeBombItem");
-            stageScreen.remove(this);
+//            stageScreen.remove(this);
             return true;
         }else{
             return false;

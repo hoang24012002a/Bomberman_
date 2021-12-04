@@ -44,7 +44,7 @@ public class FlameItem extends Item {
     public boolean isBroken() {
         if(remove()){
             System.out.println("removeFlameItem");
-            stageScreen.remove(this);
+//            stageScreen.remove(this);
 //            stageScreen.addActor(new Grass(positionX, positionY));
             return true;
         }else{
