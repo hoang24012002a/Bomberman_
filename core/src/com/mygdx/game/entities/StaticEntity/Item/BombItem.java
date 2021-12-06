@@ -17,6 +17,7 @@ public class BombItem extends Item {
     public BombItem(float positionX, float positionY){
         super(positionX, positionY);
         this.texture = GameManager.bombItem;
+        this.broken = false;
     }
 
 
@@ -26,10 +27,22 @@ public class BombItem extends Item {
         if(canBreakable==true && positionX ==  x && positionY == y){
             this.broken = true;
             remove();
-            stageScreen.addActor(new Grass(positionX, positionY));
+//            stageScreen.addActor(new Grass(positionX, positionY));
+            stageScreen.remove(this);
         }else
         {
             this.broken = false;
+        }
+    }
+
+    @Override
+    public boolean isBroken(){
+        if(this.remove()){
+            System.out.println("removeBombItem");
+//            stageScreen.remove(this);
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -41,15 +54,17 @@ public class BombItem extends Item {
             return;
         }
     }
-//
+
 //    @Override
 //    public void act(float delta){
 //        float currentBomberX = stageScreen.bomber.getPositionX();
 //        float currentBomberY = stageScreen.bomber.getPositionY();
-//        if(positionX == currentBomberX && positionY== currentBomberY){
-////            getStage().getActors().removeValue(this, true);
-//            remove();
-//            getStage().addActor(new Grass(positionX, positionY));
-//        }
+////        if(positionX == currentBomberX && positionY== currentBomberY){
+//////            getStage().getActors().removeValue(this, true);
+////            remove();
+//////            getStage().addActor(new Grass(positionX, positionY));
+////            stageScreen.remove(this);
+////        }
+//        eatItem(currentBomberX, currentBomberY);
 //    }
 }

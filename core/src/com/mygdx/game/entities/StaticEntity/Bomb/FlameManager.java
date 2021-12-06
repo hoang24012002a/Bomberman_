@@ -1,6 +1,5 @@
 package com.mygdx.game.entities.StaticEntity.Bomb;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entities.AnimatedEntity;
@@ -11,19 +10,18 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 
 public class FlameManager extends Flame {
-    //protected Array<Flame> flames;
-    private boolean burnFlameManager = false;
     public Array<Flame> flames;
     protected static int flameItem = 0;
     protected final int timeExp = 3000;
-
+    protected StageScreen stageScreen;
 
     public FlameManager(float positionX, float positionY){
         super(positionX, positionY);
-        //stageScreen = StageScreen.me;
-        flames = new Array<>(flameItem*2+5);
+        this.stageScreen = StageScreen.me;
+        this.flames = new Array<>(flameItem*2+5);
         addFlame();
         checkExploded();
+        System.out.println(sizeFlame());
 //        outPos();
     }
     public FlameManager(Flame flame){
@@ -32,16 +30,6 @@ public class FlameManager extends Flame {
         addFlame();
     }
 
-    public boolean isBurnFlameManager() {
-        for(int i = 0; i < sizeFlame(); i++) {
-            //System.out.println("work1");
-            //System.out.println(getFlames().get(i).burn);
-            if(getFlames().get(i).burn) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void addFlame(){
         flames.add(new Flame(positionX, positionY));
@@ -49,7 +37,6 @@ public class FlameManager extends Flame {
         flames.add(new Flame(positionX, positionY-(flameItem+1)*32, GameManager.flameVerDownLast));
         flames.add(new Flame(positionX-(flameItem+1)*32, positionY, GameManager.flameHorLeftLast));
         flames.add(new Flame(positionX+(flameItem+1)*32, positionY, GameManager.flameHorRightLast));
-
         // dọc trên + ngang phải
         for(int i = 1; i <=flameItem; i++){
             flames.add(new Flame(positionX, positionY+i*32, GameManager.flameVertical));
@@ -78,7 +65,6 @@ public class FlameManager extends Flame {
     }
 
     public void removeRightFlame(float posXNearestRight){
-        //System.out.println(posXNearestRight);
         /**
          * TO DO: get positionX of brick and wall nearest
          * */
@@ -87,7 +73,6 @@ public class FlameManager extends Flame {
             while (iterator.hasNext()){
                 Flame temp  = iterator.next();
                 if(temp.getPositionX() >= posXNearestRight){
-                    //System.out.println(temp.getPositionX() + "---" + posXNearestRight);
                     flames.removeValue(temp, true);
                 }
             }
@@ -128,16 +113,32 @@ public class FlameManager extends Flame {
         return (FlameManager.flameItem+1)*32;
     }
 
+
     public void checkExploded(){
         ArrayList<Actor> nearest = stageScreen.bombArounds(positionX, positionY);
-        //System.out.println(stageScreen.getAt(positionX,positionY));
-        //System.out.println(positionX+"..."+positionY);
+        System.out.println(nearest.get(3).getX());
+        System.out.println(nearest.get(2).getX());
+        System.out.println(nearest.get(0).getY());
+        System.out.println(nearest.get(1).getY());
         removeLeftFlame(nearest.get(3).getX());
         removeRightFlame(nearest.get(2).getX());
-        //System.out.println(nearest.get(2).getX());
         removeTopFlame(nearest.get(0).getY());
         removeDownFLame(nearest.get(1).getY());
     }
+
+    //    để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
+    public boolean isBurned(){
+        for(int i = 0; i < sizeFlame(); i++){
+//            System.out.println("burned");
+            if(getFlames().get(i).burned){
+                System.out.println("true");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //    để check vị trí của flame xem có đúng không
     public void outPos(){
         for(int i = 0; i < flames.size; i++){
             System.out.println(flames.get(i).getPositionX()+"-"+ flames.get(i).getPositionY());
@@ -152,29 +153,49 @@ public class FlameManager extends Flame {
         return flames.size;
     }
 
+
     public static void updateItem(){
         flameItem++;
     }
 
+    public static void beginItem(){
+        flameItem = 0;
+    }
+
+    //    nếu phát sinh vấn đề
     private int dem = 0;
     @Override
     public void act(float delta){
-        final FlameManager flameManager = this;
-        final Array.ArrayIterator<Flame> iterator = flames.iterator();
-        new Thread(
-                new Runnable() {
-                  @Override
-                  public void run() {
-                        stageScreen.addFlames(flameManager);
-                  }
-                })
-            .start();
+//        final FlameManager flameManager = this;
+//        final Array.ArrayIterator<Flame> iterator = flames.iterator();
+//        new Thread(
+//                new Runnable() {
+//                  @Override
+//                  public void run() {
+//                        stageScreen.addFlames(flameManager);
+//                  }
+//                })
+//            .start();
 //        dem++;
 //        if (dem == 200) {
 //            Array.ArrayIterator<Flame> iterator = flames.iterator();
 //            while (iterator.hasNext()){
-//                getStage().addActor(iterator.next());
+//                stageScreen.remove(iterator.next());
 //            }
 //        }
+//        final FlameManager flameManager = this;
+//        new Thread(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try{
+//                            Thread.sleep(1800);
+//                            stageScreen.addFlames(flameManager);
+//                        }catch (InterruptedException e){
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                })
+//                .start();
     }
 }

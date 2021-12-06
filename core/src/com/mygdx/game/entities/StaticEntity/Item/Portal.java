@@ -21,6 +21,7 @@ public class Portal extends Item {
         super(brick);
         this.allEnemyDie = false;
         this.texture = GameManager.portalItem;
+        this.broken = false;
     }
 
     @Override
@@ -28,9 +29,15 @@ public class Portal extends Item {
         if(positionX == x && positionY == y && allEnemyDie){
             this.broken = true;
             remove();
+            stageScreen.remove(this);
         }else{
             this.broken = false;
         }
+    }
+
+    @Override
+    public boolean isBroken(){
+        return broken;
     }
 
     @Override

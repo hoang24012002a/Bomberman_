@@ -77,8 +77,14 @@ public class BombGame implements ApplicationListener {
 	@Override
 	public void render () {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//stageInfomation.draw();
 		stagePlay.draw();
 		stagePlay.act(Gdx.graphics.getDeltaTime());
+		if (stagePlay.exit) {
+			System.out.println("exit in BombGame");
+			dispose();
+		}
+			//stageScreens.get(dem).dispose();
 		//stageChange.act(Gdx.graphics.getDeltaTime());
 		/*if(check == false) {
 			stageMenu.draw();
@@ -105,10 +111,10 @@ public class BombGame implements ApplicationListener {
 				stageScreens.get(dem).noActRemove();
 			}*/
 			/*if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-				//check = false;
+				check = false;
 				//stageScreens.get(dem).dispose();
-			}
-		}*/
+			}*/
+
 		//stageInfomation.draw();
 
 	}

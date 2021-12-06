@@ -30,6 +30,7 @@ public class Balloon extends Enemy {
             }
             if (timeKill == 100) {
                 setPositionInMatrix(getX(), getY(), 'n');
+                stageScreen.balloons.remove(this);
                 stageScreen.remove(this);
                 numberEnemy--;
                 remove();
@@ -52,7 +53,7 @@ public class Balloon extends Enemy {
         textureAtlas = GameManager.balloonRightDynamic.getKey();
         animation = GameManager.balloonRightDynamic.getValue();
         if (canMoveRight()) {
-            positionY += (Math.round(positionY / 32) * 32 - positionY);
+            positionY += (Math.round(positionY / 32) * 32 - positionY );
             positionX += speed;
         }
         setPositionInMatrix(positionX, positionY, '1');

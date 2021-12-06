@@ -14,6 +14,7 @@ public class FlameItem extends Item {
 
     public FlameItem(float positionX, float positionY){
         super(positionX, positionY);
+        this.stageScreen = StageScreen.me;
         this.texture =GameManager.flameItem;
     }
 
@@ -32,9 +33,23 @@ public class FlameItem extends Item {
         if(canBreakable == true && positionX == x && positionY == y){
             this.broken = true;
             remove();
-            stageScreen.addActor(new Grass(positionX, positionY));
+//            stageScreen.addActor(new Grass(positionX, positionY));
+            stageScreen.remove(this);
+        }
+        if(broken){
+//            TODO: man moi
+        }
+    }
+    @Override
+    public boolean isBroken() {
+        if(remove()){
+            System.out.println("removeFlameItem");
+//            stageScreen.remove(this);
+//            stageScreen.addActor(new Grass(positionX, positionY));
+            return true;
         }else{
-            this.broken = false;
+            System.out.println("not yet remove");
+            return false;
         }
     }
 
@@ -49,6 +64,7 @@ public class FlameItem extends Item {
 //    public void act(float delta){
 //        float currentBomberX = stageScreen.bomber.getPositionX();
 //        float currentBomberY = stageScreen.bomber.getPositionY();
-//        eatItem(currentBomberX, currentBomberY);
+////        eatItem(currentBomberX, currentBomberY);
+//
 //    }
 }
