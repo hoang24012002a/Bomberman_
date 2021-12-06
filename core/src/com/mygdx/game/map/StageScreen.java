@@ -21,15 +21,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class StageScreen extends Stage {
-//<<<<<<< HEAD
-    private final static String LV1 = "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv1.txt";
+  // <<<<<<< HEAD
+  private final static String LV1 =
+      "level/Lv1.txt";
   // =======
   //    private final static String LV1 =".\\core\\assets\\level\\Lv1.txt";
   // >>>>>>> 1abe639d5dfb9ff33ad2ff197d06b2375ba3a438
   private final static String LV2 =
-      "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv2.txt";
+      "level/Lv2.txt";
   private final static String LV3 =
-      "D:\\Object Oriented Programing\\bomberman\\Bomberman_\\core\\assets\\level\\Lv3.txt";
+      "level/Lv3.txt";
     public final static int textureSize = 32;
     private Group groupNoActnoBang;
     private Group groupNoActs;
@@ -78,7 +79,7 @@ public class StageScreen extends Stage {
         addActor(groupNoActnoBang);
         addActor(groupNoActs);
         addActor(groupActs);
-
+        System.out.println("this is "+s);
     }
 
     public void insertFromFile(String fileName) throws IOException {
@@ -217,18 +218,18 @@ public class StageScreen extends Stage {
     }
 
     public boolean CheckAllEnemyDeath(){
-        if (balloons.size() == 0) {
+        if (balloons.size() == 0 ) {
             //&& stageScreen.oneals == 0)
             return true;
         }
         return false;
     }
 
-    public boolean changeOfLevelUp(float x, float y) {
+    public boolean changeOfLevelUp() {
         /*if (CheckInPortal(x,y)) {
             return true;
         }*/
-        if (bomber.getX() == 200) {
+        if (bomber.getX() == 200 && CheckAllEnemyDeath()) {
             return true;
         }
         return false;
@@ -304,4 +305,5 @@ public class StageScreen extends Stage {
         }
         return bombAround;
     }
+
 }

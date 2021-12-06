@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class FlameManager extends Flame {
     public Array<Flame> flames;
-    protected static int flameItem = 0;
+    protected static int flameItem = 5;
     protected final int timeExp = 3000;
     protected StageScreen stageScreen;
 

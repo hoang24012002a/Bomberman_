@@ -17,7 +17,7 @@ import com.mygdx.game.map.StageInfomation;
 import com.mygdx.game.map.StageMenu;
 import com.mygdx.game.map.StageScreen;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class BombGame implements ApplicationListener {
@@ -45,27 +45,6 @@ public class BombGame implements ApplicationListener {
 		stageMenu = new StageMenu();
 		stageScreen = new StageScreen(1);
 		stageScreens.add(stageScreen);
-//		Bomb bomb = new Bomb(32*3, 32*5);
-//		stageScreen.addActor(bomb);
-//		stageScreen = new StageScreen(2);
-//		stageScreens.add(stageScreen);
-//		stageScreen = new StageScreen(3);
-//		stageScreens.add(stageScreen);
-//		stageChange = new StageChange();
-//		//Bomber bomber = new Bomber(0, 0);
-//		//Balloon balloon = new Balloon(200,200);
-//		//Balloon balloon1 = new Balloon(250,200);
-//		Wall wall = new Wall(30,30);
-//		Brick brick = new Brick(0, 0);
-//		Grass grass = new Grass(80, 80);
-////		SpeedItem speedItem = new SpeedItem(brick); // checked
-//		Bomb bomb = new Bomb(40, 40); // checked
-//		//Array<Flame> flames = new Flame(90,90).getFlameHorizon();
-//		//stage.addActor(balloon);
-//		//stage.addActor(balloon1);
-//		//stage.addActor(wall);
-//		stage.addActor(bomb);
-//		stage.addActor(grass);
 	}
 
 	@Override
@@ -94,6 +73,9 @@ public class BombGame implements ApplicationListener {
 //			}
 //
 //		}
+		/**
+		 * I fix here
+		 * */
 		if(check) {
 			stageScreens.get(dem).act(Gdx.graphics.getDeltaTime());
 			stageScreens.get(dem).draw();
@@ -103,16 +85,15 @@ public class BombGame implements ApplicationListener {
 //			font.draw(batch,"2",stageScreens.get(dem).bombArounds(32*3, 32*5).get(2).getX(), stageScreens.get(dem).bombArounds(32*4, 32*5).get(2).getY()+20);
 //			font.draw(batch,"3",stageScreens.get(dem).bombArounds(32*3, 32*5).get(3).getX(), stageScreens.get(dem).bombArounds(32*4, 32*5).get(3).getY()+20);
 //			font.draw(batch,"Exit",470,250);
-			//font.draw(batch,String.valueOf(stageScreen.Stringmap()),300,300);
+//			font.draw(batch,String.valueOf(stageScreen.Stringmap()),300,300);
 			batch.end();
-			System.out.println(stageScreens.get(dem).getAt(Gdx.input.getX(),550-Gdx.input.getY()));
+//			System.out.println(stageScreens.get(dem).getAt(Gdx.input.getX(),550-Gdx.input.getY()));
 			if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
 				//check = false;
 				//stageScreens.get(dem).dispose();
 			}
 		}
 		//stageInfomation.draw();
-
 	}
 
 	@Override
@@ -131,7 +112,7 @@ public class BombGame implements ApplicationListener {
 		stageScreen.dispose();
 		stageScreens.get(0).dispose();
 		stageScreens.get(1).dispose();
-		//stageScreens.get(2).dispose();
+		stageScreens.get(2).dispose();
 		stageChange.dispose();
 		stageMenu.dispose();
 		stageInfomation.dispose();
@@ -145,7 +126,6 @@ public class BombGame implements ApplicationListener {
 		StageScreen stageScreen = new StageScreen(dem +1);
 		stageScreens.set(dem,stageScreen);
 	}
-
 
 }
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
-    private int maxBomb = 2;
+    private int maxBomb = 10;
     private ArrayList<Bomb> listBomb;
 //  thêm một array flame manager để add và xoá như arraylistBom
     private ArrayList<FlameManager> listFlame;
@@ -28,7 +28,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
-        speed = 1.5f;
+        speed = 3.0f;   // fix hered
     }
 
     private int timeKill = 0;
@@ -149,11 +149,11 @@ public class Bomber extends Character {
         Actor actor2 = stageScreen.getAt(getX() + 33, getY() + 16);
         Actor actor3 = stageScreen.getAt(getX() + 16, getY() - 1);
         if (actor instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
-            alive = false;
-            return false;
+            alive = true;
+            return true;
         } else if (actor instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
-            alive = false;
-            return false;
+            alive = true;
+            return true;
         }
         return true;
     }
