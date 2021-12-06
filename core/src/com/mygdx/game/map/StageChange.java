@@ -1,23 +1,26 @@
 package com.mygdx.game.map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.MyInputProcessor;
+import com.mygdx.game.gamesys.GameManager;
 
 import java.util.ArrayList;
 
 public class StageChange extends Stage {
-
+    public  Sound stageChangeSound = GameManager.pauseSound;
     private TextureRegion board = new TextureRegion(new Texture("cartoon/board.png"));
     private TextureRegion continuE = new TextureRegion(new Texture("cartoon/CONTINUE.png"));
     private TextureRegion gameOver = new TextureRegion(new Texture("cartoon/game-over.png"));
     private TextureRegion winner = new TextureRegion(new Texture("cartoon/winner.png"));
     private TextureRegion exit = new TextureRegion(new Texture("cartoon/QUIT.png"));
     private TextureRegion menu = new TextureRegion(new Texture("cartoon/MENU.png"));
-    //private MyActor  manHinh = new MyActor(anhchuyen);
+    public boolean []checkOption = new boolean[2];
     private ArrayList<MyActor> ins = new ArrayList<>();
     private ArrayList<MyActor> outs = new ArrayList<>();
     private MyActor over,win;
@@ -26,6 +29,7 @@ public class StageChange extends Stage {
     public MyInputProcessor  inputProcessor = new MyInputProcessor();
     private float scaleOut = (float) 2.1;
     private float scaleIn = (float) 2.5;
+    public boolean checkStageChangedraw = true;
     public StageChange(String s) {
         MyActor  myBoard = new MyActor(board);
         myBoard.setPosition(270,140);
@@ -47,14 +51,17 @@ public class StageChange extends Stage {
         addActor(groupIn);
     }
 
-    public boolean convert(float x, float y) {
+    public boolean[] convert(float x, float y) {
+        checkOption[0] = false;
+        checkOption[1] = false;
         if (inputProcessor.mouseMoved((int)x,(int)y)) {
             for (int i = 0; i < 2; i++) {
                 if (inputProcessor.mouseMovedd(Gdx.input.getX(), Gdx.input.getY(),ins.get(i).getX(),ins.get(i).getY(),exit.getRegionWidth()/scaleIn, exit.getRegionHeight()/scaleIn)) {
                     groupIn.removeActor(ins.get(i));
                     groupOut.addActor(outs.get(i));
-                    if (Gdx.input.isTouched() && i == 0) {
-                        return true;
+                    if (Gdx.input.isTouched()) {
+                        checkOption[i] =true;
+                        stageChangeSound.stop();
                     }
                 }
                 if (!inputProcessor.mouseMovedd(Gdx.input.getX(), Gdx.input.getY(),outs.get(i).getX(),outs.get(i).getY(),exit.getRegionWidth()/scaleOut, exit.getRegionHeight()/scaleOut)) {
@@ -64,15 +71,20 @@ public class StageChange extends Stage {
 
             }
         }
-        return false;
+        return checkOption;
     }
-    int dem = 0;
+    //int dem = 0;
     @Override
     public void draw() {
-        dem++;
-        System.out.println(dem);
+        //dem++;
+        //System.out.println(dem);
         super.draw();
+        if(checkStageChangedraw) {
+            stageChangeSound.play();
+            checkStageChangedraw = false;
+        }
         convert(Gdx.input.getX(),Gdx.input.getY());
+
     }
 
     public void addPictureGameOver() {
@@ -91,6 +103,7 @@ public class StageChange extends Stage {
 
     public void addOption(String s) {
         if(s.equals("pause")) {
+            stageChangeSound = GameManager.pauseSound;
             MyActor  continueOut2 = new MyActor(continuE);
             continueOut2.setPosition(480,265);
             continueOut2.setBounds(continueOut2.getX(), continueOut2.getY(), exit.getRegionWidth()/scaleOut, exit.getRegionHeight()/scaleOut);
@@ -109,7 +122,13 @@ public class StageChange extends Stage {
             menuIn2.setBounds(menuIn2.getX(), menuIn2.getY(), exit.getRegionWidth()/scaleIn, exit.getRegionHeight()/scaleIn);
             ins.add(menuIn2);
             outs.add(menuOut2);
-            winLose(false);
+            if (s.equals("win")) {
+                stageChangeSound = GameManager.victorySound;
+                winLose(true);
+            } else {
+                stageChangeSound = GameManager.gameOverSound;
+                winLose(false);
+            }
         }
     }
 
