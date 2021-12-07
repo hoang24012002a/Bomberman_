@@ -31,6 +31,7 @@ public class Doll extends Enemy {
             }
             if (timeKill == 100) {
                 setPositionInMatrix(getX(), getY(), 'n');
+                stageScreen.dolls.remove(this);
                 stageScreen.remove(this);
                 numberEnemy--;
                 remove();

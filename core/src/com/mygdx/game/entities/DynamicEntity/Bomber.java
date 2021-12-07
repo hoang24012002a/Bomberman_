@@ -3,9 +3,11 @@ package com.mygdx.game.entities.DynamicEntity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entities.DynamicEntity.enemy.Enemy;
 import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
 import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
+import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
 import com.mygdx.game.entities.StaticEntity.Item.*;
 import com.mygdx.game.gamesys.GameManager;
 
@@ -14,13 +16,17 @@ import java.util.ArrayList;
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
     private int maxBomb = 2;
+    private boolean nextLevel = false;
     private ArrayList<Bomb> listBomb;
+    //  thêm một array flame manager để add và xoá như arraylistBom
+    private ArrayList<FlameManager> listFlame;
     public static Bomber bomber;
 
     public Bomber(float x, float y) {
         super(x, y);
         bomber = this;
         listBomb = new ArrayList<>();
+        listFlame = new ArrayList<>();
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
@@ -31,6 +37,7 @@ public class Bomber extends Character {
     @Override
     public void act(float delta) {
         removeBombExplored();
+        removeFlameBurned();
         if (!alive) {
             timeKill++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
@@ -39,8 +46,14 @@ public class Bomber extends Character {
                 GameManager.playerDeadSound.play();
             }
             if (timeKill == 92) {
+                System.out.println("workkkkkkkkkkk");
+                stageScreen.live = false;
+                removeFlameBurned();
+                //removeFlame();
+                alive = true;
+                timeKill = 0;
                 remove();
-                stageScreen.remove(this);
+                //stageScreen.remove(this);
             }
             return;
         }
@@ -81,6 +94,24 @@ public class Bomber extends Character {
                 animation = GameManager.playerDownStatic.getValue();
                 break;
         }
+    }
+
+    @Override
+    public float getX() {
+        return positionX;
+    }
+    @Override
+    public float getY() {
+        return positionY;
+    }
+
+
+    public void setX(float X) {
+        positionX = X;
+    }
+
+    public void setY(float Y) {
+        positionY = Y;
     }
 
     @Override
@@ -170,6 +201,7 @@ public class Bomber extends Character {
         if (!(item instanceof Item) || !((Item) item).isBroken()) {
             return;
         }
+        System.out.println("love");
         GameManager.eatItemSound.play();
         if (item instanceof BombItem) {
             maxBomb++;
@@ -181,40 +213,87 @@ public class Bomber extends Character {
             stageScreen.remove(item);
         } else if (item instanceof FlameItem) {
             //TODO: raise flame length.
+            //  update độ dài flame lên 1;
+            FlameManager.updateItem();
             item.remove();
             stageScreen.remove(item);
         } else if (item instanceof Portal) {
             if (Enemy.numberEnemy == 0) {
-                //TODO: next Level.
+                // TODO: 12/7/2021
+                nextLevel = true;
             }
         }
     }
 
     private boolean canPlaceBomb() {
-        float currentX = Math.round(getX() / 32) * 32;
-        float currentY = Math.round(getY() / 32) * 32;
-        Actor actor = stageScreen.getAt(currentX, currentY);
         if (listBomb.size() >= maxBomb) {
             return false;
         }
-        return !(actor instanceof Bomb) && !(actor instanceof Item);
+        float currentX = Math.round(getX() / 32) * 32;
+        float currentY = Math.round(getY() / 32) * 32;
+        Array<Actor> list = getStage().getActors();
+        for (Actor actor1 : list) {
+            if (actor1 instanceof Bomb && actor1.getX() == currentX && actor1.getY() == currentY) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void placeBomb() {
         float currentX = Math.round(getX() / 32) * 32;
         float currentY = Math.round(getY() / 32) * 32;
         Bomb newBomb = new Bomb(currentX, currentY);
+        getStage().addActor(newBomb);
+        final FlameManager flameManager = new FlameManager(currentX, currentY);
         listBomb.add(newBomb);
+        listFlame.add(flameManager);
         stageScreen.addBomb(newBomb);
+//      Để bắt thời gian biến mất của quả bom khoảng 1,8s
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(1800);
+                    stageScreen.addFlames(flameManager);
+                    GameManager.bombExplodedSound.play();
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
         GameManager.placeBombSound.play();
     }
 
     private void removeBombExplored() {
         for (int i = 0; i < listBomb.size(); i++) {
             if (listBomb.get(i).isExplored()) {
+                stageScreen.remove(listBomb.get(i));
                 listBomb.remove(listBomb.get(i));
                 i--;
             }
         }
     }
+
+    /**
+     * method này để xoá flame ra khỏi stage + list flame
+     * */
+    private void removeFlameBurned(){
+        for(int i = 0; i < listFlame.size(); i++){
+            if(listFlame.get(i).isBurned()){
+                stageScreen.removeFlame(listFlame.get(i));
+                listFlame.remove(listFlame.get(i));
+                i--;
+            }
+        }
+    }
+
+    /**
+     * check for nextLevel.
+     * @return boolean.
+     */
+    public boolean isNextLevel() {
+        return nextLevel;
+    }
 }
+

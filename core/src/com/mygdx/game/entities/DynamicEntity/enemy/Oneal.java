@@ -1,7 +1,6 @@
 package com.mygdx.game.entities.DynamicEntity.enemy;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_Medium;
 import com.mygdx.game.gamesys.GameManager;
 
@@ -34,6 +33,7 @@ public class Oneal extends Enemy {
             }
             if (timeKill == 100) {
                 setPositionInMatrix(getX(), getY(), 'n');
+                stageScreen.oneals.remove(this);
                 stageScreen.remove(this);
                 numberEnemy--;
                 remove();
@@ -42,10 +42,10 @@ public class Oneal extends Enemy {
         }
         if (direction == 0) {
             moveLeft();
-        } else if (direction == 1) {
-            moveTop();
         } else if (direction == 2) {
             moveRight();
+        } else if (direction == 1) {
+            moveTop();
         } else if (direction == 3) {
             moveBottom();
         }

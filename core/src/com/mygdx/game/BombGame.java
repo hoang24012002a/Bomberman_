@@ -6,16 +6,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.bullet.collision.GdxCollisionObjectBridge;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.entities.StaticEntity.Tile.Wall;
-import com.mygdx.game.map.StageChange;
-import com.mygdx.game.map.StageInfomation;
-import com.mygdx.game.map.StageMenu;
-import com.mygdx.game.map.StageScreen;
+import com.mygdx.game.map.*;
 
 import java.util.ArrayList;
 
@@ -23,13 +21,14 @@ import java.util.ArrayList;
 public class BombGame implements ApplicationListener {
 	//private int dem1 = 1;
 	//private int dem2 = 1;
+	StagePlay stagePlay;
 	private int dem = 0;
 	private Stage stage;
-	private StageChange stageChange;
-	private StageScreen stageScreen;
+	//private StageChange stageChange;
+	//private StageScreen stageScreen;
 	private StageMenu stageMenu;
 	private StageInfomation stageInfomation;
-	private ArrayList<StageScreen> stageScreens = new ArrayList<>();
+	//private ArrayList<StageScreen> stageScreens = new ArrayList<>();
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private boolean check = true;
@@ -38,18 +37,22 @@ public class BombGame implements ApplicationListener {
 	@Override
 	public void create () {
 		myInputProcessor = new MyInputProcessor();
-		stage = new Stage(new ScreenViewport());
+		//stage = new Stage(new ScreenViewport());
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		stageInfomation = new StageInfomation();
-		stageMenu = new StageMenu();
-		stageScreen = new StageScreen(1);
-		stageScreens.add(stageScreen);
-		stageScreen = new StageScreen(2);
-		stageScreens.add(stageScreen);
-		stageScreen = new StageScreen(3);
-		stageScreens.add(stageScreen);
-		stageChange = new StageChange();
+		stagePlay = new StagePlay();
+		//stageInfomation = new StageInfomation();
+		//stageMenu = new StageMenu();
+		//stageScreen = new StageScreen(1);
+		//stageScreens.add(new StageScreen(1));
+		//stageScreen = new StageScreen(2);
+		//stageScreens.add(new StageScreen(2));
+		//stageScreen = new StageScreen(3);
+		//stageScreens.add(new StageScreen(3));
+		//stageScreens.add(new StageScreen(1));
+		///stageScreen = stageScreens.get(0);
+
+		//stageChange = new StageChange();
 		//Bomber bomber = new Bomber(0, 0);
 		//Balloon balloon = new Balloon(200,200);
 		//Balloon balloon1 = new Balloon(250,200);
@@ -62,8 +65,7 @@ public class BombGame implements ApplicationListener {
 		//stage.addActor(balloon);
 		//stage.addActor(balloon1);
 		//stage.addActor(wall);
-		stage.addActor(bomb);
-		stage.addActor(grass);
+
 
 	}
 
@@ -75,8 +77,16 @@ public class BombGame implements ApplicationListener {
 	@Override
 	public void render () {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//stageInfomation.draw();
+		stagePlay.draw();
+		stagePlay.act(Gdx.graphics.getDeltaTime());
+		if (stagePlay.exit) {
+			System.out.println("exit in BombGame");
+			dispose();
+		}
+		//stageScreens.get(dem).dispose();
 		//stageChange.act(Gdx.graphics.getDeltaTime());
-		if(check == false) {
+		/*if(check == false) {
 			stageMenu.draw();
 			stageMenu.onOff(stageMenu.myOn,stageMenu.myOff,checkTouch);
 			if(!Gdx.input.isTouched()) {
@@ -96,11 +106,15 @@ public class BombGame implements ApplicationListener {
 		if(check) {
 			stageScreens.get(dem).act(Gdx.graphics.getDeltaTime());
 			stageScreens.get(dem).draw();
-			if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-				//check = false;
+			System.out.println(stageScreens.get(dem).getAt(Gdx.input.getX(),550-Gdx.input.getY()));
+			/*if (stageScreens.get(dem).noActs.get(0) instanceof Bomb) {
+				stageScreens.get(dem).noActRemove();
+			}*/
+			/*if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
+				check = false;
 				//stageScreens.get(dem).dispose();
-			}
-		}
+			}*/
+
 		//stageInfomation.draw();
 
 	}
@@ -117,24 +131,25 @@ public class BombGame implements ApplicationListener {
 
 	@Override
 	public void dispose () {
-		stage.dispose();
-		stageScreen.dispose();
-		stageScreens.get(0).dispose();
-		stageScreens.get(1).dispose();
+		//stage.dispose();
+		//stageScreen.dispose();
+		//stageScreens.get(0).dispose();
+		//stageScreens.get(1).dispose();
 		//stageScreens.get(2).dispose();
-		stageChange.dispose();
-		stageMenu.dispose();
-		stageInfomation.dispose();
+		//stageChange.dispose();
+		//stageMenu.dispose();
+		//stageInfomation.dispose();
+		stagePlay.dispose();
 	}
 
-	public void createNewLever(int dem) {
+	/*public void createNewLever(int dem) {
 		stageScreens.remove(dem);
 		for(int i = stageScreens.size() -1 ; i> dem ; i--) {
 			stageScreens.set(i,stageScreens.get(i-1));
 		}
 		StageScreen stageScreen = new StageScreen(dem +1);
 		stageScreens.set(dem,stageScreen);
-	}
+	}*/
 
 
 }

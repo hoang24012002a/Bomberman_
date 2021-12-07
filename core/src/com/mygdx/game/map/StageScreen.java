@@ -1,5 +1,7 @@
 package com.mygdx.game.map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -7,6 +9,7 @@ import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
 import com.mygdx.game.entities.DynamicEntity.enemy.Doll;
 import com.mygdx.game.entities.DynamicEntity.enemy.Oneal;
+import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
 import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
 import com.mygdx.game.entities.StaticEntity.Item.Portal;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
@@ -22,27 +25,31 @@ public class StageScreen extends Stage {
     private final static String LV3 =".\\core\\assets\\level\\Lv3.txt";
     private final static int textureSize = 32;
     private Group groupNoActnoBang;
-    private Group groupNoActs;
+    public Group groupNoActs;
     private Group groupActs;
+    private float Xbomber,Ybomber;
     //private ArrayList<Actor> bombAround = new ArrayList<>();
-    public int rows;
-    public int columns;
+    public int rows,columns;
     public int dem = 0;
-    //public Portal portal;
+    public boolean live = true;
+    public int numberlives = 3;
     public Bomber bomber;
-    public static ArrayList<Balloon> balloons = new ArrayList<>();
+    public ArrayList<Balloon> balloons = new ArrayList<>();
+    public ArrayList<Oneal> oneals = new ArrayList<>();
+    public ArrayList<Doll> dolls = new ArrayList<>();
     //mang 2 chieu ki tu.
     // 0 là ko đi đc , p là bomber , 1 ,2 , 3 là balloon, oneal,vv.
     // n là đi đc.
     public char mapMatrix[][] ;
-    //public ArrayList<Oneal> Oneals;
     private ArrayList<Actor> noActNoBangs = new ArrayList<>();
-    private ArrayList<Actor> noActs = new ArrayList<>();
+    public ArrayList<Actor> noActs = new ArrayList<>();
     private ArrayList<Actor> acts = new ArrayList<>();
     public static StageScreen me;
-
+    public int lv = 0;
     public StageScreen(int Lv) {
+        FlameManager.beginItem();
         me = this;
+        lv = Lv;
         String s = "";
         if (Lv == 1) s=LV1;
         if (Lv == 2) s=LV2;
@@ -64,7 +71,6 @@ public class StageScreen extends Stage {
         for(int i = 0 ; i < acts.size(); i++) {
             groupActs.addActor(acts.get(i));
         }
-
         addActor(groupNoActnoBang);
         addActor(groupNoActs);
         addActor(groupActs);
@@ -90,6 +96,8 @@ public class StageScreen extends Stage {
                 noActNoBangs.add(wall);
             } else if (Character.toString((char) c).equals("p")) {
                 bomber = new Bomber(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                Xbomber = x * textureSize;
+                Ybomber = textureSize * (rows-1) - y * textureSize;
                 acts.add(bomber);
             } else if (Character.toString((char) c).equals("*")) {
                 Brick brick = new Brick(x * textureSize, textureSize * (rows-1) - y * textureSize);
@@ -108,11 +116,14 @@ public class StageScreen extends Stage {
                 Balloon balloon = new Balloon(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 balloons.add(balloon);
                 acts.add(balloon);
+
             } else if (Character.toString((char) c).equals("2")) {
-                Actor oneal = new Oneal(x * 32, 384 - y * 32);
+                Oneal oneal = new Oneal(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                oneals.add(oneal);
                 acts.add(oneal);
             } else if (Character.toString((char) c).equals("3")) {
-                Actor doll = new Doll(x * 32, 384 - y * 32);
+                Doll doll = new Doll(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                dolls.add(doll);
                 acts.add(doll);
             }
             if (Character.toString((char) c).equals(" ") || (!Character.toString((char) c).equals("#")
@@ -160,8 +171,18 @@ public class StageScreen extends Stage {
             if (noActs.get(i) == myActor) {
                 groupNoActs.removeActor(noActs.get(i));
                 noActs.remove(noActs.get(i));
+                //i--;
             }
         }
+    }
+
+    public void removeFlame(FlameManager flameManager) {
+        //System.out.println("work22222" + flameManager.sizeFlame());
+        for(int i = 0; i < flameManager.sizeFlame(); i++) {
+            //System.out.println("work1111");
+            remove(flameManager.getFlames().get(i));
+        }
+
     }
 
     /**
@@ -171,21 +192,21 @@ public class StageScreen extends Stage {
      * @return
      */
     public Actor getAt ( float x, float y) {
-        for (int i = 0; i < acts.size(); i++) {
+        for (int i = acts.size() - 1; i >= 0; i--) {
             if (x >= acts.get(i).getX() && x < acts.get(i).getX() + textureSize) {
                 if (y >= acts.get(i).getY() && y < acts.get(i).getY() + textureSize) {
                     return acts.get(i);
                 }
             }
         }
-        for (int i = 0; i < noActs.size(); i++) {
+        for (int i = noActs.size() - 1; i >= 0 ; i--) {
             if (x >= noActs.get(i).getX() && x < noActs.get(i).getX() + textureSize) {
                 if (y >= noActs.get(i).getY() && y < noActs.get(i).getY() + textureSize) {
                     return noActs.get(i);
                 }
             }
         }
-        for (int i = 0; i < noActNoBangs.size(); i++) {
+        for (int i = noActNoBangs.size() - 1; i >=0 ; i--) {
             if (x >= noActNoBangs.get(i).getX() && x < noActNoBangs.get(i).getX() + textureSize) {
                 if (y >= noActNoBangs.get(i).getY() && y < noActNoBangs.get(i).getY() + textureSize) {
                     return noActNoBangs.get(i);
@@ -207,8 +228,7 @@ public class StageScreen extends Stage {
     }
 
     public boolean CheckAllEnemyDeath(){
-        if (balloons.size() == 0) {
-            //&& stageScreen.oneals == 0)
+        if (balloons.size() == 0 && oneals.size() == 0 && dolls.size() == 0) {
             return true;
         }
         return false;
@@ -232,46 +252,72 @@ public class StageScreen extends Stage {
 
     // Function addBombg
     public void addBomb(Actor actor){
-        noActs.add(0, actor);
-        groupNoActs.addActor(actor);
+        acts.add(0, actor);
+    }
+
+    public void noActRemove() {
+        noActs.remove(0);
+    }
+
+    public void addFlames(FlameManager flameManager){
+        System.out.println("work");
+        for(int i = 0; i < flameManager.sizeFlame(); i++){
+            noActs.add(flameManager.getFlames().get(i));
+            groupNoActs.addActor(flameManager.getFlames().get(i));
+        }
     }
 
     /**
      * mảng 4 phần tử gạch, tường xung quanh quả bom.
      * [0]:up,[1]:down,[2]:right,[3]:left;
-     * @param bomb .
+     * @param x, y.
      * @return ArrayList<Actor>
      */
-    public ArrayList<Actor> bombArounds(Actor bomb) {
+    public ArrayList<Actor> bombArounds(float x, float y) {
         ArrayList<Actor> bombAround = new ArrayList<>();
         for (int i = 0; i < 11; i++) {
-            if (getAt(bomb.getX() + 1, textureSize * (i + 1) + bomb.getY()) instanceof Wall
-                    || getAt(bomb.getX() + 1, textureSize * (i + 1) + bomb.getY()) instanceof Brick) {
-                bombAround.add(getAt(bomb.getX() + 1, textureSize * (i + 1) + bomb.getY()));
+            if (getAt(x + 1, textureSize * (i + 1) + y) instanceof Wall
+                    || getAt(x + 1, textureSize * (i + 1) + y) instanceof Brick) {
+                bombAround.add(getAt(x + 1, textureSize * (i + 1) + y));
                 break;
             }
         }
         for (int i = 0; i < 11; i++) {
-            if (getAt(bomb.getX() + 1, textureSize * (-i - 1) + bomb.getY() +2) instanceof Wall
-                    || getAt(bomb.getX() + 1, textureSize * (-i - 1) + bomb.getY() +2) instanceof Brick) {
-                bombAround.add(getAt(bomb.getX() + 1, textureSize * (-i - 1) + bomb.getY()+2));
+            if (getAt(x + 1, textureSize * (-i - 1) + y +2) instanceof Wall
+                    || getAt(x + 1, textureSize * (-i - 1) + y +2) instanceof Brick) {
+                bombAround.add(getAt(x + 1, textureSize * (-i - 1) + y+2));
                 break;
             }
         }
         for (int i = 0; i < 29; i++) {
-            if (getAt(textureSize * (i + 1) + bomb.getX(), bomb.getY() + 1) instanceof Wall
-                    || getAt(textureSize * (i + 1) + bomb.getX(), bomb.getY() + 1) instanceof Brick) {
-                bombAround.add(getAt(textureSize * (i + 1) + bomb.getX(), bomb.getY() + 1));
+            if (getAt(textureSize * (i + 1) + x, y + 1) instanceof Wall
+                    || getAt(textureSize * (i + 1) + x, y + 1) instanceof Brick) {
+                bombAround.add(getAt(textureSize * (i + 1) + x, y + 1));
                 break;
             }
         }
         for (int i = 0; i < 29; i++) {
-            if (getAt(textureSize * (-i - 1) + bomb.getX(), bomb.getY() + 1) instanceof Wall
-                    || getAt(textureSize * (-i - 1) + bomb.getX(), bomb.getY() + 1) instanceof Brick) {
-                bombAround.add(getAt(textureSize * (-i - 1) + bomb.getX(), bomb.getY() + 1));
+            if (getAt(textureSize * (-i - 1) + x, y + 1) instanceof Wall
+                    || getAt(textureSize * (-i - 1) + x, y + 1) instanceof Brick) {
+                bombAround.add(getAt(textureSize * (-i - 1) + x, y + 1));
                 break;
             }
         }
         return bombAround;
+    }
+
+    public void comeBack() {
+        if (live == false) {
+            System.out.println(numberlives);
+            if (numberlives > 0) {
+                System.out.println("lan" + numberlives);
+                numberlives--;
+                bomber.setX(Xbomber);
+                bomber.setY(Ybomber);
+                acts.add(bomber);
+                groupActs.addActor(bomber);
+                live = true;
+            }
+        }
     }
 }

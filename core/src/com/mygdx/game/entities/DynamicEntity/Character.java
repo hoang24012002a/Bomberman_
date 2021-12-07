@@ -28,7 +28,8 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Wall) {
             return false;
         } else if (actor instanceof Item) {
-            return ((Item) actor).isBroken();
+            return true;
+            //((Item) actor).isBroken();
         } else if (actor instanceof Bomb) {
             return false;
         }
@@ -42,7 +43,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Wall) {
             return false;
         } else if (actor instanceof Item) {
-            return ((Item) actor).isBroken();
+            return true;
         } else if (actor instanceof Bomb) {
             return false;
         }
@@ -56,7 +57,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Wall) {
             return false;
         } else if (actor instanceof Item) {
-            return ((Item) actor).isBroken();
+            return true;
         } else if (actor instanceof Bomb) {
             return false;
         }
@@ -70,7 +71,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Wall) {
             return false;
         } else if (actor instanceof Item) {
-            return ((Item) actor).isBroken();
+            return true;
         } else if (actor instanceof Bomb) {
             return false;
         }
@@ -78,7 +79,7 @@ public abstract class Character extends AnimatedEntity {
     }
 
     protected void setPositionInMatrix(float x, float y, char symbol) {
-        int x_matrix = Math.round(x / 32);
+        int x_matrix = Math.round(x/ 32);
         int y_matrix = Math.round(y / 32);
         stageScreen.mapMatrix[y_matrix][x_matrix] = symbol;
         if (stageScreen.mapMatrix[y_matrix - 1][x_matrix] == symbol) {
@@ -97,7 +98,6 @@ public abstract class Character extends AnimatedEntity {
     public void killed() {
         alive = false;
     }
-
 
     protected abstract void moveRight();
 

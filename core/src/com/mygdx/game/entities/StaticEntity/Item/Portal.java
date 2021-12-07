@@ -4,10 +4,12 @@ import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.gamesys.GameManager;
+import com.mygdx.game.map.StageScreen;
 
 public class Portal extends Item {
 
-    protected boolean allEnemyDie;
+    protected boolean allEnemyDie = StageScreen.me.CheckAllEnemyDeath();
+    protected StageScreen stageScreen;
 
     public Portal(float positionX, float positionY){
         super(positionX, positionY);
@@ -19,17 +21,23 @@ public class Portal extends Item {
         super(brick);
         this.allEnemyDie = false;
         this.texture = GameManager.portalItem;
+        this.broken = false;
     }
 
     @Override
-    public void eatItem(Bomber bomber){
-        if(positionX == bomber.getPositionX() && positionY == bomber.getPositionY()){
+    public void eatItem(float x, float y){
+        if(positionX == x && positionY == y && allEnemyDie){
             this.broken = true;
-//            cần 1 biến bool all enemy die để eatPortal
-//
+            remove();
+            stageScreen.remove(this);
         }else{
             this.broken = false;
         }
+    }
+
+    @Override
+    public boolean isBroken(){
+        return broken;
     }
 
     @Override
@@ -41,13 +49,11 @@ public class Portal extends Item {
         }
     }
 
-
     //    qua man mới
-    @Override
-    public void act(float delta){
-        if(positionX == 90 && positionY == 90 && allEnemyDie){
-            getStage().getActors().removeValue(this, true);
-            getStage().addActor(new Grass(positionX, positionY));
-        }
-    }
+//    @Override
+//    public void act(float delta){
+////        float currentBomberX = stageScreen.bomber.getPositionX();
+////        float currentBomberY = stageScreen.bomber.getPositionY();
+////        eatItem(currentBomberX, currentBomberY);
+//    }
 }

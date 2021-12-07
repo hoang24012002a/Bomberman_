@@ -31,6 +31,7 @@ public class Balloon extends Enemy {
             }
             if (timeKill == 100) {
                 setPositionInMatrix(getX(), getY(), 'n');
+                stageScreen.balloons.remove(this);
                 stageScreen.remove(this);
                 numberEnemy--;
                 remove();

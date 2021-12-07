@@ -1,29 +1,39 @@
 package com.mygdx.game.entities.StaticEntity.Bomb;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.entities.AnimatedEntity;
+import com.mygdx.game.entities.DynamicEntity.Character;
 import com.mygdx.game.gamesys.GameManager;
+import com.mygdx.game.map.StageScreen;
+import javafx.util.Pair;
+
+import java.util.ArrayList;
 
 public class FlameManager extends Flame {
-    protected Array<Flame> flames;
-    protected static int flameItem = 2;
+    public Array<Flame> flames;
+    protected static int flameItem = 0;
     protected final int timeExp = 3000;
+    protected StageScreen stageScreen;
 
     public FlameManager(float positionX, float positionY){
         super(positionX, positionY);
+        this.stageScreen = StageScreen.me;
         this.flames = new Array<>(flameItem*2+5);
         addFlame();
-        outPos();
+        checkExploded();
+        System.out.println(sizeFlame());
+//        outPos();
     }
     public FlameManager(Flame flame){
         super(flame.getPositionX(), flame.getPositionY());
         this.flames = new Array<>(flameItem*2+5);
         addFlame();
-        outPos();
     }
 
 
     public void addFlame(){
-        flames.add(new Flame(positionX, positionY, GameManager.bombExp));
+        flames.add(new Flame(positionX, positionY));
         flames.add(new Flame(positionX, positionY+(flameItem+1)*32, GameManager.flameVerTopLast));
         flames.add(new Flame(positionX, positionY-(flameItem+1)*32, GameManager.flameVerDownLast));
         flames.add(new Flame(positionX-(flameItem+1)*32, positionY, GameManager.flameHorLeftLast));
@@ -40,7 +50,95 @@ public class FlameManager extends Flame {
         }
     }
 
+    public void removeLeftFlame(float posXNearestLeft){
+        /**
+         * TO DO:  get positionX of brick and wall nearest
+         * */
+        Array.ArrayIterator<Flame> iterator = flames.iterator();
+        if(positionX-getFlameLengt() <= posXNearestLeft){
+            while (iterator.hasNext()){
+                Flame temp  = iterator.next();
+                if(temp.getPositionX() <= posXNearestLeft){
+                    flames.removeValue(temp, true);
+                }
+            }
+        }
+    }
 
+    public void removeRightFlame(float posXNearestRight){
+        /**
+         * TO DO: get positionX of brick and wall nearest
+         * */
+        Array.ArrayIterator<Flame> iterator = flames.iterator();
+        if(positionX+getFlameLengt() >= posXNearestRight){
+            while (iterator.hasNext()){
+                Flame temp  = iterator.next();
+                if(temp.getPositionX() >= posXNearestRight){
+                    flames.removeValue(temp, true);
+                }
+            }
+        }
+    }
+
+    public void removeTopFlame(float posYNearestTop){
+        /**
+         * TO DO: get positionY of brick and wall nearest
+         * */
+        Array.ArrayIterator<Flame> iterator = flames.iterator();
+        if(positionY+getFlameLengt()>=posYNearestTop){
+            while (iterator.hasNext()){
+                Flame temp = iterator.next();
+                if(temp.getPositionY()>=posYNearestTop){
+                    flames.removeValue(temp, true);
+                }
+            }
+        }
+    }
+
+    public void removeDownFLame(float posYNearestDown){
+        /**
+         * TO DO: get positionY of brick and wall nearest
+         * */
+        Array.ArrayIterator<Flame> iterator = flames.iterator();
+        if((positionY-getFlameLengt())<=posYNearestDown){
+            while (iterator.hasNext()){
+                Flame temp = iterator.next();
+                if(temp.getPositionY() <= posYNearestDown){
+                    flames.removeValue(temp, true);
+                }
+            }
+        }
+    }
+
+    public static float getFlameLengt(){
+        return (FlameManager.flameItem+1)*32;
+    }
+
+
+    public void checkExploded(){
+        ArrayList<Actor> nearest = stageScreen.bombArounds(positionX, positionY);
+        System.out.println(nearest.get(3).getX());
+        System.out.println(nearest.get(2).getX());
+        System.out.println(nearest.get(0).getY());
+        System.out.println(nearest.get(1).getY());
+        removeLeftFlame(nearest.get(3).getX());
+        removeRightFlame(nearest.get(2).getX());
+        removeTopFlame(nearest.get(0).getY());
+        removeDownFLame(nearest.get(1).getY());
+    }
+
+    //    để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
+    public boolean isBurned(){
+        for(int i = 0; i < sizeFlame(); i++){
+            if(getFlames().get(i).burned){
+                System.out.println("true");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //    để check vị trí của flame xem có đúng không
     public void outPos(){
         for(int i = 0; i < flames.size; i++){
             System.out.println(flames.get(i).getPositionX()+"-"+ flames.get(i).getPositionY());
@@ -51,12 +149,17 @@ public class FlameManager extends Flame {
         return flames;
     }
 
-    public int sizeFla(){
+    public int sizeFlame(){
         return flames.size;
     }
 
-    public void update(){
+
+    public static void updateItem(){
         flameItem++;
+    }
+
+    public static void beginItem(){
+        flameItem = 0;
     }
 
     private int dem = 0;
@@ -69,20 +172,5 @@ public class FlameManager extends Flame {
             remove();
             flames.removeAll(flames, true);
         }
-//        new Thread(
-//                new Runnable() {
-//                  @Override
-//                  public void run() {
-//                    try {
-//                      Thread.sleep(timeExp);
-//                      getStage().getActors().removeAll(_this, true);
-//                      flames.removeAll(flames, true);
-//                      System.out.println("run");
-//                    } catch (InterruptedException e) {
-//                      e.printStackTrace();
-//                    }
-//                  }
-//                })
-//            .start();
     }
 }

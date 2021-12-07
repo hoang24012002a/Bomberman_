@@ -3,29 +3,34 @@ package com.mygdx.game.entities.StaticEntity.Item;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
+import com.mygdx.game.entities.StaticEntity.Tile.Grass;
+import com.mygdx.game.map.StageScreen;
 
 public abstract class Item extends StaticEntities {
 
     protected boolean broken;
+    protected StageScreen stageScreen;
 
     public Item(Brick brick){
         super(brick.getPositionX(), brick.getPositionY());
         this.canBreakable=true;
         this.broken = false;
+        this.canPass = true;
+        this.stageScreen = StageScreen.me;
     }
 
     public Item(float positionX, float positionY){
         super(positionX, positionY);
         this.broken = false;
-        this.canBreakable  = true;
+        this.canBreakable = true;
+        this.canPass = true;
+        this.stageScreen = StageScreen.me;
     }
 
-    public boolean isBroken() {
-        return broken;
-    }
+    public abstract boolean isBroken();
 
     //    nếu pos Bomber = pos Item xoá Item
-    public abstract void eatItem(Bomber bomber);
+    public abstract void eatItem(float x, float y);
 
     //    show item inside brick
     public abstract void showItem(Brick brickBroken);
