@@ -1,7 +1,7 @@
 # Bomberman_
 ##Demo
 
-![](core/assets/cartoon/demo.gif)
+![demo](https://user-images.githubusercontent.com/80667158/145273836-997d4b98-bff6-4610-94bd-16f3c7ea82dc.gif)
 
 Game được phát triển với core viết bằng ngôn ngữ Java và được xây dựng bởi các sinh viên:
 1. Vũ Duy Hoàng (Nhóm 7, MSSV: 20020413, Manager)
