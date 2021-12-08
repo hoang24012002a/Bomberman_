@@ -10,8 +10,10 @@ import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
 import com.mygdx.game.entities.DynamicEntity.enemy.Doll;
 import com.mygdx.game.entities.DynamicEntity.enemy.Oneal;
 import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
+import com.mygdx.game.entities.StaticEntity.Item.BombItem;
 import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
 import com.mygdx.game.entities.StaticEntity.Item.Portal;
+import com.mygdx.game.entities.StaticEntity.Item.SpeedItem;
 import com.mygdx.game.entities.StaticEntity.Tile.Brick;
 import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.entities.StaticEntity.Tile.Wall;
@@ -21,22 +23,22 @@ import java.util.ArrayList;
 
 public class StageScreen extends Stage {
 //<<<<<<< HEAD
-    private final static String LV1 = "D:\\Bomb\\core\\assets\\level\\Lv1.txt";
+    private final static String LV1 = "Lv1.txt";
   // =======
   //    private final static String LV1 =".\\core\\assets\\level\\Lv1.txt";
   // >>>>>>> 1abe639d5dfb9ff33ad2ff197d06b2375ba3a438
     private final static String LV2 =
-      "D:\\Bomb\\core\\assets\\level\\Lv2.txt";
+      "Lv2.txt";
     private final static String LV3 =
-      "D:\\Bomb\\core\\assets\\level\\Lv3.txt";
+      "Lv3.txt";
     private final static int textureSize = 32;
     private Group groupNoActnoBang;
-    public Group groupNoActs;
+    private Group groupNoActs;
     private Group groupActs;
     private float Xbomber,Ybomber;
     //private ArrayList<Actor> bombAround = new ArrayList<>();
     public int rows,columns;
-    public int dem = 0;
+    //public int dem = 0;
     public boolean live = true;
     public int numberlives = 3;
     public Bomber bomber;
@@ -48,11 +50,13 @@ public class StageScreen extends Stage {
     // n là đi đc.
     public char mapMatrix[][] ;
     private ArrayList<Actor> noActNoBangs = new ArrayList<>();
-    public ArrayList<Actor> noActs = new ArrayList<>();
+    private ArrayList<Actor> noActs = new ArrayList<>();
     private ArrayList<Actor> acts = new ArrayList<>();
     public static StageScreen me;
     public int lv = 0;
     public StageScreen(int Lv) {
+        numberlives = 3;
+        Bomber.setNextLevel();
         FlameManager.beginItem();
         me = this;
         lv = Lv;
@@ -113,6 +117,16 @@ public class StageScreen extends Stage {
                 FlameItem flameItem= new FlameItem(brick);
                 noActs.add(flameItem);
                 noActs.add(brick);
+            } else if (Character.toString((char) c).equals("b")) {
+                Brick brick = new Brick(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                BombItem bombItem= new BombItem(brick);
+                noActs.add(bombItem);
+                noActs.add(brick);
+            } else if (Character.toString((char) c).equals("s")) {
+                Brick brick = new Brick(x * textureSize, textureSize * (rows-1) - y * textureSize);
+                SpeedItem speedItem = new SpeedItem(brick);
+                noActs.add(speedItem);
+                noActs.add(brick);
             } else if (Character.toString((char) c).equals("x")) {
                 Brick brick = new Brick(x * textureSize, textureSize * (rows-1) - y * textureSize);
                 Portal portal = new Portal(brick);
@@ -147,7 +161,6 @@ public class StageScreen extends Stage {
                 }
             }
             x++;
-            dem++;
         }
     }
 
@@ -222,15 +235,11 @@ public class StageScreen extends Stage {
         return null;
     }
 
-    public boolean CheckInPortal(float x,float y) {
-        /*if (bomber.getX() + 32 < portal.getX() || bomber.getX() > portal.getX() + 32
-                || bomber.getY() + 32 < portal.getY() || bomber.getY() > portal.getY() +32) {
-            return true;
-        }*/
-        if (getAt(x,y) instanceof Portal) {
-            return true;
-        }
-        return false;
+    public boolean CheckInPortal() {
+      if (Bomber.nextLevel) {
+          return true;
+      }
+      return false;
     }
 
     public boolean CheckAllEnemyDeath(){

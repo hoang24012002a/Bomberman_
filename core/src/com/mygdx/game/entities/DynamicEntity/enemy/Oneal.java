@@ -24,7 +24,7 @@ public class Oneal extends Enemy {
             direction = calculateDir();
             timeChangeDirection = 0;
         }
-        if (!isAlive()) {
+        if (!alive) {
             textureAtlas = GameManager.onealDeadDynamic.getKey();
             animation = GameManager.onealDeadDynamic.getValue();
             timeKill++;
