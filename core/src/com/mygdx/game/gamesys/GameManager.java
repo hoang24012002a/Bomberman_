@@ -203,5 +203,24 @@ public class GameManager extends AssetManager {
     public static final Texture Lv1 = new Texture(Gdx.files.internal("cartoon/lv1.png"));
     public static final Texture Lv2 = new Texture(Gdx.files.internal("cartoon/lv2.png"));
     public static final Texture Lv3 = new Texture(Gdx.files.internal("cartoon/lv3.png"));
+    public static final Texture notnhac = new Texture(Gdx.files.internal("cartoon/notnhac.png"));
+    public static final Texture board = new Texture(Gdx.files.internal("cartoon/board.png"));
+    public static final Texture play = new Texture(Gdx.files.internal("cartoon/newplay.png"));
+    public static final Texture on = new Texture(Gdx.files.internal("cartoon/on.png"));
+    public static final Texture off = new Texture(Gdx.files.internal("cartoon/off.png"));
+    public static final Texture background = new Texture(Gdx.files.internal("cartoon/background.jpg"));
+    public static final Texture quit = new Texture(Gdx.files.internal("cartoon/newquit.png"));
+    public static final Texture heart = new Texture(Gdx.files.internal("cartoon/heart.png"));
+    public static final Texture anhballoon = new Texture(Gdx.files.internal("img/enemy/balloon/left/balloom_left1.png"));
+    public static final Texture KOB = new Texture(Gdx.files.internal("cartoon/KOB.png"));
+    public static final Texture anhoneal = new Texture(Gdx.files.internal("img/enemy/oneal/left/oneal_left1.png"));
+    public static final Texture anhdoll = new Texture(Gdx.files.internal("img/enemy/doll/left/doll_left1.png"));
+    public static final Texture anhbomber = new Texture(Gdx.files.internal("img/player/down/player_down.png"));
+    public static final Texture conti = new Texture(Gdx.files.internal("cartoon/newconti.png"));
+    public static final Texture over = new Texture(Gdx.files.internal("cartoon/game-over.png"));
+    public static final Texture winner= new Texture(Gdx.files.internal("cartoon/winner.png"));
+    public static final Texture menu = new Texture(Gdx.files.internal("cartoon/newmenu.png"));
+    public static final Texture tryAg = new Texture(Gdx.files.internal("cartoon/try.png"));
+
 }
 

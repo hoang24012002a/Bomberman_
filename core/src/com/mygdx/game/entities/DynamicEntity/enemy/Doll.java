@@ -8,7 +8,7 @@ public class Doll extends Enemy {
     public Doll(float x, float y) {
         super(x, y);
         ai = new AI_Low(this);
-        speed = 2.0f;
+        speed = 1.5f;
         textureAtlas = GameManager.dollLeftDynamic.getKey();
         animation = GameManager.dollLeftDynamic.getValue();
     }

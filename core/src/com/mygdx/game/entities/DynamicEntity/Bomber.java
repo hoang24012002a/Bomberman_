@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
     private int maxBomb = 2;
-    private boolean nextLevel = false;
     private ArrayList<Bomb> listBomb;
     //  thêm một array flame manager để add và xoá như arraylistBom
     private ArrayList<FlameManager> listFlame;
+    public static boolean nextLevel = false;
     public static Bomber bomber;
 
     public Bomber(float x, float y) {
@@ -74,6 +74,9 @@ public class Bomber extends Character {
             if (canPlaceBomb()) {
                 placeBomb();
             }
+            return;
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
+            nextLevel = true;
             return;
         }
         switch (code) {
@@ -202,18 +205,20 @@ public class Bomber extends Character {
             return;
         }
         System.out.println("love");
-        GameManager.eatItemSound.play();
         if (item instanceof BombItem) {
+            GameManager.eatItemSound.play();
             maxBomb++;
             item.remove();
             stageScreen.remove(item);
         } else if (item instanceof SpeedItem) {
+            GameManager.eatItemSound.play();
             speed += 1;
             item.remove();
             stageScreen.remove(item);
         } else if (item instanceof FlameItem) {
             //TODO: raise flame length.
             //  update độ dài flame lên 1;
+            GameManager.eatItemSound.play();
             FlameManager.updateItem();
             item.remove();
             stageScreen.remove(item);
@@ -253,13 +258,16 @@ public class Bomber extends Character {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
-                    Thread.sleep(1800);
-                    stageScreen.addFlames(flameManager);
-                    GameManager.bombExplodedSound.play();
-                }catch (InterruptedException e){
-                    e.printStackTrace();
+                boolean check = false;
+                for (int i = 0; i < 1930; i++) {
+                    for (long j = 0; j < 2000000; j++) {
+                        if (check == true) {
+                            break;
+                        }
+                    }
                 }
+                stageScreen.addFlames(flameManager);
+                GameManager.bombExplodedSound.play();
             }
         }).start();
         GameManager.placeBombSound.play();
@@ -288,12 +296,8 @@ public class Bomber extends Character {
         }
     }
 
-    /**
-     * check for nextLevel.
-     * @return boolean.
-     */
-    public boolean isNextLevel() {
-        return nextLevel;
+    public static void setNextLevel() {
+        nextLevel = false;
     }
 }
 

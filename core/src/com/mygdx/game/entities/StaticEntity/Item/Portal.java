@@ -37,7 +37,7 @@ public class Portal extends Item {
 
     @Override
     public boolean isBroken(){
-        return broken;
+        return true;
     }
 
     @Override
