@@ -31,7 +31,7 @@ public class MyInputProcessor implements InputProcessor {
     }
 
     public boolean mouseMoved(int x, int y) {
-        if(550-y > 210 && 550-y < 410 && x > 440 && x < 620) {
+        if(550-y > 100 && 550-y < 450 && x > 280 && x < 700) {
             return true;
         }
         return false;

@@ -21,7 +21,7 @@ public class Balloon extends Enemy {
             direction = calculateDir();
             timeChangeDirection = 0;
         }
-        if (!isAlive()) {
+        if (!alive) {
             textureAtlas = GameManager.balloonDeadDynamic.getKey();
             animation = GameManager.balloonDeadDynamic.getValue();
             timeKill++;

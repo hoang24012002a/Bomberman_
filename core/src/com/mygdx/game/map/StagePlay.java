@@ -76,13 +76,14 @@ public class StagePlay extends Stage {
         if (chuyenman == false) {
             //System.out.println("love");
             kt = true;
-            //this.stageScreen =  new StageScreen(lv);
-            //this.stageScreen =  stageScreens.get(lv-1);
-            //this.stageInfomation = new StageInfomation(this.stageScreen)
+
             this.stageMenu.draw();
-            if (this.stageMenu.convert(Gdx.input.getX(), Gdx.input.getY()) == true) {
+            if (this.stageMenu.convert(Gdx.input.getX(), Gdx.input.getY())[0] == true) {
                 chuyenman = true;
                 playAgain();
+            } if (this.stageMenu.convert(Gdx.input.getX(), Gdx.input.getY())[1] == true){
+                System.out.println("thoat");
+                exit = true;
             }
 
         } else {
@@ -94,19 +95,20 @@ public class StagePlay extends Stage {
             //System.out.println(stageScreens.get(lv - 1).getAt(Gdx.input.getX(),550-Gdx.input.getY()));
             if (lv <4) {
                 //stageScreens.get(lv - 1).bomber.getX() >= 100
-
-            if(stageScreens.get(lv - 1).CheckAllEnemyDeath() || stageScreens.get(lv -1).bomber.getX()>600) {
+                // cheat qua man
+            if((stageScreens.get(lv - 1).CheckAllEnemyDeath() && stageScreens.get(lv - 1).CheckInPortal()) || Gdx.input.isKeyJustPressed(Input.Keys.C)) {
                     levelUp();
                     if (lv >= 4) checkWin = true;
 
             }}
-            //Bang();
             Pause();
             if(lv >= 4 || this.stageScreen.numberlives == 0) { kt =false;}
             if (kt == false) {
+
                  if (lv >=4 || this.stageScreen.numberlives == 0) {
                      //this.stageChangeLose = new StageChange("lose");
                      if (checkWin == false) {
+
                          this.stageChangeLose.draw();
                          if (this.stageChangeLose.convert(Gdx.input.getX(), Gdx.input.getY())[0] == true) {
                              System.out.println("exit1");
@@ -115,6 +117,14 @@ public class StagePlay extends Stage {
                          if (this.stageChangeLose.convert(Gdx.input.getX(), Gdx.input.getY())[1] == true) {
                              System.out.println("menu");
                              chuyenman = false;
+                             stageMenu = new StageMenu();
+                         }
+                         if (this.stageChangeLose.convert(Gdx.input.getX(), Gdx.input.getY())[2] == true) {
+                             stageScreens.remove(stageScreens.get(lv-1));
+                             stageScreens.add(new StageScreen(lv));
+                             this.stageScreen = stageScreens.get(lv-1);
+                             this.stageInfomation = new StageInfomation(this.stageScreen);
+                             kt = true;
                          }
                      } else {
                          this.stageChangeWin.draw();
@@ -125,6 +135,7 @@ public class StagePlay extends Stage {
                          if (this.stageChangeWin.convert(Gdx.input.getX(), Gdx.input.getY())[1] == true) {
                              System.out.println("menu");
                              chuyenman = false;
+                             stageMenu = new StageMenu();
                          }
                      }
                  } else {
@@ -137,15 +148,11 @@ public class StagePlay extends Stage {
                          System.out.println("menu2");
                          //kt = true;
                          chuyenman = false;
+                         stageMenu = new StageMenu();
                      }
-
                  }
-
             }
-
         }
-
-        //
     }
     public void act(float delta) {
         //stageScreens.get(lv - 1).act();

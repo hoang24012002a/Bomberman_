@@ -18,6 +18,8 @@ public class SpeedItem extends Item {
 
     public SpeedItem(Brick brick){
         super(brick);
+        this.texture = GameManager.speedItem;
+
     }
 
     public static int getSpeedBoost() {

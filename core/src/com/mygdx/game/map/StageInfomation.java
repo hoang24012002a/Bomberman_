@@ -10,12 +10,12 @@ import com.mygdx.game.gamesys.GameManager;
 
 public class StageInfomation extends Stage {
     private Pixmap pixmap = new Pixmap(992, 134, Pixmap.Format.RGBA8888);
-    private TextureRegion KOB = new TextureRegion(new Texture("cartoon/KOB.png"));
-    private TextureRegion heart = new TextureRegion(new Texture("cartoon/heart.png"));
-    private TextureRegion balloon = new TextureRegion(new Texture("img/enemy/balloon/left/balloom_left1.png"));
-    private TextureRegion oneal = new TextureRegion(new Texture("img/enemy/oneal/left/oneal_left1.png"));
-    private TextureRegion doll = new TextureRegion(new Texture("img/enemy/doll/left/doll_left1.png"));
-    private TextureRegion bomber = new TextureRegion(new Texture("img/player/down/player_down.png"));
+    private TextureRegion KOB = new TextureRegion(GameManager.KOB);
+    private TextureRegion heart = new TextureRegion(GameManager.heart);
+    private TextureRegion balloon = new TextureRegion(GameManager.anhballoon);
+    private TextureRegion oneal = new TextureRegion(GameManager.anhoneal);
+    private TextureRegion doll = new TextureRegion(GameManager.anhdoll);
+    private TextureRegion bomber = new TextureRegion(GameManager.anhbomber);
     private TextureRegion anhLv1 = new TextureRegion(GameManager.Lv1);
     private TextureRegion anhLv2 = new TextureRegion(GameManager.Lv2);
     private TextureRegion anhLv3 = new TextureRegion(GameManager.Lv3);
@@ -35,7 +35,7 @@ public class StageInfomation extends Stage {
     private static final int dollsY = 450;
     public StageInfomation(StageScreen stageScreen){
         stageScreenLocal = stageScreen;
-        pixmap.setColor(Color.BLUE);
+        pixmap.setColor(Color.BROWN);
         pixmap.fill();
         TextureRegion anhpixmap = new TextureRegion(new Texture(pixmap));
         MyActor myPixmap = new MyActor(anhpixmap);
@@ -57,17 +57,17 @@ public class StageInfomation extends Stage {
     private void addImageLever(int lv) {
         if (lv == 1) {
             MyActor myLv = new MyActor(anhLv1);
-            myLv.setPosition(840, 485);
+            myLv.setPosition(850, 485);
             myLv.setBounds(myLv.getX(), myLv.getY(), anhLv1.getRegionWidth()/(float)1.3, anhLv1.getRegionHeight()/(float)1.3);
             addActor(myLv);
         } else if (lv == 2) {
             MyActor myLv = new MyActor(anhLv2);
-            myLv.setPosition(840, 485);
+            myLv.setPosition(850, 485);
             myLv.setBounds(myLv.getX(), myLv.getY(), anhLv1.getRegionWidth()/(float)1.3, anhLv1.getRegionHeight()/(float)1.3);
             addActor(myLv);
         } else {
             MyActor myLv = new MyActor(anhLv3);
-            myLv.setPosition(840, 485);
+            myLv.setPosition(850, 485);
             myLv.setBounds(myLv.getX(), myLv.getY(), anhLv1.getRegionWidth()/(float)1.3, anhLv1.getRegionHeight()/(float)1.3);
             addActor(myLv);
         }

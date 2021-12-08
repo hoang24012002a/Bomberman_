@@ -7,7 +7,7 @@ public class Doll extends Enemy {
     public Doll(float x, float y) {
         super(x, y);
         ai = new AI_Low(this);
-        speed = 2.0f;
+        speed = 1.5f;
         textureAtlas = GameManager.dollLeftDynamic.getKey();
         animation = GameManager.dollLeftDynamic.getValue();
     }
@@ -21,7 +21,7 @@ public class Doll extends Enemy {
             direction = calculateDir();
             timeChangeDirection = 0;
         }
-        if (!isAlive()) {
+        if (!alive) {
             textureAtlas = GameManager.dollDeadDynamic.getKey();
             animation = GameManager.dollDeadDynamic.getValue();
             timeKill++;
