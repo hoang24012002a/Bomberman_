@@ -2,10 +2,10 @@ package com.mygdx.game.entities.DynamicEntity;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.entities.AnimatedEntity;
-import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
-import com.mygdx.game.entities.StaticEntity.Item.Item;
-import com.mygdx.game.entities.StaticEntity.Tile.Brick;
-import com.mygdx.game.entities.StaticEntity.Tile.Wall;
+import com.mygdx.game.entities.FreezeEntity.Bomb.Bomb;
+import com.mygdx.game.entities.FreezeEntity.Item.Item;
+import com.mygdx.game.entities.FreezeEntity.Tile.Brick;
+import com.mygdx.game.entities.FreezeEntity.Tile.Wall;
 import com.mygdx.game.map.StageScreen;
 
 public abstract class Character extends AnimatedEntity {
@@ -30,7 +30,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Item) {
             return true;
         } else if (actor instanceof Bomb) {
-            return false;
+            return true;
         }
         return true;
     }
@@ -45,7 +45,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Item) {
             return true;
         } else if (actor instanceof Bomb) {
-            return false;
+            return true;
         }
         return true;
     }
@@ -59,7 +59,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Item) {
             return true;
         } else if (actor instanceof Bomb) {
-            return false;
+            return true;
         }
         return true;
     }
@@ -74,7 +74,7 @@ public abstract class Character extends AnimatedEntity {
         } else if (actor instanceof Item) {
             return true;
         } else if (actor instanceof Bomb) {
-            return false;
+            return true;
         }
         return true;
     }

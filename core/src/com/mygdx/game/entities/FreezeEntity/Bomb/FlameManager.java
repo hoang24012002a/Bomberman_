@@ -1,13 +1,9 @@
-package com.mygdx.game.entities.StaticEntity.Bomb;
+package com.mygdx.game.entities.FreezeEntity.Bomb;
 
-import com.badlogic.gdx.Audio;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.entities.AnimatedEntity;
 import com.mygdx.game.gamesys.GameManager;
 import com.mygdx.game.map.StageScreen;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.mygdx.game.entities.StaticEntity.Bomb;
+package com.mygdx.game.entities.FreezeEntity.Bomb;
 
 import com.mygdx.game.entities.AnimatedEntity;
 import com.mygdx.game.gamesys.GameManager;

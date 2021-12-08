@@ -1,9 +1,7 @@
-package com.mygdx.game.entities.StaticEntity.Item;
+package com.mygdx.game.entities.FreezeEntity.Item;
 
-import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.StaticEntities;
-import com.mygdx.game.entities.StaticEntity.Tile.Brick;
-import com.mygdx.game.entities.StaticEntity.Tile.Grass;
+import com.mygdx.game.entities.FreezeEntity.Tile.Brick;
 import com.mygdx.game.map.StageScreen;
 
 public abstract class Item extends StaticEntities {

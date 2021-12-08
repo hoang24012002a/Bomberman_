@@ -1,14 +1,12 @@
-package com.mygdx.game.entities.StaticEntity.Tile;
+package com.mygdx.game.entities.FreezeEntity.Tile;
 
-import com.badlogic.gdx.Game;
 import com.mygdx.game.entities.StaticEntities;
-import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
-import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
-import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
-import com.mygdx.game.entities.StaticEntity.Item.BombItem;
-import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
-import com.mygdx.game.entities.StaticEntity.Item.Item;
-import com.mygdx.game.entities.StaticEntity.Item.SpeedItem;
+import com.mygdx.game.entities.FreezeEntity.Bomb.Flame;
+import com.mygdx.game.entities.FreezeEntity.Bomb.FlameManager;
+import com.mygdx.game.entities.FreezeEntity.Item.BombItem;
+import com.mygdx.game.entities.FreezeEntity.Item.FlameItem;
+import com.mygdx.game.entities.FreezeEntity.Item.Item;
+import com.mygdx.game.entities.FreezeEntity.Item.SpeedItem;
 import com.mygdx.game.gamesys.GameManager;
 import com.mygdx.game.map.StageScreen;
 

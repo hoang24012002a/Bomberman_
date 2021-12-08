@@ -1,14 +1,6 @@
-package com.mygdx.game.entities.StaticEntity.Item;
+package com.mygdx.game.entities.FreezeEntity.Item;
 
-import com.mygdx.game.entities.DynamicEntity.Bomber;
-import com.mygdx.game.entities.StaticEntity.Tile.Brick;
-import com.mygdx.game.entities.StaticEntity.Tile.Grass;
-import com.mygdx.game.gamesys.GameManager;
-import com.mygdx.game.map.StageScreen;
-
-import com.mygdx.game.entities.DynamicEntity.Bomber;
-import com.mygdx.game.entities.StaticEntity.Tile.Brick;
-import com.mygdx.game.entities.StaticEntity.Tile.Grass;
+import com.mygdx.game.entities.FreezeEntity.Tile.Brick;
 import com.mygdx.game.gamesys.GameManager;
 import com.mygdx.game.map.StageScreen;
 

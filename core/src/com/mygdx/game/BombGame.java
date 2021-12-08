@@ -2,20 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.bullet.collision.GdxCollisionObjectBridge;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
-import com.mygdx.game.entities.StaticEntity.Tile.Brick;
-import com.mygdx.game.entities.StaticEntity.Tile.Grass;
-import com.mygdx.game.entities.StaticEntity.Tile.Wall;
 import com.mygdx.game.map.*;
-
-import java.util.*;
 
 public class BombGame implements ApplicationListener {
 	private StagePlay stagePlay;

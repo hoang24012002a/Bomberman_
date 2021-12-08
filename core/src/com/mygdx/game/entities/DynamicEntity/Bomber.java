@@ -3,17 +3,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.entities.DynamicEntity.enemy.Enemy;
-import com.mygdx.game.entities.StaticEntity.Bomb.Bomb;
-import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
-import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
-import com.mygdx.game.entities.StaticEntity.Item.*;
+import com.mygdx.game.entities.FreezeEntity.Bomb.Bomb;
+import com.mygdx.game.entities.FreezeEntity.Bomb.Flame;
+import com.mygdx.game.entities.FreezeEntity.Bomb.FlameManager;
+import com.mygdx.game.entities.FreezeEntity.Item.*;
 import com.mygdx.game.gamesys.GameManager;
 
 import java.util.ArrayList;
 
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
-    private int maxBomb = 10;
+    private int maxBomb = 5;
     private ArrayList<Bomb> listBomb;
     public static boolean nextLevel = false;
     //  thêm một array flame manager để add và xoá như arraylistBom
@@ -29,7 +29,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
-        speed = 3.0f;   // fix hered
+        speed = 5.0f;   // fix hered
     }
 
     private int timeKill = 0;
@@ -59,19 +59,38 @@ public class Bomber extends Character {
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             moveRight();
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+                System.out.println("press Space");
+                if(canPlaceBomb()){
+                    placeBomb();
+                }
+            }
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             moveLeft();
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+                System.out.println("press Space");
+                if(canPlaceBomb()){
+                    placeBomb();
+                }
+            }
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             moveBottom();
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+                System.out.println("press Space");
+                if(canPlaceBomb()){
+                    placeBomb();
+                }
+            }
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveTop();
-            return;
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if (canPlaceBomb()) {
-                placeBomb();
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+                System.out.println("press Space");
+                if(canPlaceBomb()){
+                    placeBomb();
+                }
             }
             return;
         }

@@ -1,4 +1,4 @@
-package com.mygdx.game.entities.StaticEntity.Tile;
+package com.mygdx.game.entities.FreezeEntity.Tile;
 
 import com.mygdx.game.entities.StaticEntities;
 import com.mygdx.game.gamesys.GameManager;

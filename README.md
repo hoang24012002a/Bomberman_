@@ -16,6 +16,7 @@ Hướng dẫn chơi:
     ON/OFF - mute background sound
     PLAY - choose map to play
     P - pause game
+    C - pass level
     
 
 Mô tả cấu trúc của file map: 
@@ -48,7 +49,11 @@ Item:
     s - SpeedItem
 
 
-Ưu điểm: Đồ hoạ dễ dùng thân thiện, lên đến 3 màn chơi, có thêm sound effect,thuật toán AI cho từng loại
+Cây kế thừa:
+
+![](core/assets/img/EXTEND TREE.png)
+
+Ưu điểm: Đồ hoạ dễ dùng thân thiện, lên đến 3 màn chơi, có thêm sound effect, thuật toán AI cho từng loại
 quái.
 
 Source code: tự xây dựng cây kế thừa đồng thời kết hợp với libGDX để phát triển

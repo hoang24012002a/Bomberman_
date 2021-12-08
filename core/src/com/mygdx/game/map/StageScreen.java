@@ -1,7 +1,5 @@
 package com.mygdx.game.map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,19 +7,17 @@ import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
 import com.mygdx.game.entities.DynamicEntity.enemy.Doll;
 import com.mygdx.game.entities.DynamicEntity.enemy.Oneal;
-import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
-import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
-import com.mygdx.game.entities.StaticEntity.Item.BombItem;
-import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
-import com.mygdx.game.entities.StaticEntity.Item.Portal;
-import com.mygdx.game.entities.StaticEntity.Item.SpeedItem;
-import com.mygdx.game.entities.StaticEntity.Tile.Brick;
-import com.mygdx.game.entities.StaticEntity.Tile.Grass;
-import com.mygdx.game.entities.StaticEntity.Tile.Wall;
+import com.mygdx.game.entities.FreezeEntity.Bomb.FlameManager;
+import com.mygdx.game.entities.FreezeEntity.Item.BombItem;
+import com.mygdx.game.entities.FreezeEntity.Item.FlameItem;
+import com.mygdx.game.entities.FreezeEntity.Item.Portal;
+import com.mygdx.game.entities.FreezeEntity.Item.SpeedItem;
+import com.mygdx.game.entities.FreezeEntity.Tile.Brick;
+import com.mygdx.game.entities.FreezeEntity.Tile.Grass;
+import com.mygdx.game.entities.FreezeEntity.Tile.Wall;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class StageScreen extends Stage {
 

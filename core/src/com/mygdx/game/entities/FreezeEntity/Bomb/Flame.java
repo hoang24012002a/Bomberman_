@@ -1,11 +1,10 @@
-package com.mygdx.game.entities.StaticEntity.Bomb;
+package com.mygdx.game.entities.FreezeEntity.Bomb;
 
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.entities.AnimatedEntity;
 import com.mygdx.game.entities.DynamicEntity.Character;
-import com.mygdx.game.entities.StaticEntity.Tile.Grass;
 import com.mygdx.game.gamesys.GameManager;
 import com.mygdx.game.map.StageScreen;
 

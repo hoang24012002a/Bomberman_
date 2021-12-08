@@ -3,7 +3,7 @@ package com.mygdx.game.entities.DynamicEntity.enemy;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.entities.DynamicEntity.Character;
 import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI;
-import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
+import com.mygdx.game.entities.FreezeEntity.Bomb.Flame;
 
 public abstract class Enemy extends Character {
     public static int numberEnemy = 0;
