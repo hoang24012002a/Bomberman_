@@ -201,8 +201,12 @@ public class GameManager extends AssetManager {
 
     // Lever Cartoon
     public static final Texture Lv1 = new Texture(Gdx.files.internal("cartoon/lv1.png"));
+
     public static final Texture Lv2 = new Texture(Gdx.files.internal("cartoon/lv2.png"));
+
     public static final Texture Lv3 = new Texture(Gdx.files.internal("cartoon/lv3.png"));
+
+    // UI
     public static final Texture notnhac = new Texture(Gdx.files.internal("cartoon/notnhac.png"));
     public static final Texture board = new Texture(Gdx.files.internal("cartoon/board.png"));
     public static final Texture play = new Texture(Gdx.files.internal("cartoon/newplay.png"));

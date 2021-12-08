@@ -60,10 +60,10 @@ public class Brick extends StaticEntities {
         /**Left explode**/
         if(stageScreen.getAt(positionX+32, positionY) instanceof Flame){
             if(((Flame) stageScreen.getAt(positionX+32, positionY)).isHorizontalFlame() ||
-                    ((Flame) stageScreen.getAt(positionX+32, positionY)).isCenterFlame()){
+                ((Flame) stageScreen.getAt(positionX+32, positionY)).isCenterFlame()){
                 return true;
             }else{
-                System.out.println(false);
+                 System.out.println(false);
                 return false;
             }
 
@@ -71,7 +71,7 @@ public class Brick extends StaticEntities {
         /**Right explode**/
         else if(stageScreen.getAt(positionX-32, positionY) instanceof Flame){
             if(((Flame) stageScreen.getAt(positionX-32, positionY)).isHorizontalFlame() ||
-                    ((Flame) stageScreen.getAt(positionX-32, positionY)).isCenterFlame()){
+                ((Flame) stageScreen.getAt(positionX-32, positionY)).isCenterFlame()){
                 return true;
             }else{
                 System.out.println(false);
@@ -81,7 +81,7 @@ public class Brick extends StaticEntities {
         /**Down explode**/
         else if(stageScreen.getAt(positionX, positionY+32) instanceof Flame){
             if(((Flame) stageScreen.getAt(positionX, positionY+32)).isVerticalFlame()||
-                    ((Flame) stageScreen.getAt(positionX, positionY+32)).isCenterFlame()){
+                ((Flame) stageScreen.getAt(positionX, positionY+32)).isCenterFlame()){
                 return true;
             }else{
                 System.out.println(false);
@@ -91,7 +91,7 @@ public class Brick extends StaticEntities {
         /**Up explode**/
         else if(stageScreen.getAt(positionX, positionY-32) instanceof Flame){
             if(((Flame) stageScreen.getAt(positionX, positionY-32)).isVerticalFlame()||
-                    ((Flame) stageScreen.getAt(positionX, positionY-32)).isCenterFlame()){
+            ((Flame) stageScreen.getAt(positionX, positionY-32)).isCenterFlame()){
                 return true;
             }else{
                 System.out.println(false);

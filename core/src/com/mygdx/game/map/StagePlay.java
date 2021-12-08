@@ -17,7 +17,7 @@ public class StagePlay extends Stage {
     //private Window pauseWindow;
     private Sound music = Gdx.audio.newSound(Gdx.files.internal("music/Bomno.wav"));
     public ArrayList<StageScreen> stageScreens = new ArrayList<>();
-    //public Group groupStageScreen = new Group();
+//    public Group groupStageScreen = new Group();
     private StageScreen stageScreen;
     private StageMenu stageMenu;
     private StageChange stageChange;
@@ -95,8 +95,8 @@ public class StagePlay extends Stage {
             //System.out.println(stageScreens.get(lv - 1).getAt(Gdx.input.getX(),550-Gdx.input.getY()));
             if (lv <4) {
                 //stageScreens.get(lv - 1).bomber.getX() >= 100
-
-            if(stageScreens.get(lv - 1).CheckAllEnemyDeath() || stageScreens.get(lv - 1).CheckInPortal()) {
+                // cheat qua man
+            if((stageScreens.get(lv - 1).CheckAllEnemyDeath() && stageScreens.get(lv - 1).CheckInPortal()) || Gdx.input.isKeyJustPressed(Input.Keys.C)) {
                     levelUp();
                     if (lv >= 4) checkWin = true;
 

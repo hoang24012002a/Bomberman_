@@ -29,7 +29,7 @@ public class StageInfomation extends Stage {
     private static final int heartY = 450;
     private static int balloonsX = 480;
     private static final int balloonsY = 450;
-    private static int onealsX = 650;
+    private static int onealsX = 645;
     private static final int onealsY = 450;
     private static int dollsX = 790;
     private static final int dollsY = 450;

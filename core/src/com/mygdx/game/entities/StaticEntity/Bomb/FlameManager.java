@@ -1,5 +1,7 @@
 package com.mygdx.game.entities.StaticEntity.Bomb;
 
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entities.AnimatedEntity;
@@ -127,20 +129,22 @@ public class FlameManager extends Flame {
         removeDownFLame(nearest.get(1).getY());
     }
 
-    //    để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
+
+    //  để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
+    //  để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
     public boolean isBurned(){
         for(int i = 0; i < sizeFlame(); i++){
             if(getFlames().get(i).burned){
-                System.out.println("true");
                 return true;
             }
         }
         return false;
     }
 
-    //    để check vị trí của flame xem có đúng không
+    //  để check vị trí của flame xem có đúng không
+    //  để check vị trí của flame xem có đúng không
     public void outPos(){
-        for(int i = 0; i < flames.size; i++){
+       for(int i = 0; i < flames.size; i++){
             System.out.println(flames.get(i).getPositionX()+"-"+ flames.get(i).getPositionY());
         }
     }
@@ -158,6 +162,7 @@ public class FlameManager extends Flame {
         flameItem++;
     }
 
+    // nếu phát sinh vấn đề
     public static void beginItem(){
         flameItem = 0;
     }

@@ -9,6 +9,7 @@ import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
 import com.mygdx.game.entities.DynamicEntity.enemy.Doll;
 import com.mygdx.game.entities.DynamicEntity.enemy.Oneal;
+import com.mygdx.game.entities.StaticEntity.Bomb.Flame;
 import com.mygdx.game.entities.StaticEntity.Bomb.FlameManager;
 import com.mygdx.game.entities.StaticEntity.Item.BombItem;
 import com.mygdx.game.entities.StaticEntity.Item.FlameItem;
@@ -20,6 +21,7 @@ import com.mygdx.game.entities.StaticEntity.Tile.Wall;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class StageScreen extends Stage {
     private final static String LV1 =".\\core\\assets\\level\\Lv1.txt";
@@ -78,7 +80,7 @@ public class StageScreen extends Stage {
         addActor(groupNoActnoBang);
         addActor(groupNoActs);
         addActor(groupActs);
-
+        System.out.println("this is "+s);
     }
 
     public void insertFromFile(String fileName) throws IOException {
@@ -189,15 +191,6 @@ public class StageScreen extends Stage {
         }
     }
 
-    public void removeFlame(FlameManager flameManager) {
-        //System.out.println("work22222" + flameManager.sizeFlame());
-        for(int i = 0; i < flameManager.sizeFlame(); i++) {
-            //System.out.println("work1111");
-            remove(flameManager.getFlames().get(i));
-        }
-
-    }
-
     /**
      * Hàm getAt trả về Actor đang ở vị trí đầu vào.
      * @param x
@@ -243,11 +236,11 @@ public class StageScreen extends Stage {
         return false;
     }
 
-    public boolean changeOfLevelUp(float x, float y) {
+    public boolean changeOfLevelUp() {
         /*if (CheckInPortal(x,y)) {
             return true;
         }*/
-        if (bomber.getX() == 200) {
+        if (bomber.getX() == 200 && CheckAllEnemyDeath()) {
             return true;
         }
         return false;
@@ -271,10 +264,21 @@ public class StageScreen extends Stage {
     public void addFlames(FlameManager flameManager){
         System.out.println("work");
         for(int i = 0; i < flameManager.sizeFlame(); i++){
-            noActs.add(flameManager.getFlames().get(i));
+            noActs.add(0, flameManager.getFlames().get(i));
             groupNoActs.addActor(flameManager.getFlames().get(i));
         }
+        System.out.println(flameManager.sizeFlame());
     }
+
+    public void removeFlame(FlameManager flameManager) {
+        //System.out.println("work in this method" + flameManager.sizeFlame());
+        for(int i = 0; i < flameManager.sizeFlame(); i++) {
+            //System.out.println("working");
+            remove(flameManager.getFlames().get(i));
+        }
+
+    }
+
 
     /**
      * mảng 4 phần tử gạch, tường xung quanh quả bom.

@@ -98,7 +98,7 @@ public class Flame extends AnimatedEntity {
                 System.out.println("not yet");
             }
             remove();
-            //stageScreen.remove(this);
+            stageScreen.remove(this);
         }
     }
 }

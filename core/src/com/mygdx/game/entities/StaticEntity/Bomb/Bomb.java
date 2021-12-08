@@ -1,7 +1,5 @@
 package com.mygdx.game.entities.StaticEntity.Bomb;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.mygdx.game.entities.AnimatedEntity;
 import com.mygdx.game.gamesys.GameManager;
 import com.mygdx.game.map.StageScreen;
@@ -28,6 +26,10 @@ public class Bomb extends AnimatedEntity {
         return numberOfBomb;
     }
 
+    public boolean isExplored() {
+        return explored;
+    }
+
     private int dem = 0;
     @Override
     public void act(float delta) {
@@ -39,18 +41,20 @@ public class Bomb extends AnimatedEntity {
         if (dem == 100 && getStage().getActors().notEmpty()) {
             dem = 0;
             explored = true;
+//            getStage().getActors().removeValue(this, true);
             remove();
-            //this.
-            //stageScreen.addBomb(this);
-            //stageScreen.remove(_this);
-            if(explored){
-                System.out.println("true");
+            stageScreen.remove(this);
+//            stageScreen.mapMatrix[(int)positionX/32][(int)positionY/32] = ' ';
+            if(this.remove()){
+                if(explored){
+                    System.out.println("nổ");
+                    stageScreen.addFlames(new FlameManager(positionX, positionY));
+                } else {
+                    System.out.println("chưa nổ đâu");
+                }
+            }else{
+                    System.out.println("chưa cút đâu");
             }
         }
-        return;
-    }
-
-    public boolean isExplored() {
-        return explored;
     }
 }

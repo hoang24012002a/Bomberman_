@@ -15,8 +15,9 @@ import java.util.ArrayList;
 
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
-    private int maxBomb = 2;
+    private int maxBomb = 10;
     private ArrayList<Bomb> listBomb;
+    //  thêm một array flame manager để add và xoá như arraylistBom
     //  thêm một array flame manager để add và xoá như arraylistBom
     private ArrayList<FlameManager> listFlame;
     public static boolean nextLevel = false;
@@ -30,7 +31,7 @@ public class Bomber extends Character {
         textureAtlas = GameManager.playerDownStatic.getKey();
         animation = GameManager.playerDownStatic.getValue();
         code = Input.Keys.S;
-        speed = 1.5f;
+        speed = 1.5f;   // fix hered
     }
 
     private int timeKill = 0;

@@ -29,7 +29,6 @@ public abstract class Character extends AnimatedEntity {
             return false;
         } else if (actor instanceof Item) {
             return true;
-            //((Item) actor).isBroken();
         } else if (actor instanceof Bomb) {
             return false;
         }
