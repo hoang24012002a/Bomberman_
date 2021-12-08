@@ -1,5 +1,4 @@
 package com.mygdx.game.entities.DynamicEntity;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -16,7 +15,8 @@ public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
     private int maxBomb = 10;
     private ArrayList<Bomb> listBomb;
-//  thêm một array flame manager để add và xoá như arraylistBom
+    //  thêm một array flame manager để add và xoá như arraylistBom
+    //  thêm một array flame manager để add và xoá như arraylistBom
     private ArrayList<FlameManager> listFlame;
     public static Bomber bomber;
 
@@ -35,6 +35,7 @@ public class Bomber extends Character {
     @Override
     public void act(float delta) {
         removeBombExplored();
+        removeFlameBurned();
         if (!isAlive()) {
             timeKill++;
             textureAtlas = GameManager.playerDeadDynamic.getKey();
@@ -43,8 +44,14 @@ public class Bomber extends Character {
                 GameManager.playerDeadSound.play();
             }
             if (timeKill == 92) {
+                System.out.println("workkkkkkkkkkk");
+                stageScreen.live = false;
+                removeFlameBurned();
+                //removeFlame();
+                alive = true;
+                timeKill = 0;
                 remove();
-                stageScreen.remove(this);
+                //stageScreen.remove(this);
             }
             return;
         }
@@ -85,6 +92,24 @@ public class Bomber extends Character {
                 animation = GameManager.playerDownStatic.getValue();
                 break;
         }
+    }
+
+    @Override
+    public float getX() {
+        return positionX;
+    }
+    @Override
+    public float getY() {
+        return positionY;
+    }
+
+
+    public void setX(float X) {
+        positionX = X;
+    }
+
+    public void setY(float Y) {
+        positionY = Y;
     }
 
     @Override
@@ -149,11 +174,11 @@ public class Bomber extends Character {
         Actor actor2 = stageScreen.getAt(getX() + 33, getY() + 16);
         Actor actor3 = stageScreen.getAt(getX() + 16, getY() - 1);
         if (actor instanceof Enemy || actor1 instanceof Enemy || actor2 instanceof Enemy || actor3 instanceof Enemy) {
-            alive = true;
-            return true;
+            alive = false;
+            return false;
         } else if (actor instanceof Flame || actor1 instanceof Flame || actor2 instanceof Flame || actor3 instanceof Flame) {
-            alive = true;
-            return true;
+            alive = false;
+            return false;
         }
         return true;
     }
@@ -162,6 +187,7 @@ public class Bomber extends Character {
         if (!(item instanceof Item) || !((Item) item).isBroken()) {
             return;
         }
+        System.out.println("love");
         GameManager.eatItemSound.play();
         if (item instanceof BombItem) {
             maxBomb++;
@@ -213,6 +239,10 @@ public class Bomber extends Character {
                     if(flameManager.isBurned()){
                         removeFlameBurned();
                     }
+                    /*if(flameManager.isBurned()){
+                        System.out.println("xoabom");
+                        removeFlameBurned();
+                    }*/
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
@@ -245,3 +275,27 @@ public class Bomber extends Character {
     }
 
 }
+
+
+
+
+       /* if (!isAlive()) {
+            timeKill++;
+            textureAtlas = GameManager.playerDeadDynamic.getKey();
+            animation = GameManager.playerDeadDynamic.getValue();
+            if (timeKill == 10) {
+                GameManager.playerDeadSound.play();
+            }
+            if (timeKill == 100) {
+                System.out.println("workkkkkkkkkkk");
+                stageScreen.live = false;
+                removeFlame();
+                alive = true;
+                timeKill = 0;
+                remove();
+                //stageScreen.remove(this);
+
+            }
+            return;
+        }*/
+

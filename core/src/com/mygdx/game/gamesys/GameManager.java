@@ -159,7 +159,7 @@ public class GameManager extends AssetManager {
     private static final TextureAtlas onealRight = new TextureAtlas(Gdx.files.internal("img/enemy/oneal/right/right.atlas"));
     public static final Pair<TextureAtlas, Animation> onealRightDynamic = new Pair<TextureAtlas, Animation>(onealRight,
             new Animation(1/6.f, onealRight.getRegions()));
-
+    // sound
     public static final Sound playerDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Die.ogg"));
 
     public static final Sound dollDeadSound = Gdx.audio.newSound(Gdx.files.internal("sounds/EnemyDie.ogg"));
@@ -197,5 +197,12 @@ public class GameManager extends AssetManager {
     public static final Sound pauseSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Pause.ogg"));
 
     public static final Sound powerUpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Powerup.ogg"));
+
+    // Lever Cartoon
+    public static final Texture Lv1 = new Texture(Gdx.files.internal("cartoon/lv1.png"));
+
+    public static final Texture Lv2 = new Texture(Gdx.files.internal("cartoon/lv2.png"));
+
+    public static final Texture Lv3 = new Texture(Gdx.files.internal("cartoon/lv3.png"));
 }
 

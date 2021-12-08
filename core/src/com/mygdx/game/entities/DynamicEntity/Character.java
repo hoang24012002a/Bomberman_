@@ -36,6 +36,7 @@ public abstract class Character extends AnimatedEntity {
     }
 
     public boolean canMoveLeft() {
+        //System.out.println(getX());
         Actor actor = stageScreen.getAt(getX() - 1, getY() + 32 * 0.5f);
         if (actor instanceof Brick) {
             return false;
@@ -65,6 +66,7 @@ public abstract class Character extends AnimatedEntity {
 
     public boolean canMoveBottom() {
         Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() - 1);
+        //System.out.println(getY());
         if (actor instanceof Brick) {
             return false;
         } else if (actor instanceof Wall) {
@@ -78,7 +80,7 @@ public abstract class Character extends AnimatedEntity {
     }
 
     protected void setPositionInMatrix(float x, float y, char symbol) {
-        int x_matrix = Math.round(x / 32);
+        int x_matrix = Math.round(x/ 32);
         int y_matrix = Math.round(y / 32);
         stageScreen.mapMatrix[y_matrix][x_matrix] = symbol;
         if (stageScreen.mapMatrix[y_matrix - 1][x_matrix] == symbol) {

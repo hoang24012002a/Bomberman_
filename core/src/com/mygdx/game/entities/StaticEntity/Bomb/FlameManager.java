@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class FlameManager extends Flame {
     public Array<Flame> flames;
-    protected static int flameItem = 5;
+    protected static int flameItem = 0;
     protected final int timeExp = 3000;
     protected StageScreen stageScreen;
 
@@ -118,13 +118,19 @@ public class FlameManager extends Flame {
 
     public void checkExploded(){
         ArrayList<Actor> nearest = stageScreen.bombArounds(positionX, positionY);
+        System.out.println(nearest.get(3).getX());
+        System.out.println(nearest.get(2).getX());
+        System.out.println(nearest.get(0).getY());
+        System.out.println(nearest.get(1).getY());
         removeLeftFlame(nearest.get(3).getX());
         removeRightFlame(nearest.get(2).getX());
         removeTopFlame(nearest.get(0).getY());
         removeDownFLame(nearest.get(1).getY());
     }
 
-//    để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
+
+    //  để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
+    //  để check xem chỉ cần 1 cái nổ rồi thì sẽ remove nó trong class Bomber
     public boolean isBurned(){
         for(int i = 0; i < sizeFlame(); i++){
 //            System.out.println("burned");
@@ -135,7 +141,8 @@ public class FlameManager extends Flame {
         return false;
     }
 
-//    để check vị trí của flame xem có đúng không
+    //  để check vị trí của flame xem có đúng không
+    //  để check vị trí của flame xem có đúng không
     public void outPos(){
        for(int i = 0; i < flames.size; i++){
             System.out.println(flames.get(i).getPositionX()+"-"+ flames.get(i).getPositionY());
@@ -155,7 +162,12 @@ public class FlameManager extends Flame {
         flameItem++;
     }
 
-//    nếu phát sinh vấn đề
+    // nếu phát sinh vấn đề
+    public static void beginItem(){
+        flameItem = 0;
+    }
+    //    nếu phát sinh vấn đề
+
     private int dem = 0;
     @Override
     public void act(float delta){
