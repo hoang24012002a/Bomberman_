@@ -63,7 +63,6 @@ public class Brick extends StaticEntities {
                 ((Flame) stageScreen.getAt(positionX+32, positionY)).isCenterFlame()){
                 return true;
             }else{
-                 System.out.println(false);
                 return false;
             }
 
@@ -74,7 +73,6 @@ public class Brick extends StaticEntities {
                 ((Flame) stageScreen.getAt(positionX-32, positionY)).isCenterFlame()){
                 return true;
             }else{
-                System.out.println(false);
                 return false;
             }
         }
@@ -84,7 +82,6 @@ public class Brick extends StaticEntities {
                 ((Flame) stageScreen.getAt(positionX, positionY+32)).isCenterFlame()){
                 return true;
             }else{
-                System.out.println(false);
                 return false;
             }
         }
@@ -94,7 +91,6 @@ public class Brick extends StaticEntities {
             ((Flame) stageScreen.getAt(positionX, positionY-32)).isCenterFlame()){
                 return true;
             }else{
-                System.out.println(false);
                 return false;
             }
         }else{
@@ -179,7 +175,6 @@ public class Brick extends StaticEntities {
         if(checkExplode()){
             brokenDown = true;
             stageScreen.remove(this);
-            System.out.println("exploded");
             stageScreen.addActor(brickEXP);
             dem++;
         }if(dem == 50 && brokenDown){

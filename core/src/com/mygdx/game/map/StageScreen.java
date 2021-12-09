@@ -80,7 +80,6 @@ public class StageScreen extends Stage {
         addActor(groupNoActnoBang);
         addActor(groupNoActs);
         addActor(groupActs);
-        System.out.println("this is "+s);
     }
 
     public void insertFromFile(String fileName) throws IOException {
@@ -262,12 +261,10 @@ public class StageScreen extends Stage {
     }
 
     public void addFlames(FlameManager flameManager){
-        System.out.println("work");
         for(int i = 0; i < flameManager.sizeFlame(); i++){
             noActs.add(0, flameManager.getFlames().get(i));
             groupNoActs.addActor(flameManager.getFlames().get(i));
         }
-        System.out.println(flameManager.sizeFlame());
     }
 
     public void removeFlame(FlameManager flameManager) {
@@ -322,9 +319,7 @@ public class StageScreen extends Stage {
 
     public void comeBack() {
         if (live == false) {
-            System.out.println(numberlives);
             if (numberlives > 0) {
-                System.out.println("lan" + numberlives);
                 numberlives--;
                 bomber.setX(Xbomber);
                 bomber.setY(Ybomber);

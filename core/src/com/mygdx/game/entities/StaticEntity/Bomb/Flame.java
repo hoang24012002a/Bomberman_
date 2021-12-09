@@ -30,7 +30,6 @@ public class Flame extends AnimatedEntity {
     }
 
     public Flame getFlame(){
-        System.out.println(positionX+"-"+positionY);
         return this;
     }
 
@@ -79,24 +78,26 @@ public class Flame extends AnimatedEntity {
             Actor actor3 = stageScreen.getAt(positionX + 2, positionY + 30);
             if (actor instanceof Character) {
                 ((Character) actor).killed();
+            } else if (actor instanceof Bomb) {
+                ((Bomb) actor).updateExplored();
             }
             if (actor1 instanceof Character) {
                 ((Character) actor1).killed();
+            } else if (actor1 instanceof Bomb) {
+                ((Bomb) actor1).updateExplored();
             }
             if (actor2 instanceof Character) {
                 ((Character) actor2).killed();
+            } else if (actor2 instanceof Bomb) {
+                ((Bomb) actor2).updateExplored();
             }
             if (actor3 instanceof Character) {
                 ((Character) actor3).killed();
+            } else if (actor3 instanceof Bomb) {
+                ((Bomb) actor3).updateExplored();
             }
         } else if (dem == 50) {
             dem = 0;
-            burned = true;
-            if(burned){
-                System.out.println("removed");
-            }else{
-                System.out.println("not yet");
-            }
             remove();
             stageScreen.remove(this);
         }

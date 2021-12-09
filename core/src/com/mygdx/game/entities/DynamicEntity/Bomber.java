@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class Bomber extends Character {
     private int code = 0; //Mã phím vừa bấm.
-    private int maxBomb = 10;
+    private int maxBomb = 2;
     private ArrayList<Bomb> listBomb;
     //  thêm một array flame manager để add và xoá như arraylistBom
     //  thêm một array flame manager để add và xoá như arraylistBom
@@ -47,7 +47,6 @@ public class Bomber extends Character {
                 GameManager.playerDeadSound.play();
             }
             if (timeKill == 92) {
-                System.out.println("workkkkkkkkkkk");
                 stageScreen.live = false;
                 removeFlameBurned();
                 //removeFlame();
@@ -125,12 +124,12 @@ public class Bomber extends Character {
         if (canMoveRight()) {
             Actor actor = stageScreen.getAt(positionX + 33, positionY + 16);
             eadItem(actor);
+            positionY += (Math.round(positionY / 32) * 32 - positionY);
+            positionX += speed;
             if (!isAlive(actor))  {
                 killed();
                 return;
             }
-            positionY += (Math.round(positionY / 32) * 32 - positionY);
-            positionX += speed;
         }
         setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.D;
@@ -143,12 +142,12 @@ public class Bomber extends Character {
         if (canMoveLeft()) {
             Actor actor = stageScreen.getAt(positionX - 1, positionY + 16);
             eadItem(actor);
+            positionY += (Math.round(positionY / 32) * 32 - positionY);
+            positionX -= speed;
             if (!isAlive(actor))  {
                 killed();
                 return;
             }
-            positionY += (Math.round(positionY / 32) * 32 - positionY);
-            positionX -= speed;
         }
         setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.A;
@@ -161,12 +160,12 @@ public class Bomber extends Character {
         if (canMoveTop()) {
             Actor actor = stageScreen.getAt(positionX + 16, positionY + 33);
             eadItem(actor);
-            if (!isAlive(actor))  {
+
+            positionX += (Math.round(positionX / 32) * 32 - positionX);
+            positionY += speed;if (!isAlive(actor))  {
                 killed();
                 return;
             }
-            positionX += (Math.round(positionX / 32) * 32 - positionX);
-            positionY += speed;
         }
         setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.W;
@@ -179,12 +178,12 @@ public class Bomber extends Character {
         if (canMoveBottom()) {
             Actor actor = stageScreen.getAt(positionX + 16, positionY - 1);
             eadItem(actor);
-            if (!isAlive(actor))  {
+
+            positionX += (Math.round(positionX / 32) * 32 - positionX);
+            positionY -= speed;if (!isAlive(actor))  {
                 killed();
                 return;
             }
-            positionX += (Math.round(positionX / 32) * 32 - positionX);
-            positionY -= speed;
         }
         setPositionInMatrix(positionX, positionY, 'p');
         code = Input.Keys.S;
@@ -205,7 +204,6 @@ public class Bomber extends Character {
         if (!(item instanceof Item) || !((Item) item).isBroken()) {
             return;
         }
-        System.out.println("love");
         if (item instanceof BombItem) {
             GameManager.eatItemSound.play();
             maxBomb++;
@@ -249,7 +247,7 @@ public class Bomber extends Character {
     private void placeBomb() {
         float currentX = Math.round(getX() / 32) * 32;
         float currentY = Math.round(getY() / 32) * 32;
-        Bomb newBomb = new Bomb(currentX, currentY);
+        final Bomb newBomb = new Bomb(currentX, currentY);
         getStage().addActor(newBomb);
         final FlameManager flameManager = new FlameManager(currentX, currentY);
         listBomb.add(newBomb);
@@ -259,14 +257,17 @@ public class Bomber extends Character {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                boolean check = false;
-                for (int i = 0; i < 1930; i++) {
-                    for (long j = 0; j < 2000000; j++) {
-                        if (check == true) {
+                for (int i = 0; i < 1800; i++) {
+                    try {
+                        if (newBomb.isCheckFlame()) {
                             break;
                         }
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
+                newBomb.removeBomb();
                 stageScreen.addFlames(flameManager);
                 GameManager.bombExplodedSound.play();
             }

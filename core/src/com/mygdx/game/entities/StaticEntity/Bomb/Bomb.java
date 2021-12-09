@@ -10,9 +10,8 @@ import com.mygdx.game.map.StageScreen;
  */
 public class Bomb extends AnimatedEntity {
     public boolean explored = false;
-    protected final int timeToExplode = 3000; // 2000ms
-    protected int numberOfBomb = 1;
     protected StageScreen stageScreen;
+    private boolean checkFlame = false;
 
     public Bomb(float x, float y){
         super(x, y);
@@ -22,39 +21,21 @@ public class Bomb extends AnimatedEntity {
 
     }
 
-    public int getNumberOfBomb() {
-        return numberOfBomb;
-    }
-
     public boolean isExplored() {
         return explored;
     }
 
-    private int dem = 0;
-    @Override
-    public void act(float delta) {
-        textureAtlas = GameManager.bombFlick.getKey();
-        animation = GameManager.bombFlick.getValue();
-        //TODO: nen lam theo cach nay.
-        //TODO: tại sao khi explore = true lại không hoạt động???
-        dem++;
-        if (dem == 100 && getStage().getActors().notEmpty()) {
-            dem = 0;
-            explored = true;
-//            getStage().getActors().removeValue(this, true);
-            remove();
-            stageScreen.remove(this);
-//            stageScreen.mapMatrix[(int)positionX/32][(int)positionY/32] = ' ';
-            if(this.remove()){
-                if(explored){
-                    System.out.println("nổ");
-                    stageScreen.addFlames(new FlameManager(positionX, positionY));
-                } else {
-                    System.out.println("chưa nổ đâu");
-                }
-            }else{
-                    System.out.println("chưa cút đâu");
-            }
-        }
+    public void updateExplored() {
+        checkFlame = true;
+    }
+
+    public void removeBomb() {
+        explored = true;
+        remove();
+        stageScreen.remove(this);
+    }
+
+    public boolean isCheckFlame() {
+        return checkFlame;
     }
 }

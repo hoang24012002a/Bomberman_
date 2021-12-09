@@ -24,7 +24,6 @@ public class FlameManager extends Flame {
         this.flames = new Array<>(flameItem*2+5);
         addFlame();
         checkExploded();
-        System.out.println(sizeFlame());
 //        outPos();
     }
     public FlameManager(Flame flame){
@@ -119,10 +118,6 @@ public class FlameManager extends Flame {
 
     public void checkExploded(){
         ArrayList<Actor> nearest = stageScreen.bombArounds(positionX, positionY);
-        System.out.println(nearest.get(3).getX());
-        System.out.println(nearest.get(2).getX());
-        System.out.println(nearest.get(0).getY());
-        System.out.println(nearest.get(1).getY());
         removeLeftFlame(nearest.get(3).getX());
         removeRightFlame(nearest.get(2).getX());
         removeTopFlame(nearest.get(0).getY());
@@ -144,9 +139,9 @@ public class FlameManager extends Flame {
     //  để check vị trí của flame xem có đúng không
     //  để check vị trí của flame xem có đúng không
     public void outPos(){
-       for(int i = 0; i < flames.size; i++){
-            System.out.println(flames.get(i).getPositionX()+"-"+ flames.get(i).getPositionY());
-        }
+//       for(int i = 0; i < flames.size; i++){
+//            System.out.println(flames.get(i).getPositionX()+"-"+ flames.get(i).getPositionY());
+//        }
     }
 
     public Array<Flame> getFlames() {

@@ -55,9 +55,9 @@ public class Doll extends Enemy {
         animation = GameManager.dollRightDynamic.getValue();
         if (canMoveRight()) {
             Actor actor =stageScreen.getAt(positionX + 33, positionY + 16);
-            handle(actor);
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
+            handle(actor);
         }
         setPositionInMatrix(positionX, positionY, '3');
     }
@@ -68,9 +68,9 @@ public class Doll extends Enemy {
         animation = GameManager.dollLeftDynamic.getValue();
         if (canMoveLeft()) {
             Actor actor = stageScreen.getAt(positionX - 1, positionY + 16);
-            handle(actor);
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX -= speed;
+            handle(actor);
         }
         setPositionInMatrix(positionX, positionY, '3');
     }
@@ -81,9 +81,9 @@ public class Doll extends Enemy {
         animation = GameManager.dollRightDynamic.getValue();
         if (canMoveTop()) {
             Actor actor = stageScreen.getAt(positionX + 16, positionY + 33);
-            handle(actor);
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY += speed;
+            handle(actor);
         }
         setPositionInMatrix(positionX, positionY, '3');
     }
@@ -94,9 +94,9 @@ public class Doll extends Enemy {
         animation = GameManager.dollLeftDynamic.getValue();
         if (canMoveBottom()) {
             Actor actor = stageScreen.getAt(positionX + 16, positionY - 1);
-            handle(actor);
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY -= speed;
+            handle(actor);
         }
         setPositionInMatrix(positionX, positionY, '3');
     }
