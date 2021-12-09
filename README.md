@@ -18,7 +18,7 @@ Hướng dẫn chơi:
     ON/OFF - mute background sound
     PLAY - choose map to play
     P - pause game
-    C or O - pass level
+    C - pass level
     
 
 Mô tả cấu trúc của file map: 
