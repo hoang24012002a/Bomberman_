@@ -224,6 +224,8 @@ public class GameManager extends AssetManager {
     public static final Texture winner= new Texture(Gdx.files.internal("cartoon/winner.png"));
     public static final Texture menu = new Texture(Gdx.files.internal("cartoon/newmenu.png"));
     public static final Texture tryAg = new Texture(Gdx.files.internal("cartoon/try.png"));
+    public static final Texture pause = new Texture(Gdx.files.internal("cartoon/pause.png"));
+    public static final Texture notnhac2 = new Texture(Gdx.files.internal("cartoon/notnhac2.png"));
 
 }
 

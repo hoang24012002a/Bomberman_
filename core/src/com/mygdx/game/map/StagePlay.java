@@ -61,6 +61,7 @@ public class StagePlay extends Stage {
             //stageScreen.clear();
             stageScreens.clear();
             setListStageScreens();
+            this.stageChange = new StageChange("pause");
             //stageScreens.add(new StageScreen(lv));
             //this.stageScreen =  new StageScreen(lv);
             this.stageScreen = stageScreens.get(lv-1);
@@ -122,8 +123,10 @@ public class StagePlay extends Stage {
                          if (this.stageChangeLose.convert(Gdx.input.getX(), Gdx.input.getY())[2] == true) {
                              stageScreens.remove(stageScreens.get(lv-1));
                              stageScreens.add(new StageScreen(lv));
+                             this.stageChange = new StageChange("pause");
                              this.stageScreen = stageScreens.get(lv-1);
                              this.stageInfomation = new StageInfomation(this.stageScreen);
+                             stageChangeLose.checkStageChangedraw = true;
                              kt = true;
                          }
                      } else {

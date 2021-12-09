@@ -1,6 +1,7 @@
 package com.mygdx.game.entities.DynamicEntity.enemy;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.Character;
 import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI;
 import com.mygdx.game.entities.FreezeEntity.Bomb.Flame;
@@ -26,5 +27,14 @@ public abstract class Enemy extends Character {
             return false;
         }
         return true;
+    }
+
+    protected void handle(Actor actor) {
+        if (actor instanceof Bomber) {
+            ((Bomber) actor).killed();
+        }
+        if (!isAlive(actor)) {
+            killed();
+        }
     }
 }
