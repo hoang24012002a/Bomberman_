@@ -1,6 +1,6 @@
 package com.mygdx.game.entities.DynamicEntity.enemy;
 
-import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_Low;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.entities.DynamicEntity.enemy.AI.AI_Medium;
 import com.mygdx.game.gamesys.GameManager;
 
@@ -56,6 +56,8 @@ public class Oneal extends Enemy {
         textureAtlas = GameManager.onealRightDynamic.getKey();
         animation = GameManager.onealRightDynamic.getValue();
         if (canMoveRight()) {
+            Actor actor = stageScreen.getAt(positionX + 33, positionY + 16);
+            handle(actor);
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX += speed;
         }
@@ -66,8 +68,9 @@ public class Oneal extends Enemy {
     protected void moveLeft() {
         textureAtlas = GameManager.onealLeftDynamic.getKey();
         animation = GameManager.onealLeftDynamic.getValue();
-        //System.out.println(positionX);
         if (canMoveLeft()) {
+            Actor actor = stageScreen.getAt(positionX - 1, positionY + 16);
+            handle(actor);
             positionY += (Math.round(positionY / 32) * 32 - positionY);
             positionX -= speed;
         }
@@ -79,6 +82,8 @@ public class Oneal extends Enemy {
         textureAtlas = GameManager.onealRightDynamic.getKey();
         animation = GameManager.onealRightDynamic.getValue();
         if (canMoveTop()) {
+            Actor actor = stageScreen.getAt(positionX + 16, positionY + 33);
+            handle(actor);
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY += speed;
         }
@@ -90,6 +95,8 @@ public class Oneal extends Enemy {
         textureAtlas = GameManager.onealLeftDynamic.getKey();
         animation = GameManager.onealLeftDynamic.getValue();
         if (canMoveBottom()) {
+            Actor actor = stageScreen.getAt(positionX + 16, positionY - 1);
+            handle(actor);
             positionX += (Math.round(positionX / 32) * 32 - positionX);
             positionY -= speed;
         }

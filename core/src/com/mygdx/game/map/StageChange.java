@@ -2,6 +2,8 @@ package com.mygdx.game.map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -14,24 +16,41 @@ import java.util.ArrayList;
 
 public class StageChange extends Stage {
     public  Sound stageChangeSound = GameManager.pauseSound;
-    private TextureRegion board = new TextureRegion(GameManager.board);
-    private TextureRegion continuE = new TextureRegion(GameManager.conti);
-    private TextureRegion gameOver = new TextureRegion(GameManager.over);
-    private TextureRegion winner = new TextureRegion(GameManager.winner);
-    private TextureRegion exit = new TextureRegion(GameManager.quit);
-    private TextureRegion menu = new TextureRegion(GameManager.menu);
-    private TextureRegion tryAgain = new TextureRegion(GameManager.tryAg);
+    private Pixmap pixmap = new Pixmap(992, 550, Pixmap.Format.RGBA8888);
+    private TextureRegion notnhac = new TextureRegion(GameManager.notnhac2);
+    private TextureRegion board = new TextureRegion(new Texture("cartoon/board.png"));
+    private TextureRegion continuE = new TextureRegion(new Texture("cartoon/newconti.png"));
+    private TextureRegion gameOver = new TextureRegion(new Texture("cartoon/game-over.png"));
+    private TextureRegion winner = new TextureRegion(new Texture("cartoon/winner.png"));
+    private TextureRegion exit = new TextureRegion(new Texture("cartoon/newquit.png"));
+    private TextureRegion menu = new TextureRegion(new Texture("cartoon/newmenu.png"));
+    private TextureRegion tryAgain = new TextureRegion(new Texture("cartoon/try.png"));
+    private TextureRegion on = new TextureRegion(GameManager.on);
+    private TextureRegion off = new TextureRegion(GameManager.off);
     public boolean []checkOption = new boolean[3];
     private ArrayList<MyActor> ins = new ArrayList<>();
     private ArrayList<MyActor> outs = new ArrayList<>();
     private MyActor over,win;
     private Group groupIn = new Group();
     private Group groupOut = new Group();
+    public Group groupMusic = new Group();
+    private boolean checkTouch =true;
+    private MyActor myOn,myOff;
     public MyInputProcessor  inputProcessor = new MyInputProcessor();
     private float scaleOut = (float) 7;
     private float scaleIn = (float) 8;
+    private String ss = "";
     public boolean checkStageChangedraw = true;
     public StageChange(String s) {
+        ss = s;
+        pixmap.setColor(new Color(0,0,0,(float)0.5));
+        pixmap.fill();
+        TextureRegion anhpixmap = new TextureRegion(new Texture(pixmap));
+        MyActor myPixmap = new MyActor(anhpixmap);
+        myPixmap.setPosition(0, 0);
+        myPixmap.setBounds(myPixmap.getX(), myPixmap.getY(), anhpixmap.getRegionWidth(), anhpixmap.getRegionHeight());
+        addActor(myPixmap);
+        pixmap.dispose();
         MyActor  myBoard = new MyActor(board);
         myBoard.setPosition(270,100);
         myBoard.setBounds(myBoard.getX(), myBoard.getY(), board.getRegionWidth()/4, board.getRegionHeight()/4);
@@ -48,9 +67,48 @@ public class StageChange extends Stage {
         addActor(myBoard);
         addOption(s);
         //groupOut.addActor(outs.get(0));
-
         addActor(groupOut);
         addActor(groupIn);
+        //addOnOff();
+        addActor(groupMusic);
+    }
+
+    void addOnOff() {
+        MyActor  myMusic = new MyActor(notnhac);
+        myMusic.setPosition(420,283);
+        myMusic.setBounds(myMusic.getX(), myMusic.getY(), notnhac.getRegionWidth()/2, notnhac.getRegionHeight()/2);
+        myOn = new MyActor(on);
+        myOn.setPosition(370,280);
+        myOn.setBounds(myOn.getX(), myOn.getY(), on.getRegionWidth()/(float)1.5, on.getRegionHeight()/(float)1.5);
+        myOff = new MyActor(off);
+        myOff.setPosition(370,280);
+        myOff.setBounds(myOff.getX(), myOff.getY(), off.getRegionWidth()/(float)1.5, off.getRegionHeight()/(float)1.5);
+        if(StageMenu.music.isPlaying()) {
+            groupMusic.addActor(myOn);
+           // System.out.println("yes");
+        } else {
+            groupMusic.addActor(myOff);
+           // System.out.println("no");
+        }
+        addActor(myMusic);
+    }
+
+    public void onOff(MyActor actor1,MyActor actor2,boolean check) {
+        System.out.println("w1");
+        if (inputProcessor.mouseMovedd(Gdx.input.getX(), Gdx.input.getY(), actor1.getX(), actor1.getY(),on.getRegionWidth()/(float)1.5, on.getRegionHeight()/(float)1.5)) {
+            System.out.println("w2");
+            if (Gdx.input.isTouched() && groupMusic.getChild(0) == actor1 && check == true) {
+                groupMusic.removeActor(actor1);
+                groupMusic.addActor(actor2);
+                StageMenu.music.stop();
+            } else if (Gdx.input.isTouched() && groupMusic.getChild(0) == actor2 && check == true) {
+                groupMusic.removeActor(actor2);
+                groupMusic.addActor(actor1);
+                StageMenu.music.play();
+                StageMenu.music.setLooping(true);
+            }
+            check = false;
+        }
     }
 
     public boolean[] convert(float x, float y) {
@@ -82,9 +140,22 @@ public class StageChange extends Stage {
         //dem++;
         //System.out.println(dem);
         super.draw();
+        if (ss.equals("pause")) {
+            if (!groupMusic.hasChildren()) {
+                addOnOff();
+            }
+                onOff(myOn, myOff, checkTouch);
+        }
+        if(!Gdx.input.isTouched()) {
+            checkTouch= true;
+        } else {
+            checkTouch =false;
+        }
         if(checkStageChangedraw) {
             stageChangeSound.play();
-            StageMenu.music.stop();
+            if (ss.equals("win") || ss.equals("lose")) {
+                StageMenu.music.stop();
+            }
             checkStageChangedraw = false;
         }
         convert(Gdx.input.getX(),Gdx.input.getY());

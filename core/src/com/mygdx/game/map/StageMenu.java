@@ -12,7 +12,7 @@ import com.mygdx.game.gamesys.GameManager;
 import java.util.ArrayList;
 
 public class StageMenu extends Stage {
-    public static Music music = Gdx.audio.newMusic(Gdx.files.internal("music/soundtrack.wav"));
+    public static Music music = Gdx.audio.newMusic(Gdx.files.internal("music/SuperBomberman-Area1.ogg"));
     private TextureRegion notnhac = new TextureRegion(GameManager.notnhac);
     private TextureRegion board = new TextureRegion(GameManager.board);
     private TextureRegion start = new TextureRegion(GameManager.play);
@@ -20,6 +20,7 @@ public class StageMenu extends Stage {
     private TextureRegion off = new TextureRegion(GameManager.off);
     private TextureRegion  background = new TextureRegion(GameManager.background);
     private TextureRegion exit = new TextureRegion(GameManager.quit);
+    private TextureRegion pause = new TextureRegion(GameManager.pause);
     //private MyActor  manHinh = new MyActor(anhchuyen);
     private ArrayList<MyActor> ins = new ArrayList<>();
     private ArrayList<MyActor> outs = new ArrayList<>();
@@ -65,9 +66,14 @@ public class StageMenu extends Stage {
 
         groupIn.addActor(ins.get(0));
         groupIn.addActor(ins.get(1));
+        MyActor myPause = new MyActor(pause);
+        myPause.setPosition(340,175);
+        myPause.setBounds(myPause.getX(), myPause.getY(), pause.getRegionWidth()/(float)3, pause.getRegionHeight()/(float)3);
+
         //groupIn
         //groupOut.addActor(outs.get(0));
         addActor(myBoard);
+        addActor(myPause);
         addActor(groupMusic);
         addActor(myMusic);
         addActor(groupOut);
@@ -111,6 +117,7 @@ public class StageMenu extends Stage {
                 groupMusic.removeActor(actor2);
                 groupMusic.addActor(actor1);
                 music.play();
+                music.setLooping(true);
             }
             check = false;
         }

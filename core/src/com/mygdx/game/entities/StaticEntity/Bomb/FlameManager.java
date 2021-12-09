@@ -116,10 +116,6 @@ public class FlameManager extends Flame {
 
     public void checkExploded(){
         ArrayList<Actor> nearest = stageScreen.bombArounds(positionX, positionY);
-        System.out.println(nearest.get(3).getX());
-        System.out.println(nearest.get(2).getX());
-        System.out.println(nearest.get(0).getY());
-        System.out.println(nearest.get(1).getY());
         removeLeftFlame(nearest.get(3).getX());
         removeRightFlame(nearest.get(2).getX());
         removeTopFlame(nearest.get(0).getY());
@@ -131,7 +127,6 @@ public class FlameManager extends Flame {
         for(int i = 0; i < sizeFlame(); i++){
 //            System.out.println("burned");
             if(getFlames().get(i).burned){
-                System.out.println("true");
                 return true;
             }
         }

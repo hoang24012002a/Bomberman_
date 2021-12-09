@@ -216,7 +216,6 @@ public class Bomber extends Character {
                 item.remove();
                 stageScreen.remove(item);
             } else if (item instanceof Portal) {
-                System.out.println("love");
                 nextLevel = true;
                 if (Enemy.numberEnemy == 0) {
                     // TODO: 12/7/2021

@@ -215,11 +215,8 @@ public class GameManager extends AssetManager {
     public static final Texture anhoneal = new Texture(Gdx.files.internal("img/enemy/oneal/left/oneal_left1.png"));
     public static final Texture anhdoll = new Texture(Gdx.files.internal("img/enemy/doll/left/doll_left1.png"));
     public static final Texture anhbomber = new Texture(Gdx.files.internal("img/player/down/player_down.png"));
-    public static final Texture conti = new Texture(Gdx.files.internal("cartoon/newconti.png"));
-    public static final Texture over = new Texture(Gdx.files.internal("cartoon/game-over"));
-    public static final Texture winner= new Texture(Gdx.files.internal("cartoon/winner.png"));
-    public static final Texture menu = new Texture(Gdx.files.internal("cartoon/newmenu.png"));
-    public static final Texture tryAg = new Texture(Gdx.files.internal("cartoon/try.png"));
+    public static final Texture pause = new Texture(Gdx.files.internal("cartoon/pause.png"));
+    public static final Texture notnhac2 = new Texture(Gdx.files.internal("cartoon/notnhac2.png"));
 
 }
 
