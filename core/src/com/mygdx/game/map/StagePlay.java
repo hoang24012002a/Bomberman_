@@ -146,9 +146,9 @@ public class StagePlay extends Stage {
                      }
                      if (this.stageChange.convert(Gdx.input.getX(), Gdx.input.getY())[1] == true) {
                          System.out.println("menu2");
-                         //kt = true;
-                         chuyenman = false;
-                         stageMenu = new StageMenu();
+                         kt = true;
+//                         chuyenman = false;
+//                         stageMenu = new StageMenu();
                      }
                  }
             }

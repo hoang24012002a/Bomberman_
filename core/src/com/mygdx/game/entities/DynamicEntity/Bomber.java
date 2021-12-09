@@ -59,42 +59,22 @@ public class Bomber extends Character {
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             moveRight();
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-                System.out.println("press Space");
-                if(canPlaceBomb()){
-                    placeBomb();
-                }
-            }
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             moveLeft();
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-                System.out.println("press Space");
-                if(canPlaceBomb()){
-                    placeBomb();
-                }
-            }
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             moveBottom();
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-                System.out.println("press Space");
-                if(canPlaceBomb()){
-                    placeBomb();
-                }
-            }
             return;
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveTop();
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-                System.out.println("press Space");
-                if(canPlaceBomb()){
-                    placeBomb();
-                }
-            }
             return;
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            if(canPlaceBomb()){
+                placeBomb();
+            }
         }
-        switch (code) {
+      switch (code) {
             case Input.Keys.A:
                 textureAtlas = GameManager.playerLeftStatic.getKey();
                 animation = GameManager.playerLeftStatic.getValue();
@@ -237,7 +217,7 @@ public class Bomber extends Character {
                 stageScreen.remove(item);
             } else if (item instanceof Portal) {
                 System.out.println("love");
-                nextLevel = true;
+//                nextLevel = true;
                 if (Enemy.numberEnemy == 0) {
                     // TODO: 12/7/2021
                     nextLevel = true;
