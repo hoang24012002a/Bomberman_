@@ -18,7 +18,7 @@ Hướng dẫn chơi:
     ON/OFF - mute background sound
     PLAY - choose map to play
     P - pause game
-    C - pass level
+    C or O - pass level
     
 
 Mô tả cấu trúc của file map: 
@@ -50,10 +50,6 @@ Item:
     f - FlameItem
     s - SpeedItem
 
-
-Cây kế thừa:
-
-![](core/assets/img/EXTEND TREE.png)
 
 Ưu điểm: Đồ hoạ dễ dùng thân thiện, lên đến 3 màn chơi, có thêm sound effect, thuật toán AI cho từng loại
 quái.
