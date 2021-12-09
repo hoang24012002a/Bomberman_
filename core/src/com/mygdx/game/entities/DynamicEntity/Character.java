@@ -9,104 +9,100 @@ import com.mygdx.game.entities.FreezeEntity.Tile.Wall;
 import com.mygdx.game.map.StageScreen;
 
 public abstract class Character extends AnimatedEntity {
-    protected float speed;
-    protected boolean alive = true;
-    protected StageScreen stageScreen;
-    private char[][] map;
+  protected float speed;
+  protected boolean alive = true;
+  protected StageScreen stageScreen;
+  private final char[][] map;
 
-    protected Character(float x, float y) {
-        super(x, y);
-        speed = 1;
-        stageScreen = StageScreen.me;
-        map = stageScreen.mapMatrix;
+  protected Character(float x, float y) {
+    super(x, y);
+    speed = 1;
+    stageScreen = StageScreen.me;
+    map = stageScreen.mapMatrix;
+  }
+
+  public boolean canMoveRight() {
+    Actor actor = stageScreen.getAt(getX() + 32 + 1, getY() + 32 * 0.5f);
+    if (actor instanceof Brick) {
+      return false;
+    } else if (actor instanceof Wall) {
+      return false;
+    } else if (actor instanceof Item) {
+      return true;
+    } else if (actor instanceof Bomb) {
+      return true;
     }
+    return true;
+  }
 
-    public boolean canMoveRight() {
-        Actor actor = stageScreen.getAt(getX() + 32 + 1, getY() + 32 * 0.5f);
-        if (actor instanceof Brick) {
-            return false;
-        } else if (actor instanceof Wall) {
-            return false;
-        } else if (actor instanceof Item) {
-            return true;
-        } else if (actor instanceof Bomb) {
-            return true;
-        }
-        return true;
+  public boolean canMoveLeft() {
+    Actor actor = stageScreen.getAt(getX() - 1, getY() + 32 * 0.5f);
+    if (actor instanceof Brick) {
+      return false;
+    } else if (actor instanceof Wall) {
+      return false;
+    } else if (actor instanceof Item) {
+      return true;
+    } else if (actor instanceof Bomb) {
+      return true;
     }
+    return true;
+  }
 
-    public boolean canMoveLeft() {
-        //System.out.println(getX());
-        Actor actor = stageScreen.getAt(getX() - 1, getY() + 32 * 0.5f);
-        if (actor instanceof Brick) {
-            return false;
-        } else if (actor instanceof Wall) {
-            return false;
-        } else if (actor instanceof Item) {
-            return true;
-        } else if (actor instanceof Bomb) {
-            return true;
-        }
-        return true;
+  public boolean canMoveTop() {
+    Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() + 32 + 1);
+    if (actor instanceof Brick) {
+      return false;
+    } else if (actor instanceof Wall) {
+      return false;
+    } else if (actor instanceof Item) {
+      return true;
+    } else if (actor instanceof Bomb) {
+      return true;
     }
+    return true;
+  }
 
-    public boolean canMoveTop() {
-        Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() + 32 + 1);
-        if (actor instanceof Brick) {
-            return false;
-        } else if (actor instanceof Wall) {
-            return false;
-        } else if (actor instanceof Item) {
-            return true;
-        } else if (actor instanceof Bomb) {
-            return true;
-        }
-        return true;
+  public boolean canMoveBottom() {
+    Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() - 1);
+    if (actor instanceof Brick) {
+      return false;
+    } else if (actor instanceof Wall) {
+      return false;
+    } else if (actor instanceof Item) {
+      return true;
+    } else if (actor instanceof Bomb) {
+      return true;
     }
+    return true;
+  }
 
-    public boolean canMoveBottom() {
-        Actor actor = stageScreen.getAt(getX() + 32 * 0.5f, getY() - 1);
-        //System.out.println(getY());
-        if (actor instanceof Brick) {
-            return false;
-        } else if (actor instanceof Wall) {
-            return false;
-        } else if (actor instanceof Item) {
-            return true;
-        } else if (actor instanceof Bomb) {
-            return true;
-        }
-        return true;
+  protected void setPositionInMatrix(float x, float y, char symbol) {
+    int x_matrix = Math.round(x / 32);
+    int y_matrix = Math.round(y / 32);
+    stageScreen.mapMatrix[y_matrix][x_matrix] = symbol;
+    if (stageScreen.mapMatrix[y_matrix - 1][x_matrix] == symbol) {
+      stageScreen.mapMatrix[y_matrix - 1][x_matrix] = 'n';
+    } else if (stageScreen.mapMatrix[y_matrix + 1][x_matrix] == symbol) {
+      stageScreen.mapMatrix[y_matrix + 1][x_matrix] = 'n';
+    } else if (stageScreen.mapMatrix[y_matrix][x_matrix - 1] == symbol) {
+      stageScreen.mapMatrix[y_matrix][x_matrix - 1] = 'n';
+    } else if (stageScreen.mapMatrix[y_matrix][x_matrix + 1] == symbol) {
+      stageScreen.mapMatrix[y_matrix][x_matrix + 1] = 'n';
     }
+  }
 
-    protected void setPositionInMatrix(float x, float y, char symbol) {
-        int x_matrix = Math.round(x/ 32);
-        int y_matrix = Math.round(y / 32);
-        stageScreen.mapMatrix[y_matrix][x_matrix] = symbol;
-        if (stageScreen.mapMatrix[y_matrix - 1][x_matrix] == symbol) {
-            stageScreen.mapMatrix[y_matrix - 1][x_matrix] = 'n';
-        } else if (stageScreen.mapMatrix[y_matrix + 1][x_matrix] == symbol) {
-            stageScreen.mapMatrix[y_matrix + 1][x_matrix] = 'n';
-        } else if (stageScreen.mapMatrix[y_matrix][x_matrix - 1] == symbol) {
-            stageScreen.mapMatrix[y_matrix][x_matrix - 1] = 'n';
-        } else if (stageScreen.mapMatrix[y_matrix][x_matrix + 1] == symbol) {
-            stageScreen.mapMatrix[y_matrix][x_matrix + 1] = 'n';
-        }
-    }
+  public abstract boolean isAlive(Actor actor);
 
-    public abstract boolean isAlive(Actor actor);
+  public void killed() {
+    alive = false;
+  }
 
+  protected abstract void moveRight();
 
-    public void killed() {
-        alive = false;
-    }
+  protected abstract void moveLeft();
 
+  protected abstract void moveTop();
 
-    protected abstract void moveRight();
-
-    protected abstract void moveLeft();
-
-    protected abstract void moveTop();
-
-    protected abstract void moveBottom();
+  protected abstract void moveBottom();
 }
