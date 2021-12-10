@@ -16,6 +16,7 @@ import com.mygdx.game.entities.FreezeEntity.Item.SpeedItem;
 import com.mygdx.game.entities.FreezeEntity.Tile.Brick;
 import com.mygdx.game.entities.FreezeEntity.Tile.Grass;
 import com.mygdx.game.entities.FreezeEntity.Tile.Wall;
+import com.mygdx.game.gamesys.GameManager;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -78,6 +79,7 @@ public class StageScreen extends Stage {
     addActor(groupNoActnoBang);
     addActor(groupNoActs);
     addActor(groupActs);
+    if (Lv != 1) GameManager.stageClearSound.play();
   }
 
   public void insertFromFile(String fileName) throws IOException {

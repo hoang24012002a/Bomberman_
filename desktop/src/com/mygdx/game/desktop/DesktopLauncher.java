@@ -9,8 +9,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.x = 140;
 		config.y = 50;
-		config.height = 550;
-		config.width = 992;
+		config.height = 13*32 + 134;
+		config.width = 31*32;
 		new LwjglApplication(new BombGame(), config);
 	}
 }
