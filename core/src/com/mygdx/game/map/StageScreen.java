@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.entities.DynamicEntity.Bomber;
 import com.mygdx.game.entities.DynamicEntity.enemy.Balloon;
 import com.mygdx.game.entities.DynamicEntity.enemy.Doll;
+import com.mygdx.game.entities.DynamicEntity.enemy.Enemy;
 import com.mygdx.game.entities.DynamicEntity.enemy.Oneal;
 import com.mygdx.game.entities.FreezeEntity.Bomb.FlameManager;
 import com.mygdx.game.entities.FreezeEntity.Item.BombItem;
@@ -80,7 +81,7 @@ public class StageScreen extends Stage {
   }
 
   public void insertFromFile(String fileName) throws IOException {
-
+    Enemy.numberEnemy = 0;
     File file = new File(fileName);
     InputStream inputStream = new FileInputStream(file);
     InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

@@ -225,7 +225,9 @@ public class Bomber extends Character {
       item.remove();
       stageScreen.remove(item);
     } else if (item instanceof Portal) {
-        nextLevel = true;
+        if(Enemy.numberEnemy == 0){
+          nextLevel = true;
+        }
     }
   }
 
